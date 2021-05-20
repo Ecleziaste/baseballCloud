@@ -13,7 +13,7 @@ const App = () => {
         <Header></Header>
       </HeaderWrapper>
       <SignInScreen></SignInScreen>
-      <FooterWrapper></FooterWrapper>
+      <FooterWrapper>{/* <Footer></Footer> */}</FooterWrapper>
     </div>
   );
 };

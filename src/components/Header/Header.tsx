@@ -1,5 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import {
+  TRIANGLE_ARROW_ICON,
+  LOGO_0_ICON,
+  LOGO_1_ICON,
+  LOGO_2_ICON,
+  LOGO_3_ICON,
+} from "../../assets/svg/paths";
 // import { useSelector, shallowEqual } from "react-redux";
 
 const Header: React.FC<Props> = () => {
@@ -7,7 +14,20 @@ const Header: React.FC<Props> = () => {
 
   return (
     <Container>
-      <LogoContainer></LogoContainer>
+      <LogoContainer>
+        <div>
+          <Span>
+            <Svg width="198" height="28" viewBox="0 0 198 28">
+              <G>
+                <Path fill="#6CB830" d={LOGO_0_ICON}></Path>
+                <Path fill="#788B99" d={LOGO_1_ICON}></Path>
+                <Path fill="#788B99" d={LOGO_2_ICON}></Path>
+                <Path fill="#6CB830" fill-rule="nonzero" d={LOGO_3_ICON}></Path>
+              </G>
+            </Svg>
+          </Span>
+        </div>
+      </LogoContainer>
       {user && (
         <UserMenu>
           <NavBar>
@@ -26,8 +46,8 @@ const Header: React.FC<Props> = () => {
               <ProfileButton>
                 <UserName>User Name</UserName>
                 <Span>
-                  <Svg>
-                    <Path></Path>
+                  <Svg width="8" height="5" viewBox="0 0 8 5">
+                    <Path d={TRIANGLE_ARROW_ICON}></Path>
                   </Svg>
                 </Span>
               </ProfileButton>
@@ -116,6 +136,10 @@ const ProfileButton = styled.button`
   }
 `;
 const UserName = styled.div``;
+const G = styled.g`
+  fill: none;
+  fill-rule: evenodd;
+`;
 const Span = styled.span`
   display: flex;
   align-self: center;
@@ -123,17 +147,8 @@ const Span = styled.span`
 `;
 const Svg = styled.svg`
   fill: currentColor;
-  width: 8px;
-  height: 5px;
-  viewbox: 0 0 8px 5px;
 `;
-const Path = styled.path`
-  fill: rgb(120, 139, 153);
-  fill-rule: evenodd;
-  d: path(
-    "M 8 0.5 c 0 -0.273 -0.227 -0.5 -0.5 -0.5 h -7 C 0.227 0 0 0.227 0 0.5 c 0 0.133 0.055 0.258 0.148 0.352 l 3.5 3.5 A 0.497 0.497 0 0 0 4 4.5 a 0.497 0.497 0 0 0 0.352 -0.148 l 3.5 -3.5 A 0.497 0.497 0 0 0 8 0.5 Z"
-  );
-`;
+const Path = styled.path``;
 
 export default Header;
 
