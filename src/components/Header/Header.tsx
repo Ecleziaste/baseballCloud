@@ -1,32 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import {
-  TRIANGLE_ARROW_ICON,
-  LOGO_0_ICON,
-  LOGO_1_ICON,
-  LOGO_2_ICON,
-  LOGO_3_ICON,
+  TRIANGLE_ARROW_SVG,
+  LOGO_0_SVG,
+  LOGO_1_SVG,
+  LOGO_2_SVG,
+  LOGO_3_SVG,
 } from "../../assets/svg/paths";
-// import { useSelector, shallowEqual } from "react-redux";
 
-const Header: React.FC<Props> = () => {
-  const user = true;
-
+const Header: React.FC<Props> = ({ user }) => {
   return (
     <Container>
       <LogoContainer>
-        <div>
-          <Span>
-            <Svg width="198" height="28" viewBox="0 0 198 28">
-              <G>
-                <Path fill="#6CB830" d={LOGO_0_ICON}></Path>
-                <Path fill="#788B99" d={LOGO_1_ICON}></Path>
-                <Path fill="#788B99" d={LOGO_2_ICON}></Path>
-                <Path fill="#6CB830" fill-rule="nonzero" d={LOGO_3_ICON}></Path>
-              </G>
-            </Svg>
-          </Span>
-        </div>
+        <Span>
+          <Svg width="198" height="28" viewBox="0 0 198 28">
+            <G>
+              <Path fill="#6CB830" d={LOGO_0_SVG}></Path>
+              <Path fill="#788B99" d={LOGO_1_SVG}></Path>
+              <Path fill="#788B99" d={LOGO_2_SVG}></Path>
+              <Path fill="#6CB830" fill-rule="nonzero" d={LOGO_3_SVG}></Path>
+            </G>
+          </Svg>
+        </Span>
       </LogoContainer>
       {user && (
         <UserMenu>
@@ -47,7 +42,7 @@ const Header: React.FC<Props> = () => {
                 <UserName>User Name</UserName>
                 <Span>
                   <Svg width="8" height="5" viewBox="0 0 8 5">
-                    <Path d={TRIANGLE_ARROW_ICON}></Path>
+                    <Path d={TRIANGLE_ARROW_SVG}></Path>
                   </Svg>
                 </Span>
               </ProfileButton>
@@ -60,19 +55,16 @@ const Header: React.FC<Props> = () => {
 };
 
 const Container = styled.div`
-  /* height: 45px; */
   padding: 8px;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 `;
 const LogoContainer = styled.a`
-  width: 198px;
-  height: 28px;
-  justify-content: space-evenly;
-  border: 1px solid tomato;
+  cursor: pointer;
 `;
 const UserMenu = styled.div`
   display: flex;
@@ -135,7 +127,9 @@ const ProfileButton = styled.button`
     background: #eee;
   }
 `;
-const UserName = styled.div``;
+const UserName = styled.div`
+  margin-right: 6px;
+`;
 const G = styled.g`
   fill: none;
   fill-rule: evenodd;
@@ -143,7 +137,6 @@ const G = styled.g`
 const Span = styled.span`
   display: flex;
   align-self: center;
-  margin-left: 6px;
 `;
 const Svg = styled.svg`
   fill: currentColor;
@@ -152,4 +145,4 @@ const Path = styled.path``;
 
 export default Header;
 
-type Props = {};
+type Props = { user: any };
