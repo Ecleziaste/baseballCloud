@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const ButtonMain: React.FC<Props> = ({ text }) => {
+const ButtonMain: React.FC<Props> = ({ text, handleClick }) => {
   return (
     <Container>
-      <Button type="submit" onClick={() => {}}>
+      <Button type="submit" onClick={handleClick}>
         {text}
       </Button>
     </Container>
@@ -18,6 +18,7 @@ const Button = styled.button`
   padding-top: 15px;
   padding-bottom: 17px;
   margin-bottom: 15px;
+  cursor: pointer;
   /* flex: 1 1 auto; */
   color: #ffffff;
   font-weight: 400;
@@ -31,4 +32,4 @@ const Button = styled.button`
 
 export default ButtonMain;
 
-type Props = { text: string };
+type Props = { text: string; handleClick: () => void };

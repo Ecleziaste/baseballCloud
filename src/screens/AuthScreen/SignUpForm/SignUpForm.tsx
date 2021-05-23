@@ -4,7 +4,7 @@ import ButtonMain from "../components/ButtonMain";
 import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
 
-const SignInForm: React.FC<Props> = () => {
+const SignUpForm: React.FC<Props> = () => {
   const onSubmit = (value: any) => {
     console.log("value", value);
   };
@@ -12,9 +12,16 @@ const SignInForm: React.FC<Props> = () => {
   return (
     <Container>
       <FormWrapper>
+        <div>
+          <div></div>
+          <div></div>
+        </div>
         <FormHeader>
-          <Title>Welcome to BaseballCloud!</Title>
-          <Text>Sign into your account here:</Text>
+          <Title>Players</Title>
+          <Text>
+            Players have their own profile within the system and plan on having
+            data collected.
+          </Text>
         </FormHeader>
 
         <Form
@@ -32,22 +39,36 @@ const SignInForm: React.FC<Props> = () => {
                 type="password"
                 component={InputField}
                 placeholder="Password"
+                secure
               />
+              <Field
+                name="confirm"
+                type="password"
+                component={InputField}
+                placeholder="Confirm Password"
+                secure
+              />
+              <FormText>
+                By clicking Sign Up, you agree to our
+                <span>
+                  <FormLink>&nbsp;Terms of Service</FormLink>
+                </span>
+                &nbsp;and
+                <span>
+                  <FormLink>&nbsp;Privacy Policy.</FormLink>
+                </span>
+              </FormText>
               <ButtonMain
-                text="Sign in"
+                text="Sign Up"
                 handleClick={handleSubmit}
               ></ButtonMain>
             </FormContainer>
           )}
         />
 
-        <Forgot>
-          <ForgotLink>Forgotten password?</ForgotLink>
-        </Forgot>
-
         <FormFooter>
-          <Question>Don’t have an account?</Question>
-          <SignUpLink href="#">Sign Up</SignUpLink>
+          <Question>Already registered?</Question>
+          <SignUpLink href="#">Sign In</SignUpLink>
         </FormFooter>
       </FormWrapper>
     </Container>
@@ -76,21 +97,24 @@ const FormWrapper = styled.div`
 const FormHeader = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 48px;
+  background: #48bbff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
 `;
 const Title = styled.div`
   font-size: 24px;
   line-height: 1.25;
   font-weight: 400;
   text-align: center;
-  color: #667784;
+  color: #fff;
   margin-bottom: 8px;
 `;
 const Text = styled.div`
   line-height: 1.25;
   font-weight: 400;
   text-align: center;
-  color: #667784;
+  color: #fff;
   font-size: 16px;
 `;
 const FormContainer = styled.div`
@@ -98,12 +122,15 @@ const FormContainer = styled.div`
   max-width: 100%;
   flex-flow: column nowrap;
 `;
-const Forgot = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 15px;
+const FormText = styled.div`
+  max-width: 100%;
+  /* display: block; */
+  margin-bottom: 8px;
+  margin-top: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
-const ForgotLink = styled.a`
+const FormLink = styled.a`
   cursor: pointer;
   background-color: transparent;
   color: #337ab7;
@@ -125,7 +152,6 @@ const SignUpLink = styled.a`
   cursor: pointer;
   margin-left: 4px;
 `;
-
-export default SignInForm;
+export default SignUpForm;
 
 type Props = {};

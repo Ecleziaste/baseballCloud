@@ -4,42 +4,38 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import styled from "styled-components";
 
-import "./App.css";
-
 const App = () => {
   const user = true;
 
   return (
-    <div>
+    <MainContent>
       <HeaderWrapper>
         <Header user={user}></Header>
       </HeaderWrapper>
-      {/* <MainContent> */}
       <AuthScreen></AuthScreen>
-      {/* </MainContent> */}
       <FooterWrapper>
         <Footer></Footer>
       </FooterWrapper>
-    </div>
+    </MainContent>
   );
 };
 
+const MainContent = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 100vh;
+  /* background: url("../src/assets/images/main.png") no-repeat top center cover; */
+`;
 const HeaderWrapper = styled.div`
   width: 100%;
-  position: fixed;
-  top: 0;
+  /* position: fixed;
+  top: 0; */
 `;
 const FooterWrapper = styled.div`
   width: 100%;
-  position: fixed;
-  bottom: 0;
-`;
-const MainContent = styled.div`
-  width: 100%;
-  display: flex;
-  /* flex: 1; */
-  justify-content: center;
-  align-items: center;
+  /* position: fixed;
+  bottom: 0; */
 `;
 
 export default App;

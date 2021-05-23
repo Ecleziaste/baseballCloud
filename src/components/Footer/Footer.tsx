@@ -37,6 +37,9 @@ const Link = styled.a`
   padding: 0 8px;
   color: #337ab7;
   text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export default Footer;

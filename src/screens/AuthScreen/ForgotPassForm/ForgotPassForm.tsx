@@ -4,7 +4,7 @@ import ButtonMain from "../components/ButtonMain";
 import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
 
-const SignInForm: React.FC<Props> = () => {
+const ForgotPassForm: React.FC<Props> = () => {
   const onSubmit = (value: any) => {
     console.log("value", value);
   };
@@ -13,8 +13,11 @@ const SignInForm: React.FC<Props> = () => {
     <Container>
       <FormWrapper>
         <FormHeader>
-          <Title>Welcome to BaseballCloud!</Title>
-          <Text>Sign into your account here:</Text>
+          <Title>Forgot Password</Title>
+          <Text>
+            Please enter your email address. You will receive a link to reset
+            your password via email.
+          </Text>
         </FormHeader>
 
         <Form
@@ -27,27 +30,14 @@ const SignInForm: React.FC<Props> = () => {
                 component={InputField}
                 placeholder="Email"
               />
-              <Field
-                name="password"
-                type="password"
-                component={InputField}
-                placeholder="Password"
-              />
-              <ButtonMain
-                text="Sign in"
-                handleClick={handleSubmit}
-              ></ButtonMain>
+              <ButtonMain text="Submit" handleClick={handleSubmit}></ButtonMain>
             </FormContainer>
           )}
         />
 
-        <Forgot>
-          <ForgotLink>Forgotten password?</ForgotLink>
-        </Forgot>
-
         <FormFooter>
-          <Question>Don’t have an account?</Question>
-          <SignUpLink href="#">Sign Up</SignUpLink>
+          <Question>Remembered password?</Question>
+          <SignUpLink href="#">Sign In</SignUpLink>
         </FormFooter>
       </FormWrapper>
     </Container>
@@ -98,17 +88,6 @@ const FormContainer = styled.div`
   max-width: 100%;
   flex-flow: column nowrap;
 `;
-const Forgot = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 15px;
-`;
-const ForgotLink = styled.a`
-  cursor: pointer;
-  background-color: transparent;
-  color: #337ab7;
-  text-decoration: none;
-`;
 const FormFooter = styled.div`
   display: flex;
   justify-content: center;
@@ -126,6 +105,6 @@ const SignUpLink = styled.a`
   margin-left: 4px;
 `;
 
-export default SignInForm;
+export default ForgotPassForm;
 
 type Props = {};

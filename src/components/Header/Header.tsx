@@ -55,13 +55,14 @@ const Header: React.FC<Props> = ({ user }) => {
 };
 
 const Container = styled.div`
-  padding: 8px;
+  background: #fff;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
+  padding: 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 const LogoContainer = styled.a`
   cursor: pointer;

@@ -1,33 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 import SignInForm from "./SignInForm";
+import ForgotPassForm from "./ForgotPassForm";
+import SignUpForm from "./SignUpForm";
+import MAIN_SRC from "../../assets/images/main.png";
 
 const SignInScreen: React.FC<Props> = () => {
   return (
     <Container>
-      <InnerContainer>
-        <SignInForm></SignInForm>
-      </InnerContainer>
+      <SignUpForm></SignUpForm>
     </Container>
   );
 };
 
 const Container = styled.div`
-  /* grid-area: content; */
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-self: center;
-  overflow: hidden;
-`;
-const InnerContainer = styled.div`
-  width: 100%;
+  max-width: 100%;
+  /* height: calc(100vh - 40px); */
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* overflow: hidden; */
-  overflow: auto;
   padding: 16px;
+  background-image: url(${MAIN_SRC});
+  /* background-color: #f84728; */
+  background-position: top center;
+  background-size: cover;
+
+  overflow: auto;
 `;
 
 export default SignInScreen;
