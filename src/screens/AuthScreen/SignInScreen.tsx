@@ -8,8 +8,8 @@ import MAIN_SRC from "../../assets/images/main.png";
 const SignInScreen: React.FC<Props> = () => {
   return (
     <Container>
-      <SignUpForm></SignUpForm>
-      {/* <SignInForm></SignInForm> */}
+      {/* <SignUpForm></SignUpForm> */}
+      <SignInForm></SignInForm>
       {/* <ForgotPassForm></ForgotPassForm> */}
     </Container>
   );

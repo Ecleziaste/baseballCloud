@@ -22,11 +22,12 @@ const InputField: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
 
 const Input = styled.input`
   display: flex;
-  max-width: 100%;
+  width: 100%;
+  flex: 1;
   justify-content: flex-start;
   flex-direction: row;
   height: 30px;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   padding: 6px 12px 10px 37px;
   border-radius: 4px;
   background-color: #eff1f3;

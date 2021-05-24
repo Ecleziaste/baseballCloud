@@ -64,26 +64,42 @@ const SignUpForm: React.FC<Props> = () => {
           onSubmit={onSubmit}
           render={({ handleSubmit }) => (
             <FormContainer>
-              <Field
-                name="email"
-                type="email"
-                component={InputField}
-                placeholder="Email"
-              />
-              <Field
-                name="password"
-                type="password"
-                component={InputField}
-                placeholder="Password"
-                secure
-              />
-              <Field
-                name="confirm"
-                type="password"
-                component={InputField}
-                placeholder="Confirm Password"
-                secure
-              />
+              <FieldContainer>
+                <FieldIcon>
+                  <Icon className="fas fa-check" aria-hidden="true"></Icon>
+                </FieldIcon>
+                <Field
+                  name="email"
+                  type="email"
+                  component={InputField}
+                  placeholder="Email"
+                />
+              </FieldContainer>
+              <FieldContainer>
+                <FieldIcon>
+                  <Icon className="fas fa-check" aria-hidden="true"></Icon>
+                </FieldIcon>
+                <Field
+                  name="password"
+                  type="password"
+                  component={InputField}
+                  placeholder="Password"
+                  secure
+                />
+              </FieldContainer>
+              <FieldContainer>
+                <FieldIcon>
+                  <Icon className="fas fa-check" aria-hidden="true"></Icon>
+                </FieldIcon>
+                <Field
+                  name="confirm"
+                  type="password"
+                  component={InputField}
+                  placeholder="Confirm Password"
+                  secure
+                />
+              </FieldContainer>
+
               <FormText>
                 By clicking Sign Up, you agree to our
                 <span>
@@ -112,6 +128,24 @@ const SignUpForm: React.FC<Props> = () => {
   );
 };
 
+const FieldContainer = styled.div`
+  display: flex;
+  position: relative;
+  max-width: 100%;
+  margin-bottom: 15px;
+`;
+const FieldIcon = styled.span`
+  display: flex;
+  position: absolute;
+  top: 10px;
+  left: 17px;
+  color: #667784;
+`;
+const Icon = styled.i`
+  &:before {
+    content: "\f007";
+  }
+`;
 const Container = styled.div`
   width: 450px;
   display: flex;

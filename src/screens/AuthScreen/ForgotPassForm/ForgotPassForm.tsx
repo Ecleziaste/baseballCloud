@@ -24,12 +24,18 @@ const ForgotPassForm: React.FC<Props> = () => {
           onSubmit={onSubmit}
           render={({ handleSubmit }) => (
             <FormContainer>
-              <Field
-                name="email"
-                type="email"
-                component={InputField}
-                placeholder="Email"
-              />
+              <FieldContainer>
+                <FieldIcon>
+                  <Icon className="fas fa-check" aria-hidden="true"></Icon>
+                </FieldIcon>
+                <Field
+                  name="email"
+                  type="email"
+                  component={InputField}
+                  placeholder="Email"
+                />
+              </FieldContainer>
+
               <ButtonMain text="Submit" handleClick={handleSubmit}></ButtonMain>
             </FormContainer>
           )}
@@ -51,6 +57,24 @@ const Container = styled.div`
   align-items: center;
   overflow: auto;
   padding: 16px;
+`;
+const FieldContainer = styled.div`
+  display: flex;
+  position: relative;
+  max-width: 100%;
+  margin-bottom: 15px;
+`;
+const FieldIcon = styled.span`
+  display: flex;
+  position: absolute;
+  top: 10px;
+  left: 17px;
+  color: #667784;
+`;
+const Icon = styled.i`
+  &:before {
+    content: "\f007";
+  }
 `;
 const FormWrapper = styled.div`
   background: hsla(0, 0%, 100%, 0.8);

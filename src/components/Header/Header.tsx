@@ -98,10 +98,7 @@ const Link = styled.a`
       bottom: -16px;
     }
   }
-
-  /* position: relative; */
 `;
-
 const UserWrapper = styled.div``;
 const User = styled.div`
   padding-left: 8px;
