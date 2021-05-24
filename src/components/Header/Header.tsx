@@ -85,8 +85,23 @@ const Link = styled.a`
   color: #788b99;
   cursor: pointer;
   text-decoration: none;
+  position: relative;
+
+  &:hover {
+    &:after {
+      border-bottom: 4px solid #cbcccd;
+      content: "";
+      display: block;
+      left: 0;
+      right: 0;
+      position: absolute;
+      bottom: -16px;
+    }
+  }
+
   /* position: relative; */
 `;
+
 const UserWrapper = styled.div``;
 const User = styled.div`
   padding-left: 8px;
