@@ -102,7 +102,7 @@ const ProfileLink = styled.a`
   cursor: pointer;
 `;
 const Avatar = styled.div`
-  background-image: url("https://baseballcloud-staging-assets.s3.amazonaws.com/profile/469/size_100_100_ac9db14b-205c-42aa-b0f1-0a3dad86f414.png");
+  background-image: url("https://baseballcloud-staging-assets.s3.amazonaws.com/profile/469/size_100_100_be233dcd-3b5c-4e8c-affe-6cfdf10dec37.png");
   width: 32px;
   height: 32px;
   background-size: cover;

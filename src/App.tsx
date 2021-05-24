@@ -25,7 +25,6 @@ const MainContent = styled.div`
   flex-flow: column nowrap;
   justify-content: space-between;
   height: 100vh;
-  /* background: url("../src/assets/images/main.png") no-repeat top center cover; */
 `;
 const HeaderWrapper = styled.div`
   width: 100%;
@@ -34,8 +33,6 @@ const HeaderWrapper = styled.div`
 `;
 const FooterWrapper = styled.div`
   width: 100%;
-  /* position: fixed;
-  bottom: 0; */
 `;
 
 export default App;

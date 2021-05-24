@@ -9,6 +9,8 @@ const SignInScreen: React.FC<Props> = () => {
   return (
     <Container>
       <SignUpForm></SignUpForm>
+      {/* <SignInForm></SignInForm> */}
+      {/* <ForgotPassForm></ForgotPassForm> */}
     </Container>
   );
 };

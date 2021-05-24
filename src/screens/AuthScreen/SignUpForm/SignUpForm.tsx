@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ButtonMain from "../components/ButtonMain";
 import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
+import { CHECK_SVG } from "../../../assets/svg/paths";
 
 const SignUpForm: React.FC<Props> = () => {
+  const [btnPress, setBtnPress] = useState(false);
+  const [title, setTitle] = useState("Players");
+  const [text, setText] = useState(
+    " Players have their own profile within the system and plan on having data collected."
+  );
+  const handleLeftBtnClick = () => {
+    setBtnPress(true);
+    setTitle("Players");
+    setText(
+      " Players have their own profile within the system and plan on having data collected."
+    );
+  };
+  const handleRightBtnClick = () => {
+    setBtnPress(false);
+    setTitle("Scouts");
+    setText(
+      "Coaches and scouts can view players in the system but do not have their own profile."
+    );
+  };
+
   const onSubmit = (value: any) => {
     console.log("value", value);
   };
@@ -12,16 +33,31 @@ const SignUpForm: React.FC<Props> = () => {
   return (
     <Container>
       <FormWrapper>
-        <div>
-          <div></div>
-          <div></div>
-        </div>
+        <BtnsWrapper>
+          <BtnLeft isActive={btnPress} onClick={handleLeftBtnClick}>
+            <BtnIcon>
+              {btnPress && (
+                <Svg width="14" height="15" viewBox="0 0 14 15">
+                  <Path fill="#FFF" d={CHECK_SVG}></Path>
+                </Svg>
+              )}
+            </BtnIcon>
+            Sign Up as Player
+          </BtnLeft>
+          <BtnRight isActive={!btnPress} onClick={handleRightBtnClick}>
+            <BtnIcon>
+              {!btnPress && (
+                <Svg width="14" height="15" viewBox="0 0 14 15">
+                  <Path fill="#FFF" d={CHECK_SVG}></Path>
+                </Svg>
+              )}
+            </BtnIcon>
+            &nbsp;Sign Up as Scout
+          </BtnRight>
+        </BtnsWrapper>
         <FormHeader>
-          <Title>Players</Title>
-          <Text>
-            Players have their own profile within the system and plan on having
-            data collected.
-          </Text>
+          <Title>{title}</Title>
+          <Text>{text}</Text>
         </FormHeader>
 
         <Form
@@ -53,10 +89,11 @@ const SignUpForm: React.FC<Props> = () => {
                 <span>
                   <FormLink>&nbsp;Terms of Service</FormLink>
                 </span>
-                &nbsp;and
+                &nbsp;and&nbsp;
                 <span>
-                  <FormLink>&nbsp;Privacy Policy.</FormLink>
+                  <FormLink>Privacy Policy</FormLink>
                 </span>
+                .
               </FormText>
               <ButtonMain
                 text="Sign Up"
@@ -83,6 +120,44 @@ const Container = styled.div`
   overflow: auto;
   padding: 16px;
 `;
+const BtnsWrapper = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+`;
+const BtnLeft = styled.button<{ isActive: boolean }>`
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  justify-content: center;
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 15px 5px 17px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.13;
+  border: solid 1px #35c32a;
+  background-color: ${(props) => (props.isActive ? "#35c32a" : "#fff")};
+  color: ${(props) => (props.isActive ? "#fff" : "#35c32a")};
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  &:hover {
+    background-color: #35c32a;
+    color: #fff;
+  }
+`;
+const BtnRight = styled(BtnLeft)<{ isActive: boolean }>`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+`;
+const BtnIcon = styled.span`
+  margin-right: 6px;
+`;
+const Svg = styled.svg`
+  fill: currentColor;
+`;
+const Path = styled.path``;
 const FormWrapper = styled.div`
   background: hsla(0, 0%, 100%, 0.8);
   padding: 16px;
@@ -103,19 +178,19 @@ const FormHeader = styled.div`
   margin-bottom: 16px;
 `;
 const Title = styled.div`
-  font-size: 24px;
-  line-height: 1.25;
-  font-weight: 400;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 0.78;
   text-align: center;
   color: #fff;
-  margin-bottom: 8px;
+  margin-bottom: 21px;
 `;
 const Text = styled.div`
   line-height: 1.25;
   font-weight: 400;
   text-align: center;
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
 `;
 const FormContainer = styled.div`
   display: flex;
@@ -123,18 +198,22 @@ const FormContainer = styled.div`
   flex-flow: column nowrap;
 `;
 const FormText = styled.div`
-  max-width: 100%;
-  /* display: block; */
+  width: 100%;
+  font-size: 16px;
   margin-bottom: 8px;
   margin-top: 8px;
   padding-left: 10px;
   padding-right: 10px;
 `;
 const FormLink = styled.a`
+  display: inline-block;
   cursor: pointer;
   background-color: transparent;
   color: #337ab7;
   text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 const FormFooter = styled.div`
   display: flex;
