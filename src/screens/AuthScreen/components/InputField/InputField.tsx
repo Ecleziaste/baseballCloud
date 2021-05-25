@@ -12,9 +12,9 @@ const InputField: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
   return (
     <Input
       // onEndEditing={() => input.onChange("")}
-      value={value}
-      placeholder={placeholder}
       {...input}
+      value={value || undefined}
+      placeholder={placeholder}
       secureTextEntry={secure}
     />
   );
@@ -22,8 +22,7 @@ const InputField: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
 
 const Input = styled.input`
   display: flex;
-  width: 100%;
-  flex: 1;
+  max-width: 100%;
   justify-content: flex-start;
   flex-direction: row;
   height: 30px;

@@ -23,7 +23,10 @@ const SignInForm: React.FC<Props> = () => {
             <FormContainer>
               <FieldContainer>
                 <FieldIcon>
-                  <Icon className="fas fa-check" aria-hidden="true"></Icon>
+                  <UserIcon
+                    className="fa fa-user"
+                    aria-hidden="true"
+                  ></UserIcon>
                 </FieldIcon>
                 <Field
                   name="email"
@@ -34,16 +37,22 @@ const SignInForm: React.FC<Props> = () => {
               </FieldContainer>
               <FieldContainer>
                 <FieldIcon>
-                  <Icon className="fas fa-check" aria-hidden="true"></Icon>
+                  <LockIcon
+                    className="fa fa-lock"
+                    aria-hidden="true"
+                  ></LockIcon>
                 </FieldIcon>
                 <Field
                   name="password"
                   type="password"
                   component={InputField}
                   placeholder="Password"
+                  secure
                 />
               </FieldContainer>
-
+              <ValidationText>
+                Invalid login credentials. Please try again.
+              </ValidationText>
               <ButtonMain
                 text="Sign in"
                 handleClick={handleSubmit}
@@ -75,23 +84,36 @@ const Container = styled.div`
 `;
 const FieldContainer = styled.div`
   display: flex;
+  flex-direction: column;
   position: relative;
-  max-width: 100%;
+  width: 100%;
   margin-bottom: 15px;
+`;
+const ValidationText = styled.div`
+  display: flex;
+  color: #f05f62;
+  margin-bottom: 2px;
 `;
 const FieldIcon = styled.span`
   display: flex;
   position: absolute;
-  top: 10px;
+  top: 13px;
   left: 17px;
   color: #667784;
 `;
-const Icon = styled.i`
+const UserIcon = styled.i`
   &:before {
     content: "\f007";
   }
 `;
+const LockIcon = styled.i`
+  &:before {
+    content: "\f023";
+  }
+`;
 const FormWrapper = styled.div`
+  width: 100%;
+  max-width: 450px;
   background: hsla(0, 0%, 100%, 0.8);
   padding: 16px;
   display: flex;
@@ -99,8 +121,6 @@ const FormWrapper = styled.div`
   border-radius: 8px;
   box-shadow: 0 0 20px rgb(0 0 0 / 40%);
   backdrop-filter: blur(5px);
-  width: 100%;
-  max-width: 450px;
 `;
 const FormHeader = styled.div`
   display: flex;

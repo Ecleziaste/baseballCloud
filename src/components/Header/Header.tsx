@@ -120,6 +120,8 @@ const Avatar = styled.div`
   background-size: cover;
   background-position: 50% 50%;
   border-radius: 50%;
+
+  border: 1px solid tomato;
 `;
 const ProfileButton = styled.button`
   display: flex;

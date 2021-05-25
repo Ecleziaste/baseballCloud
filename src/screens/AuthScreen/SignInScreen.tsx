@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import SignUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
 import ForgotPassForm from "./ForgotPassForm";
-import SignUpForm from "./SignUpForm";
 import MAIN_SRC from "../../assets/images/main.png";
 
 const SignInScreen: React.FC<Props> = () => {
   return (
     <Container>
-      {/* <SignUpForm></SignUpForm> */}
+      <SignUpForm></SignUpForm>
       <SignInForm></SignInForm>
-      {/* <ForgotPassForm></ForgotPassForm> */}
+      <ForgotPassForm></ForgotPassForm>
     </Container>
   );
 };

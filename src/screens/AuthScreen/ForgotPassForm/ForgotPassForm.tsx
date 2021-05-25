@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ButtonMain from "../components/ButtonMain";
 import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
 
 const ForgotPassForm: React.FC<Props> = () => {
-  const onSubmit = (value: any) => {
+  const [emailError, emailErrorSet] = useState<null | boolean>(null);
+  // const required = (value: string) => (value ? undefined : "Required");
+
+  const onSubmit = (value: Values) => {
+    // const emailValue = value.email || undefined;
+    // if (emailValue === undefined || null) {
+    //   emailErrorSet(true);
+    // }
     console.log("value", value);
   };
 
@@ -19,27 +26,46 @@ const ForgotPassForm: React.FC<Props> = () => {
             your password via email.
           </Text>
         </FormHeader>
+        <FormContainer>
+          <Form
+            onSubmit={onSubmit}
+            validate={(values) => {
+              const errors = {} as Errors;
+              if (!values.email) {
+                // emailErrorSet(true);
+                errors.email = "Required";
+              }
+              return errors;
+            }}
+            render={({ handleSubmit }) => (
+              <FormContainer>
+                <FieldContainer>
+                  <FieldIcon>
+                    <UserIcon
+                      className="fa fa-user"
+                      aria-hidden="true"
+                    ></UserIcon>
+                  </FieldIcon>
+                  <Field
+                    // validate={undefined}
+                    value={"undefined"}
+                    name="email"
+                    type="email"
+                    component={InputField}
+                    placeholder="Email"
+                  />
+                  {emailError && <ValidationText>Required</ValidationText>}
+                  {/* <ValidationText>Required</ValidationText> */}
+                </FieldContainer>
 
-        <Form
-          onSubmit={onSubmit}
-          render={({ handleSubmit }) => (
-            <FormContainer>
-              <FieldContainer>
-                <FieldIcon>
-                  <Icon className="fas fa-check" aria-hidden="true"></Icon>
-                </FieldIcon>
-                <Field
-                  name="email"
-                  type="email"
-                  component={InputField}
-                  placeholder="Email"
-                />
-              </FieldContainer>
-
-              <ButtonMain text="Submit" handleClick={handleSubmit}></ButtonMain>
-            </FormContainer>
-          )}
-        />
+                <ButtonMain
+                  text="Submit"
+                  handleClick={handleSubmit}
+                ></ButtonMain>
+              </FormContainer>
+            )}
+          />
+        </FormContainer>
 
         <FormFooter>
           <Question>Remembered password?</Question>
@@ -60,22 +86,30 @@ const Container = styled.div`
 `;
 const FieldContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  flex-flow: column nowrap;
   position: relative;
   max-width: 100%;
   margin-bottom: 15px;
 `;
+const ValidationText = styled.div`
+  display: flex;
+  margin-top: 8px;
+  color: #f05f62;
+`;
 const FieldIcon = styled.span`
   display: flex;
   position: absolute;
-  top: 10px;
+  top: 13px;
   left: 17px;
   color: #667784;
 `;
-const Icon = styled.i`
+const UserIcon = styled.i`
   &:before {
     content: "\f007";
   }
 `;
+
 const FormWrapper = styled.div`
   background: hsla(0, 0%, 100%, 0.8);
   padding: 16px;
@@ -132,3 +166,5 @@ const SignUpLink = styled.a`
 export default ForgotPassForm;
 
 type Props = {};
+type Errors = { email: string };
+type Values = { email: string | undefined };

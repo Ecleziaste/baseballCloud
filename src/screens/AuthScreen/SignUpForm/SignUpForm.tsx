@@ -66,7 +66,10 @@ const SignUpForm: React.FC<Props> = () => {
             <FormContainer>
               <FieldContainer>
                 <FieldIcon>
-                  <Icon className="fas fa-check" aria-hidden="true"></Icon>
+                  <UserIcon
+                    className="fa fa-user"
+                    aria-hidden="true"
+                  ></UserIcon>
                 </FieldIcon>
                 <Field
                   name="email"
@@ -74,10 +77,11 @@ const SignUpForm: React.FC<Props> = () => {
                   component={InputField}
                   placeholder="Email"
                 />
+                <ValidationText>Required</ValidationText>
               </FieldContainer>
               <FieldContainer>
                 <FieldIcon>
-                  <Icon className="fas fa-check" aria-hidden="true"></Icon>
+                  <LockIcon className="fa fa-lock"></LockIcon>
                 </FieldIcon>
                 <Field
                   name="password"
@@ -86,10 +90,14 @@ const SignUpForm: React.FC<Props> = () => {
                   placeholder="Password"
                   secure
                 />
+                <ValidationText>Required</ValidationText>
               </FieldContainer>
               <FieldContainer>
                 <FieldIcon>
-                  <Icon className="fas fa-check" aria-hidden="true"></Icon>
+                  <CheckIcon
+                    className="fa fa-check"
+                    aria-hidden="true"
+                  ></CheckIcon>
                 </FieldIcon>
                 <Field
                   name="confirm"
@@ -130,20 +138,38 @@ const SignUpForm: React.FC<Props> = () => {
 
 const FieldContainer = styled.div`
   display: flex;
+  flex-direction: column;
   position: relative;
+  /* height: 50px; */
   max-width: 100%;
   margin-bottom: 15px;
+`;
+const ValidationText = styled.div`
+  display: flex;
+  margin-top: 8px;
+  color: #f05f62;
 `;
 const FieldIcon = styled.span`
   display: flex;
   position: absolute;
-  top: 10px;
+  top: 13px;
   left: 17px;
+  align-items: baseline;
   color: #667784;
 `;
-const Icon = styled.i`
+const UserIcon = styled.i`
   &:before {
     content: "\f007";
+  }
+`;
+const LockIcon = styled.i`
+  &:before {
+    content: "\f023";
+  }
+`;
+const CheckIcon = styled.i`
+  &:before {
+    content: "\f00c";
   }
 `;
 const Container = styled.div`
