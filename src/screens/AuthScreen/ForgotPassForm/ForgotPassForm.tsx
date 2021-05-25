@@ -6,13 +6,11 @@ import { Form, Field } from "react-final-form";
 
 const ForgotPassForm: React.FC<Props> = () => {
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
-  // const required = (value: string) => (value ? undefined : "Required");
 
   const onSubmit = (value: Values) => {
-    // const emailValue = value.email || undefined;
-    // if (emailValue === undefined || null) {
-    //   emailErrorSet(true);
-    // }
+    if (!value.email) {
+      emailErrorSet(true);
+    } else emailErrorSet(null);
     console.log("value", value);
   };
 
@@ -29,14 +27,14 @@ const ForgotPassForm: React.FC<Props> = () => {
         <FormContainer>
           <Form
             onSubmit={onSubmit}
-            validate={(values) => {
-              const errors = {} as Errors;
-              if (!values.email) {
-                // emailErrorSet(true);
-                errors.email = "Required";
-              }
-              return errors;
-            }}
+            // validate={(values) => {
+            //   const errors = {} as Errors;
+            //   if (!values.email) {
+            //     // emailErrorSet(true);
+            //     errors.email = "Required";
+            //   }
+            //   return errors;
+            // }}
             render={({ handleSubmit }) => (
               <FormContainer>
                 <FieldContainer>
@@ -55,7 +53,6 @@ const ForgotPassForm: React.FC<Props> = () => {
                     placeholder="Email"
                   />
                   {emailError && <ValidationText>Required</ValidationText>}
-                  {/* <ValidationText>Required</ValidationText> */}
                 </FieldContainer>
 
                 <ButtonMain
@@ -167,4 +164,4 @@ export default ForgotPassForm;
 
 type Props = {};
 type Errors = { email: string };
-type Values = { email: string | undefined };
+type Values = { email: string | {} };

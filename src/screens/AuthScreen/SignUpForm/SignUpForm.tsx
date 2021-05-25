@@ -26,7 +26,21 @@ const SignUpForm: React.FC<Props> = () => {
     );
   };
 
+  const [emailError, emailErrorSet] = useState<null | boolean>(null);
+  const [pswdError, pswdErrorSet] = useState<null | boolean>(null);
+  const [confError, confErrorSet] = useState<null | boolean>(null);
+
   const onSubmit = (value: any) => {
+    if (!value.email) {
+      emailErrorSet(true);
+    } else emailErrorSet(null);
+    if (!value.password) {
+      pswdErrorSet(true);
+    } else pswdErrorSet(null);
+    if (value.password && value.password !== value.confirm) {
+      confErrorSet(true);
+    } else confErrorSet(null);
+
     console.log("value", value);
   };
 
@@ -77,7 +91,7 @@ const SignUpForm: React.FC<Props> = () => {
                   component={InputField}
                   placeholder="Email"
                 />
-                <ValidationText>Required</ValidationText>
+                {emailError && <ValidationText>Required</ValidationText>}
               </FieldContainer>
               <FieldContainer>
                 <FieldIcon>
@@ -90,7 +104,7 @@ const SignUpForm: React.FC<Props> = () => {
                   placeholder="Password"
                   secure
                 />
-                <ValidationText>Required</ValidationText>
+                {pswdError && <ValidationText>Required</ValidationText>}
               </FieldContainer>
               <FieldContainer>
                 <FieldIcon>
@@ -106,6 +120,9 @@ const SignUpForm: React.FC<Props> = () => {
                   placeholder="Confirm Password"
                   secure
                 />
+                {confError && (
+                  <ValidationText>Passwords are not equal</ValidationText>
+                )}
               </FieldContainer>
 
               <FormText>

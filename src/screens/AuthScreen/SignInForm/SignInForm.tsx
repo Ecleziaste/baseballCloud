@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ButtonMain from "../components/ButtonMain";
 import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
 
 const SignInForm: React.FC<Props> = () => {
+  const [emailError, emailErrorSet] = useState<null | boolean>(null);
+  const [pswdError, pswdErrorSet] = useState<null | boolean>(null);
+
   const onSubmit = (value: any) => {
+    if (!value.email || !value.password || value.password !== "12") {
+      emailErrorSet(true);
+    } else emailErrorSet(null);
     console.log("value", value);
   };
 
@@ -50,9 +56,11 @@ const SignInForm: React.FC<Props> = () => {
                   secure
                 />
               </FieldContainer>
-              <ValidationText>
-                Invalid login credentials. Please try again.
-              </ValidationText>
+              {emailError && (
+                <ValidationText>
+                  Invalid login credentials. Please try again.
+                </ValidationText>
+              )}
               <ButtonMain
                 text="Sign in"
                 handleClick={handleSubmit}
