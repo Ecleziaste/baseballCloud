@@ -4,6 +4,7 @@ import ButtonMain from "../components/ButtonMain";
 import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
 import { CHECK_SVG } from "../../../assets/svg/paths";
+import { Link } from "react-router-dom";
 
 const SignUpForm: React.FC<Props> = () => {
   const [btnPress, setBtnPress] = useState(false);
@@ -146,7 +147,7 @@ const SignUpForm: React.FC<Props> = () => {
 
         <FormFooter>
           <Question>Already registered?</Question>
-          <SignUpLink href="#">Sign In</SignUpLink>
+          <SignUpLink to="login">Sign In</SignUpLink>
         </FormFooter>
       </FormWrapper>
     </Container>
@@ -300,7 +301,7 @@ const Question = styled.div`
   font-size: 16px;
   color: #667784;
 `;
-const SignUpLink = styled.a`
+const SignUpLink = styled(Link)`
   color: #48bbff;
   font-size: 16px;
   line-height: 1.13;

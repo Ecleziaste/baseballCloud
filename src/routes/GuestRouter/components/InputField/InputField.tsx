@@ -25,7 +25,7 @@ const Input = styled.input`
   max-width: 100%;
   justify-content: flex-start;
   flex-direction: row;
-  height: 30px;
+  height: 32px;
   /* margin-bottom: 15px; */
   padding: 6px 12px 10px 37px;
   border-radius: 4px;

@@ -1,17 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import SignUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
+import SignUpForm from "./SignUpForm";
 import ForgotPassForm from "./ForgotPassForm";
 import MAIN_SRC from "../../assets/images/main.png";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 const GuestRouter: React.FC<Props> = () => {
   return (
     <Container>
-      <SignUpForm></SignUpForm>
-      <SignInForm></SignInForm>
-      <ForgotPassForm></ForgotPassForm>
+      <Redirect to="/login" />
+      <Switch>
+        <Route component={SignInForm} exact path="/login" />
+        <Route component={SignUpForm} path="/registration" />
+        <Route component={ForgotPassForm} path="/forgotpassword" />
+      </Switch>
     </Container>
   );
 };
@@ -27,7 +30,7 @@ const Container = styled.div`
   background-image: url(${MAIN_SRC});
   background-position: top center;
   background-size: cover;
-  overflow: auto;
+  overflow: hidden;
 `;
 
 export default GuestRouter;

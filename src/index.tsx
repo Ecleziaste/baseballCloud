@@ -7,13 +7,15 @@ import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
-// import "font-awesome/css/font-awesome.min.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </PersistGate>
     </Provider>
   </React.StrictMode>,

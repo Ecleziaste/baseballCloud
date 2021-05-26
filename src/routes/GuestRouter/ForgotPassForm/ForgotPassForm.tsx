@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ButtonMain from "../components/ButtonMain";
 import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
+import { Link } from "react-router-dom";
 
 const ForgotPassForm: React.FC<Props> = () => {
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
@@ -66,7 +67,7 @@ const ForgotPassForm: React.FC<Props> = () => {
 
         <FormFooter>
           <Question>Remembered password?</Question>
-          <SignUpLink href="#">Sign In</SignUpLink>
+          <SignUpLink to="login">Sign In</SignUpLink>
         </FormFooter>
       </FormWrapper>
     </Container>
@@ -106,7 +107,6 @@ const UserIcon = styled.i`
     content: "\f007";
   }
 `;
-
 const FormWrapper = styled.div`
   background: hsla(0, 0%, 100%, 0.8);
   padding: 16px;
@@ -151,7 +151,7 @@ const Question = styled.div`
   font-size: 16px;
   color: #667784;
 `;
-const SignUpLink = styled.a`
+const SignUpLink = styled(Link)`
   color: #48bbff;
   font-size: 16px;
   line-height: 1.13;

@@ -2,17 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import GuestRouter from "../GuestRouter";
 import UserRouter from "../UserRouter";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 const AppRouter: React.FC<Props> = ({ user }) => {
   return (
     <Container>
-      {user ? <UserRouter></UserRouter> : <GuestRouter></GuestRouter>}
+      <Route path="/">{user ? <UserRouter /> : <GuestRouter />}</Route>
     </Container>
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  /* flex: 1; */
+  height: 100%;
+  overflow: hidden;
+`;
 
 export default AppRouter;
 

@@ -3,7 +3,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import styled from "styled-components";
 import AppRouter from "./routes/AppRouter";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const App = () => {
   const user = null;
@@ -13,7 +12,9 @@ const App = () => {
       <HeaderWrapper>
         <Header user={user}></Header>
       </HeaderWrapper>
+
       <AppRouter user={user}></AppRouter>
+
       <FooterWrapper>
         <Footer></Footer>
       </FooterWrapper>
@@ -29,11 +30,11 @@ const MainContent = styled.div`
 `;
 const HeaderWrapper = styled.div`
   width: 100%;
-  /* position: fixed;
-  top: 0; */
 `;
 const FooterWrapper = styled.div`
   width: 100%;
+  /* position: fixed;
+  bottom: 0; */
 `;
 
 export default App;

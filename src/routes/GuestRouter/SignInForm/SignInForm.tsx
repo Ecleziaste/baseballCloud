@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ButtonMain from "../components/ButtonMain";
 import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
+import { Link } from "react-router-dom";
 
 const SignInForm: React.FC<Props> = () => {
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
@@ -70,12 +71,12 @@ const SignInForm: React.FC<Props> = () => {
         />
 
         <Forgot>
-          <ForgotLink>Forgotten password?</ForgotLink>
+          <ForgotLink to="forgotpassword">Forgotten password?</ForgotLink>
         </Forgot>
 
         <FormFooter>
           <Question>Don’t have an account?</Question>
-          <SignUpLink href="#">Sign Up</SignUpLink>
+          <SignUpLink to="registration">Sign Up</SignUpLink>
         </FormFooter>
       </FormWrapper>
     </Container>
@@ -160,11 +161,15 @@ const Forgot = styled.div`
   justify-content: flex-end;
   margin-bottom: 15px;
 `;
-const ForgotLink = styled.a`
+const ForgotLink = styled(Link)`
   cursor: pointer;
   background-color: transparent;
   color: #337ab7;
   text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    color: #204b70;
+  }
 `;
 const FormFooter = styled.div`
   display: flex;
@@ -174,7 +179,7 @@ const Question = styled.div`
   font-size: 16px;
   color: #667784;
 `;
-const SignUpLink = styled.a`
+const SignUpLink = styled(Link)`
   color: #48bbff;
   font-size: 16px;
   line-height: 1.13;

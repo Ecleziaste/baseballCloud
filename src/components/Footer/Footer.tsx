@@ -20,13 +20,14 @@ const Footer: React.FC<Props> = () => {
 };
 
 const Container = styled.div`
-  background: #fff;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
+  flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
   padding: 10px 16px;
   font-size: 14px;
+  background: #fff;
 `;
 const Legal = styled.div``;
 const SocialMedia = styled.div``;

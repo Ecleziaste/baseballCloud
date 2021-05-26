@@ -55,14 +55,13 @@ const Header: React.FC<Props> = ({ user }) => {
 };
 
 const Container = styled.div`
-  background: #fff;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
   padding: 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  /* FIXME: краница отображается выше фактич гранциы блока */
+  background: #fff;
   /* overflow: hidden; */
 `;
 const LogoContainer = styled.a`
