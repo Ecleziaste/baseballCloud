@@ -1,18 +1,19 @@
 import React from "react";
-import AuthScreen from "./screens/AuthScreen";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import styled from "styled-components";
+import AppRouter from "./routes/AppRouter";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const App = () => {
-  const user = true;
+  const user = null;
 
   return (
     <MainContent>
       <HeaderWrapper>
         <Header user={user}></Header>
       </HeaderWrapper>
-      <AuthScreen></AuthScreen>
+      <AppRouter user={user}></AppRouter>
       <FooterWrapper>
         <Footer></Footer>
       </FooterWrapper>

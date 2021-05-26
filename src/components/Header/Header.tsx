@@ -62,6 +62,7 @@ const Container = styled.div`
   align-items: center;
   padding: 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  /* FIXME: краница отображается выше фактич гранциы блока */
   /* overflow: hidden; */
 `;
 const LogoContainer = styled.a`
