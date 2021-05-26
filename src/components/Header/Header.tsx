@@ -7,6 +7,7 @@ import {
   LOGO_2_SVG,
   LOGO_3_SVG,
 } from "../../assets/svg/paths";
+import { Link } from "react-router-dom";
 
 const Header: React.FC<Props> = ({ user }) => {
   return (
@@ -27,14 +28,14 @@ const Header: React.FC<Props> = ({ user }) => {
         <UserMenu>
           <NavBar>
             <Nav>
-              <Link href="#">Leaderboard</Link>
-              <Link href="#">Network</Link>
+              <NavLink to="leaderboard">Leaderboard</NavLink>
+              <NavLink to="network">Network</NavLink>
             </Nav>
           </NavBar>
           <UserWrapper>
             <User>
               <AvatarWrapper>
-                <ProfileLink href="#">
+                <ProfileLink to="profile">
                   <Avatar></Avatar>
                 </ProfileLink>
               </AvatarWrapper>
@@ -46,6 +47,12 @@ const Header: React.FC<Props> = ({ user }) => {
                   </Svg>
                 </Span>
               </ProfileButton>
+              <DropdownMenu>
+                <ProfileScreenLink to="profile">My Profile</ProfileScreenLink>
+                <ExitLink onClick={() => {}} to="#">
+                  Log Out
+                </ExitLink>
+              </DropdownMenu>
             </User>
           </UserWrapper>
         </UserMenu>
@@ -54,6 +61,51 @@ const Header: React.FC<Props> = ({ user }) => {
   );
 };
 
+const DropdownMenu = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  width: 178px;
+  position: absolute;
+  top: 100%;
+  right: -5px;
+  margin-top: 12px;
+  padding: 8px 0;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 3px 8px 0 rgb(0 0 0 / 15%);
+  border: solid 1px #ebebeb;
+  z-index: 100;
+
+  &:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: -8px;
+    right: 25px;
+    z-index: 100;
+    border-style: solid;
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent #fff transparent;
+    /* border: 1px solid red; */
+  }
+`;
+const ProfileScreenLink = styled(Link)`
+  display: block;
+  padding: 8px 16px;
+  background: #fff;
+  line-height: 1;
+  font-size: 16px;
+  line-height: 1.13;
+  font-weight: 400;
+  color: #788b99;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    background: #ecf8ff;
+  }
+`;
+const ExitLink = styled(ProfileScreenLink)``;
 const Container = styled.div`
   display: flex;
   flex-flow: row wrap;
@@ -80,13 +132,12 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
 `;
-const Link = styled.a`
+const NavLink = styled(Link)`
   padding: 0 8px;
   color: #788b99;
   cursor: pointer;
   text-decoration: none;
   position: relative;
-
   &:hover {
     &:after {
       border-bottom: 4px solid #cbcccd;
@@ -104,13 +155,14 @@ const User = styled.div`
   padding-left: 8px;
   display: flex;
   flex-flow: row wrap;
+  position: relative;
 `;
 const AvatarWrapper = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 50%;
 `;
-const ProfileLink = styled.a`
+const ProfileLink = styled(Link)`
   cursor: pointer;
 `;
 const Avatar = styled.div`

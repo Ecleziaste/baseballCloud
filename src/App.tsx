@@ -5,7 +5,7 @@ import styled from "styled-components";
 import AppRouter from "./routes/AppRouter";
 
 const App = () => {
-  const user = null;
+  const user = true;
 
   return (
     <MainContent>
