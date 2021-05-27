@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import {
   TRIANGLE_ARROW_SVG,
@@ -10,9 +10,27 @@ import {
 import { Link } from "react-router-dom";
 
 const Header: React.FC<Props> = ({ user }) => {
+  const [menu, setMenu] = useState(false);
+  const menuEl = useRef<HTMLDivElement>(null);
+  const toggleMenu = (value: boolean) => {
+    setMenu(value);
+  };
+
+  const handleClickOutside = (event: Event) => {
+    if (menuEl.current && !menuEl.current.contains(event.target as Node)) {
+      toggleMenu(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  });
+  
   return (
     <Container>
-      <LogoContainer>
+      <LogoContainer to="profile">
         <Span>
           <Svg width="198" height="28" viewBox="0 0 198 28">
             <G>
@@ -39,7 +57,7 @@ const Header: React.FC<Props> = ({ user }) => {
                   <Avatar></Avatar>
                 </ProfileLink>
               </AvatarWrapper>
-              <ProfileButton>
+              <ProfileButton onClick={() => toggleMenu(!menu)}>
                 <UserName>User Name</UserName>
                 <Span>
                   <Svg width="8" height="5" viewBox="0 0 8 5">
@@ -47,12 +65,14 @@ const Header: React.FC<Props> = ({ user }) => {
                   </Svg>
                 </Span>
               </ProfileButton>
-              <DropdownMenu>
-                <ProfileScreenLink to="profile">My Profile</ProfileScreenLink>
-                <ExitLink onClick={() => {}} to="#">
-                  Log Out
-                </ExitLink>
-              </DropdownMenu>
+              {menu && (
+                <DropdownMenu ref={menuEl}>
+                  <ProfileScreenLink to="profile">My Profile</ProfileScreenLink>
+                  <ExitLink onClick={() => {}} to="#">
+                    Log Out
+                  </ExitLink>
+                </DropdownMenu>
+              )}
             </User>
           </UserWrapper>
         </UserMenu>
@@ -116,7 +136,7 @@ const Container = styled.div`
   background: #fff;
   /* overflow: hidden; */
 `;
-const LogoContainer = styled.a`
+const LogoContainer = styled(Link)`
   cursor: pointer;
 `;
 const UserMenu = styled.div`
