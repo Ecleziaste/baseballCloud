@@ -7,7 +7,9 @@ import EditProfile from "./components/EditProfile";
 
 const Profile: React.FC<Props> = () => {
   const [editBtn, setEditBtn] = useState(false);
-  const toggleEditBtn = (value: boolean) => {
+  const [activeTab, setActiveTab] = useState(true);
+
+  const toggleEditBtn = (value: boolean): void => {
     setEditBtn(value);
   };
 
@@ -23,7 +25,7 @@ const Profile: React.FC<Props> = () => {
         </LeftPanel>
       ) : (
         <LeftPanel>
-          <FeaturesProfile></FeaturesProfile>
+          <FeaturesProfile toggleEditBtn={toggleEditBtn}></FeaturesProfile>
         </LeftPanel>
       )}
 
@@ -44,10 +46,11 @@ const Profile: React.FC<Props> = () => {
         </SummaryEvents>
         <InfoCard>
           <TabBtnsWrapper>
-            <TabBtn text="Batting"></TabBtn>
-            <TabBtn text="Session Reports"></TabBtn>
-            <TabBtn text="Comparison"></TabBtn>
+            <TabBtn isActive={activeTab} text="Batting"></TabBtn>
+            <TabBtn isActive={!activeTab} text="Session Reports"></TabBtn>
+            <TabBtn isActive={!activeTab} text="Comparison"></TabBtn>
           </TabBtnsWrapper>
+          <InnerContent>There's no info yet!</InnerContent>
         </InfoCard>
       </MainContent>
     </Container>
@@ -65,6 +68,15 @@ const MainContent = styled.main`
   overflow: auto;
   width: 100%;
   /* width: calc(100vw - 280px); */
+`;
+const InnerContent = styled.div`
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+  color: #667784;
+  font-size: 16px;
 `;
 const SummaryEvents = styled.div`
   display: flex;
@@ -110,7 +122,7 @@ const LeftPanel = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
+  width: 328px;
   max-width: 100%;
   background: #fff;
   border-left: 1px solid rgba(0, 0, 0, 0.1);

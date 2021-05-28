@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 const SignInForm: React.FC<Props> = () => {
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
-  const [pswdError, pswdErrorSet] = useState<null | boolean>(null);
 
   const onSubmit = (value: any) => {
     if (!value.email || !value.password || value.password !== "12") {

@@ -15,7 +15,6 @@ const AppRouter: React.FC<Props> = ({ user }) => {
 const Container = styled.div`
   display: flex;
   flex-flow: column wrap;
-  /* flex: 1; */
   height: 100%;
   overflow: hidden;
 `;

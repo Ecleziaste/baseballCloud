@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const Leaderboard: React.FC<Props> = () => {
   return <Container></Container>;

@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-const TabBtn: React.FC<Props> = ({ text }) => {
+const TabBtn: React.FC<Props> = ({ isActive, text }) => {
   return (
     <div>
-      <Button>{text}</Button>
+      <Button isActive={isActive}>{text}</Button>
     </div>
   );
 };
 
-const Button = styled.div`
+const Button = styled.div<{ isActive: boolean }>`
   padding: 8px;
   margin: 8px;
   border: 2px solid #788b99;
@@ -17,10 +17,8 @@ const Button = styled.div`
   font-size: 14px;
   line-height: 17px;
   font-weight: 700;
-  /* background: #788b99; */
-  background: #fff;
-  /* color: #fff; */
-  color: #667784;
+  background: ${(props) => (props.isActive ? "#788b99" : "#fff")};
+  color: ${(props) => (props.isActive ? "#fff" : "#788b99")};
   position: relative;
   font-size: 14px;
   line-height: 17px;
@@ -33,4 +31,4 @@ const Button = styled.div`
 
 export default TabBtn;
 
-type Props = { text: string };
+type Props = { isActive: boolean; text: string };

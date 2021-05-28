@@ -163,5 +163,4 @@ const SignUpLink = styled(Link)`
 export default ForgotPassForm;
 
 type Props = {};
-type Errors = { email: string };
 type Values = { email: string | {} };
