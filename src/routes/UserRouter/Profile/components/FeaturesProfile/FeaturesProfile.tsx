@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Item from "../Item";
 import InnerInfo from "../InnerInfo";
+import TitleLine from "../TitleLine";
 import {
   EDIT,
   AGE_1,
@@ -104,13 +105,8 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
         <InnerInfo title="School year" text="asdas" />
         <InnerInfo title="Team" text="ass" />
         <InnerInfo title="Facility" text="eqwe" />
-        <About>
-          <TitleBox>
-            <Title>About</Title>
-          </TitleBox>
-
-          <Text> some words about person</Text>
-        </About>
+        <TitleLine title="About"></TitleLine>
+        <Text> some words about person</Text>
       </Info>
     </Container>
   );
@@ -120,32 +116,6 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-`;
-const About = styled(Container)``;
-const TitleBox = styled.div`
-  display: flex;
-  position: relative;
-  &:before {
-    content: "";
-    position: absolute;
-    top: 11px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background-color: #e7ebef;
-    z-index: 0;
-  }
-`;
-const Title = styled.div`
-  font-size: 18px;
-  font-weight: 700;
-  color: #414f5a;
-  text-align: left;
-  display: inline-block;
-  position: relative;
-  z-index: 5;
-  background-color: #ffffff;
-  padding-right: 12px;
 `;
 const Text = styled.div`
   font-size: 16px;

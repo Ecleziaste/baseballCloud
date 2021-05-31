@@ -21,7 +21,7 @@ const Profile: React.FC<Props> = () => {
     <Container>
       {editBtn ? (
         <LeftPanel>
-          <EditProfile></EditProfile>
+          <EditProfile toggleEditBtn={toggleEditBtn}></EditProfile>
         </LeftPanel>
       ) : (
         <LeftPanel>
