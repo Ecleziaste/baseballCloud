@@ -6,14 +6,20 @@ import { Form, Field } from "react-final-form";
 import { Link } from "react-router-dom";
 import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../../store/user/actions";
 
 const SignInForm: React.FC<Props> = () => {
+  const dispatch = useDispatch();
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
 
   const onSubmit = (value: any) => {
-    if (!value.email || !value.password || value.password !== "12") {
+    if (!value.email || !value.password || value.password !== "12345678") {
       emailErrorSet(true);
-    } else emailErrorSet(null);
+    } else {
+      emailErrorSet(null);
+      dispatch(signIn(value));
+    }
     console.log("value", value);
   };
 

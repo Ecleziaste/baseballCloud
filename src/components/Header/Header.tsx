@@ -8,16 +8,20 @@ import {
   LOGO_3_SVG,
 } from "../../assets/svg/paths";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
+import { setUser } from "../../store/user/actions";
 
 const Header: React.FC<Props> = () => {
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
-
   const [menu, setMenu] = useState(false);
   const menuEl = useRef<HTMLDivElement>(null);
   const toggleMenu = (value: boolean) => {
     setMenu(value);
+  };
+  const logOut = () => {
+    dispatch(setUser(null));
   };
 
   const handleClickOutside = (event: Event) => {
@@ -72,7 +76,7 @@ const Header: React.FC<Props> = () => {
               {menu && (
                 <DropdownMenu ref={menuEl}>
                   <ProfileScreenLink to="profile">My Profile</ProfileScreenLink>
-                  <ExitLink onClick={() => {}} to="#">
+                  <ExitLink onClick={logOut} to="#">
                     Log Out
                   </ExitLink>
                 </DropdownMenu>

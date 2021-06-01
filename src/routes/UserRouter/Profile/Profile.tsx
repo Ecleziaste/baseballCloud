@@ -63,6 +63,7 @@ const Profile: React.FC<Props> = () => {
 const Container = styled.div`
   display: flex;
   width: 100%;
+  height: 100%;
 `;
 const MainContent = styled.main`
   display: flex;
