@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Item: React.FC<Props> = ({ title }) => {
+const TitleLine: React.FC<Props> = ({ title }) => {
   return (
     <Container>
       <TitleBox>
@@ -42,6 +42,6 @@ const Title = styled.div`
   padding-right: 12px;
 `;
 
-export default Item;
+export default TitleLine;
 
 type Props = { title: string };
