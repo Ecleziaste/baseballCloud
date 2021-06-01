@@ -4,6 +4,7 @@ import TabBtn from "../components/TabBtn";
 import ProgressBar from "../components/ProgressBar";
 import FeaturesProfile from "./components/FeaturesProfile";
 import EditProfile from "./components/EditProfile";
+import AppLayout from "../../../layouts";
 
 const Profile: React.FC<Props> = () => {
   const [editBtn, setEditBtn] = useState(false);
@@ -18,42 +19,44 @@ const Profile: React.FC<Props> = () => {
   };
 
   return (
-    <Container>
-      {editBtn ? (
-        <LeftPanel>
-          <EditProfile toggleEditBtn={toggleEditBtn}></EditProfile>
-        </LeftPanel>
-      ) : (
-        <LeftPanel>
-          <FeaturesProfile toggleEditBtn={toggleEditBtn}></FeaturesProfile>
-        </LeftPanel>
-      )}
+    <AppLayout>
+      <Container>
+        {editBtn ? (
+          <LeftPanel>
+            <EditProfile toggleEditBtn={toggleEditBtn}></EditProfile>
+          </LeftPanel>
+        ) : (
+          <LeftPanel>
+            <FeaturesProfile toggleEditBtn={toggleEditBtn}></FeaturesProfile>
+          </LeftPanel>
+        )}
 
-      <MainContent>
-        <SummaryEvents>
-          <PitcherSummary>
-            <SumTitle>Top Batting Values</SumTitle>
-            <SumRecord>
-              <ProgressBar title="Exit Velocity" avail="N/A" />
-              <ProgressBar title="Carry Distance" avail="N/A" />
-              <ProgressBar title="Launch Angle" avail="N/A" />
-            </SumRecord>
-          </PitcherSummary>
-          <RecentEvents>
-            <EvTitle>Recent Session Reports</EvTitle>
-            <EvData>No data currently linked to this profile</EvData>
-          </RecentEvents>
-        </SummaryEvents>
-        <InfoCard>
-          <TabBtnsWrapper>
-            <TabBtn isActive={activeTab} text="Batting"></TabBtn>
-            <TabBtn isActive={!activeTab} text="Session Reports"></TabBtn>
-            <TabBtn isActive={!activeTab} text="Comparison"></TabBtn>
-          </TabBtnsWrapper>
-          <InnerContent>There's no info yet!</InnerContent>
-        </InfoCard>
-      </MainContent>
-    </Container>
+        <MainContent>
+          <SummaryEvents>
+            <PitcherSummary>
+              <SumTitle>Top Batting Values</SumTitle>
+              <SumRecord>
+                <ProgressBar title="Exit Velocity" avail="N/A" />
+                <ProgressBar title="Carry Distance" avail="N/A" />
+                <ProgressBar title="Launch Angle" avail="N/A" />
+              </SumRecord>
+            </PitcherSummary>
+            <RecentEvents>
+              <EvTitle>Recent Session Reports</EvTitle>
+              <EvData>No data currently linked to this profile</EvData>
+            </RecentEvents>
+          </SummaryEvents>
+          <InfoCard>
+            <TabBtnsWrapper>
+              <TabBtn isActive={activeTab} text="Batting"></TabBtn>
+              <TabBtn isActive={!activeTab} text="Session Reports"></TabBtn>
+              <TabBtn isActive={!activeTab} text="Comparison"></TabBtn>
+            </TabBtnsWrapper>
+            <InnerContent>There's no info yet!</InnerContent>
+          </InfoCard>
+        </MainContent>
+      </Container>
+    </AppLayout>
   );
 };
 
@@ -67,7 +70,6 @@ const MainContent = styled.main`
   background: #788b99;
   overflow: auto;
   width: 100%;
-  /* width: calc(100vw - 280px); */
 `;
 const InnerContent = styled.div`
   display: flex;

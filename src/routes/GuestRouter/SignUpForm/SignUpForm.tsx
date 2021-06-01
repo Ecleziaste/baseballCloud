@@ -5,6 +5,8 @@ import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
 import { CHECK_SVG } from "../../../assets/svg/paths";
 import { Link } from "react-router-dom";
+import AppLayout from "../../../layouts";
+import GuestLayout from "../../../layouts/GuestLayout";
 
 const SignUpForm: React.FC<Props> = () => {
   const [btnPress, setBtnPress] = useState(false);
@@ -46,111 +48,115 @@ const SignUpForm: React.FC<Props> = () => {
   };
 
   return (
-    <Container>
-      <FormWrapper>
-        <BtnsWrapper>
-          <BtnLeft isActive={btnPress} onClick={handleLeftBtnClick}>
-            <BtnIcon>
-              {btnPress && (
-                <Svg width="14" height="15" viewBox="0 0 14 15">
-                  <Path fill="#FFF" d={CHECK_SVG}></Path>
-                </Svg>
+    <AppLayout>
+      <GuestLayout>
+        <Container>
+          <FormWrapper>
+            <BtnsWrapper>
+              <BtnLeft isActive={btnPress} onClick={handleLeftBtnClick}>
+                <BtnIcon>
+                  {btnPress && (
+                    <Svg width="14" height="15" viewBox="0 0 14 15">
+                      <Path fill="#FFF" d={CHECK_SVG}></Path>
+                    </Svg>
+                  )}
+                </BtnIcon>
+                Sign Up as Player
+              </BtnLeft>
+              <BtnRight isActive={!btnPress} onClick={handleRightBtnClick}>
+                <BtnIcon>
+                  {!btnPress && (
+                    <Svg width="14" height="15" viewBox="0 0 14 15">
+                      <Path fill="#FFF" d={CHECK_SVG}></Path>
+                    </Svg>
+                  )}
+                </BtnIcon>
+                &nbsp;Sign Up as Scout
+              </BtnRight>
+            </BtnsWrapper>
+            <FormHeader>
+              <Title>{title}</Title>
+              <Text>{text}</Text>
+            </FormHeader>
+
+            <Form
+              onSubmit={onSubmit}
+              render={({ handleSubmit }) => (
+                <FormContainer>
+                  <FieldContainer>
+                    <FieldIcon>
+                      <UserIcon
+                        className="fa fa-user"
+                        aria-hidden="true"
+                      ></UserIcon>
+                    </FieldIcon>
+                    <Field
+                      name="email"
+                      type="email"
+                      component={InputField}
+                      placeholder="Email"
+                    />
+                    {emailError && <ValidationText>Required</ValidationText>}
+                  </FieldContainer>
+                  <FieldContainer>
+                    <FieldIcon>
+                      <LockIcon className="fa fa-lock"></LockIcon>
+                    </FieldIcon>
+                    <Field
+                      name="password"
+                      type="password"
+                      component={InputField}
+                      placeholder="Password"
+                      secure
+                    />
+                    {pswdError && <ValidationText>Required</ValidationText>}
+                  </FieldContainer>
+                  <FieldContainer>
+                    <FieldIcon>
+                      <CheckIcon
+                        className="fa fa-check"
+                        aria-hidden="true"
+                      ></CheckIcon>
+                    </FieldIcon>
+                    <Field
+                      name="confirm"
+                      type="password"
+                      component={InputField}
+                      placeholder="Confirm Password"
+                      secure
+                    />
+                    {confError && (
+                      <ValidationText>Passwords are not equal</ValidationText>
+                    )}
+                  </FieldContainer>
+
+                  <FormText>
+                    By clicking Sign Up, you agree to our
+                    <span>
+                      <FormLink>&nbsp;Terms of Service</FormLink>
+                    </span>
+                    &nbsp;and&nbsp;
+                    <span>
+                      <FormLink>Privacy Policy</FormLink>
+                    </span>
+                    .
+                  </FormText>
+                  <ButtonMain
+                    text="Sign Up"
+                    handleClick={handleSubmit}
+                  ></ButtonMain>
+                </FormContainer>
               )}
-            </BtnIcon>
-            Sign Up as Player
-          </BtnLeft>
-          <BtnRight isActive={!btnPress} onClick={handleRightBtnClick}>
-            <BtnIcon>
-              {!btnPress && (
-                <Svg width="14" height="15" viewBox="0 0 14 15">
-                  <Path fill="#FFF" d={CHECK_SVG}></Path>
-                </Svg>
-              )}
-            </BtnIcon>
-            &nbsp;Sign Up as Scout
-          </BtnRight>
-        </BtnsWrapper>
-        <FormHeader>
-          <Title>{title}</Title>
-          <Text>{text}</Text>
-        </FormHeader>
+            />
 
-        <Form
-          onSubmit={onSubmit}
-          render={({ handleSubmit }) => (
-            <FormContainer>
-              <FieldContainer>
-                <FieldIcon>
-                  <UserIcon
-                    className="fa fa-user"
-                    aria-hidden="true"
-                  ></UserIcon>
-                </FieldIcon>
-                <Field
-                  name="email"
-                  type="email"
-                  component={InputField}
-                  placeholder="Email"
-                />
-                {emailError && <ValidationText>Required</ValidationText>}
-              </FieldContainer>
-              <FieldContainer>
-                <FieldIcon>
-                  <LockIcon className="fa fa-lock"></LockIcon>
-                </FieldIcon>
-                <Field
-                  name="password"
-                  type="password"
-                  component={InputField}
-                  placeholder="Password"
-                  secure
-                />
-                {pswdError && <ValidationText>Required</ValidationText>}
-              </FieldContainer>
-              <FieldContainer>
-                <FieldIcon>
-                  <CheckIcon
-                    className="fa fa-check"
-                    aria-hidden="true"
-                  ></CheckIcon>
-                </FieldIcon>
-                <Field
-                  name="confirm"
-                  type="password"
-                  component={InputField}
-                  placeholder="Confirm Password"
-                  secure
-                />
-                {confError && (
-                  <ValidationText>Passwords are not equal</ValidationText>
-                )}
-              </FieldContainer>
-
-              <FormText>
-                By clicking Sign Up, you agree to our
-                <span>
-                  <FormLink>&nbsp;Terms of Service</FormLink>
-                </span>
-                &nbsp;and&nbsp;
-                <span>
-                  <FormLink>Privacy Policy</FormLink>
-                </span>
-                .
-              </FormText>
-              <ButtonMain
-                text="Sign Up"
-                handleClick={handleSubmit}
-              ></ButtonMain>
-            </FormContainer>
-          )}
-        />
-
-        <FormFooter>
-          <Question>Already registered?</Question>
-          <SignUpLink to="login">Sign In</SignUpLink>
-        </FormFooter>
-      </FormWrapper>
-    </Container>
+            <FormFooter>
+              <Question>Already registered?</Question>
+              <SignUpLink to="login">Sign In</SignUpLink>
+            </FormFooter>
+          </FormWrapper>
+        </Container>
+      </GuestLayout>
+    </AppLayout>
   );
 };
 
@@ -158,7 +164,6 @@ const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  /* height: 50px; */
   max-width: 100%;
   margin-bottom: 15px;
 `;

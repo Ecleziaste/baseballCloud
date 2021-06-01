@@ -4,6 +4,8 @@ import ButtonMain from "../components/ButtonMain";
 import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
 import { Link } from "react-router-dom";
+import AppLayout from "../../../layouts";
+import GuestLayout from "../../../layouts/GuestLayout";
 
 const SignInForm: React.FC<Props> = () => {
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
@@ -16,69 +18,73 @@ const SignInForm: React.FC<Props> = () => {
   };
 
   return (
-    <Container>
-      <FormWrapper>
-        <FormHeader>
-          <Title>Welcome to BaseballCloud!</Title>
-          <Text>Sign into your account here:</Text>
-        </FormHeader>
+    <AppLayout>
+      <GuestLayout>
+        <Container>
+          <FormWrapper>
+            <FormHeader>
+              <Title>Welcome to BaseballCloud!</Title>
+              <Text>Sign into your account here:</Text>
+            </FormHeader>
 
-        <Form
-          onSubmit={onSubmit}
-          render={({ handleSubmit }) => (
-            <FormContainer>
-              <FieldContainer>
-                <FieldIcon>
-                  <UserIcon
-                    className="fa fa-user"
-                    aria-hidden="true"
-                  ></UserIcon>
-                </FieldIcon>
-                <Field
-                  name="email"
-                  type="email"
-                  component={InputField}
-                  placeholder="Email"
-                />
-              </FieldContainer>
-              <FieldContainer>
-                <FieldIcon>
-                  <LockIcon
-                    className="fa fa-lock"
-                    aria-hidden="true"
-                  ></LockIcon>
-                </FieldIcon>
-                <Field
-                  name="password"
-                  type="password"
-                  component={InputField}
-                  placeholder="Password"
-                  secure
-                />
-              </FieldContainer>
-              {emailError && (
-                <ValidationText>
-                  Invalid login credentials. Please try again.
-                </ValidationText>
+            <Form
+              onSubmit={onSubmit}
+              render={({ handleSubmit }) => (
+                <FormContainer>
+                  <FieldContainer>
+                    <FieldIcon>
+                      <UserIcon
+                        className="fa fa-user"
+                        aria-hidden="true"
+                      ></UserIcon>
+                    </FieldIcon>
+                    <Field
+                      name="email"
+                      type="email"
+                      component={InputField}
+                      placeholder="Email"
+                    />
+                  </FieldContainer>
+                  <FieldContainer>
+                    <FieldIcon>
+                      <LockIcon
+                        className="fa fa-lock"
+                        aria-hidden="true"
+                      ></LockIcon>
+                    </FieldIcon>
+                    <Field
+                      name="password"
+                      type="password"
+                      component={InputField}
+                      placeholder="Password"
+                      secure
+                    />
+                  </FieldContainer>
+                  {emailError && (
+                    <ValidationText>
+                      Invalid login credentials. Please try again.
+                    </ValidationText>
+                  )}
+                  <ButtonMain
+                    text="Sign in"
+                    handleClick={handleSubmit}
+                  ></ButtonMain>
+                </FormContainer>
               )}
-              <ButtonMain
-                text="Sign in"
-                handleClick={handleSubmit}
-              ></ButtonMain>
-            </FormContainer>
-          )}
-        />
+            />
 
-        <Forgot>
-          <ForgotLink to="forgotpassword">Forgotten password?</ForgotLink>
-        </Forgot>
+            <Forgot>
+              <ForgotLink to="forgotpassword">Forgotten password?</ForgotLink>
+            </Forgot>
 
-        <FormFooter>
-          <Question>Don’t have an account?</Question>
-          <SignUpLink to="registration">Sign Up</SignUpLink>
-        </FormFooter>
-      </FormWrapper>
-    </Container>
+            <FormFooter>
+              <Question>Don’t have an account?</Question>
+              <SignUpLink to="registration">Sign Up</SignUpLink>
+            </FormFooter>
+          </FormWrapper>
+        </Container>
+      </GuestLayout>
+    </AppLayout>
   );
 };
 

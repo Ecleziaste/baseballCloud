@@ -4,6 +4,8 @@ import ButtonMain from "../components/ButtonMain";
 import InputField from "../components/InputField";
 import { Form, Field } from "react-final-form";
 import { Link } from "react-router-dom";
+import AppLayout from "../../../layouts";
+import GuestLayout from "../../../layouts/GuestLayout";
 
 const ForgotPassForm: React.FC<Props> = () => {
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
@@ -16,61 +18,57 @@ const ForgotPassForm: React.FC<Props> = () => {
   };
 
   return (
-    <Container>
-      <FormWrapper>
-        <FormHeader>
-          <Title>Forgot Password</Title>
-          <Text>
-            Please enter your email address. You will receive a link to reset
-            your password via email.
-          </Text>
-        </FormHeader>
-        <FormContainer>
-          <Form
-            onSubmit={onSubmit}
-            // validate={(values) => {
-            //   const errors = {} as Errors;
-            //   if (!values.email) {
-            //     // emailErrorSet(true);
-            //     errors.email = "Required";
-            //   }
-            //   return errors;
-            // }}
-            render={({ handleSubmit }) => (
-              <FormContainer>
-                <FieldContainer>
-                  <FieldIcon>
-                    <UserIcon
-                      className="fa fa-user"
-                      aria-hidden="true"
-                    ></UserIcon>
-                  </FieldIcon>
-                  <Field
-                    // validate={undefined}
-                    value={"undefined"}
-                    name="email"
-                    type="email"
-                    component={InputField}
-                    placeholder="Email"
-                  />
-                  {emailError && <ValidationText>Required</ValidationText>}
-                </FieldContainer>
+    <AppLayout>
+      <GuestLayout>
+        <Container>
+          <FormWrapper>
+            <FormHeader>
+              <Title>Forgot Password</Title>
+              <Text>
+                Please enter your email address. You will receive a link to
+                reset your password via email.
+              </Text>
+            </FormHeader>
+            <FormContainer>
+              <Form
+                onSubmit={onSubmit}
+                render={({ handleSubmit }) => (
+                  <FormContainer>
+                    <FieldContainer>
+                      <FieldIcon>
+                        <UserIcon
+                          className="fa fa-user"
+                          aria-hidden="true"
+                        ></UserIcon>
+                      </FieldIcon>
+                      <Field
+                        // validate={undefined}
+                        value={"undefined"}
+                        name="email"
+                        type="email"
+                        component={InputField}
+                        placeholder="Email"
+                      />
+                      {emailError && <ValidationText>Required</ValidationText>}
+                    </FieldContainer>
 
-                <ButtonMain
-                  text="Submit"
-                  handleClick={handleSubmit}
-                ></ButtonMain>
-              </FormContainer>
-            )}
-          />
-        </FormContainer>
+                    <ButtonMain
+                      text="Submit"
+                      handleClick={handleSubmit}
+                    ></ButtonMain>
+                  </FormContainer>
+                )}
+              />
+            </FormContainer>
 
-        <FormFooter>
-          <Question>Remembered password?</Question>
-          <SignUpLink to="login">Sign In</SignUpLink>
-        </FormFooter>
-      </FormWrapper>
-    </Container>
+            <FormFooter>
+              <Question>Remembered password?</Question>
+              <SignUpLink to="login">Sign In</SignUpLink>
+            </FormFooter>
+          </FormWrapper>
+        </Container>
+      </GuestLayout>
+    </AppLayout>
   );
 };
 

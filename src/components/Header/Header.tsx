@@ -9,7 +9,9 @@ import {
 } from "../../assets/svg/paths";
 import { Link } from "react-router-dom";
 
-const Header: React.FC<Props> = ({ user }) => {
+const Header: React.FC<Props> = () => {
+  const user = null;
+
   const [menu, setMenu] = useState(false);
   const menuEl = useRef<HTMLDivElement>(null);
   const toggleMenu = (value: boolean) => {
@@ -27,7 +29,7 @@ const Header: React.FC<Props> = ({ user }) => {
       document.removeEventListener("click", handleClickOutside, true);
     };
   });
-  
+
   return (
     <Container>
       <LogoContainer to="profile">
@@ -107,7 +109,6 @@ const DropdownMenu = styled.div`
     border-style: solid;
     border-width: 0 8px 8px 8px;
     border-color: transparent transparent #fff transparent;
-    /* border: 1px solid red; */
   }
 `;
 const ProfileScreenLink = styled(Link)`
@@ -232,4 +233,4 @@ const Path = styled.path``;
 
 export default Header;
 
-type Props = { user: any };
+type Props = {};

@@ -3,12 +3,10 @@ import styled from "styled-components";
 import { Form, Field } from "react-final-form";
 import InputProfile from "../InputProfile";
 import TitleLine from "../TitleLine";
-// import Label from "../Label";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const onSubmit = (value: Values) => {
     console.log("value", value);
-    console.log("value");
   };
 
   return (
@@ -32,8 +30,6 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                     placeholder="First Name *"
                     component={InputProfile}
                   />
-                  {/* <Label className="Label" text="First Name *"></Label> */}
-                  {/* <label className="Label">First Name *</label> */}
                 </SmallInputBox>
                 <SmallInputBox>
                   <Field
