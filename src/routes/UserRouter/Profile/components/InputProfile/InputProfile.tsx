@@ -9,23 +9,18 @@ const InputProfile: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
   val,
   secure,
 }) => {
-  const handleChange = (e: any): void => {
-    // (e: React.ChangeEvent<HTMLInputElement>)
-
-    console.log(e.target.value);
-  };
+  // const handleChange = (e: any): void => {
+  //   // (e: React.ChangeEvent<HTMLInputElement>)
+  //   console.log(e.target.value);
+  // };
 
   const labelText = "First Name *";
 
   return (
     <Container>
       <Input
-        onChange={() => input.onChange(handleChange)}
-        // onInput={() => input.onChange(handleChange)}
+        // onChange={() => input.onChange(handleChange)}
         {...input}
-        // value={val}
-        // defaultValue={val}
-        type="text"
         placeholder={placeholder}
         secureTextEntry={secure}
       />
@@ -39,33 +34,19 @@ const Container = styled.div`
   position: relative;
 `;
 const Label = styled.label`
+  /* display: block; */
   display: none;
   position: absolute;
   width: 100%;
-  /* z-index: 0; */
-  top: 2px;
-  left: 6px;
-  /* top: 50%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); */
-
+  transform: translate(-50%, -50%);
   text-align: center;
-  /* margin-bottom: 0; */
   font-size: 14px;
   line-height: 1;
   font-weight: 400;
   color: transparent;
-  cursor: pointer;
-  &:hover {
-    color: #48bbff;
-    text-decoration: underline;
-  }
-  &:focus {
-    font-size: 8px;
-    color: #788b99;
-    top: 2px;
-    left: 6px;
-  }
+  text-decoration: none;
 `;
 const Input = styled.input`
   /* z-index: 1; */
@@ -82,9 +63,20 @@ const Input = styled.input`
     outline: none;
     background-color: white;
     border: 1px solid #48bbff;
-    font-size: 16px;
-    &.Label {
-      display: flex;
+  }
+  &:focus ~ ${Label} {
+    display: flex;
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    font-size: 10px;
+    color: #667784;
+    transform: none;
+    translate: none;
+    cursor: pointer;
+    &:hover {
+      color: #48bbff;
+      text-decoration: underline;
     }
   }
 `;

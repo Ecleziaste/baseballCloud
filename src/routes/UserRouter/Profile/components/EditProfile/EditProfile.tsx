@@ -28,7 +28,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <SmallInputBox>
                   <Field
                     name="firstName"
-                    val="Chelovek"
+                    defaultValue="Chelovek"
                     placeholder="First Name *"
                     component={InputProfile}
                   />
@@ -38,7 +38,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <SmallInputBox>
                   <Field
                     name="lastName"
-                    val="Bat'kovich"
+                    defaultValue="Bat'kovich"
                     placeholder="Last Name *"
                     component={InputProfile}
                   />
