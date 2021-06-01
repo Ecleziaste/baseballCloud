@@ -1,10 +1,11 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {setUser, signIn, signUp} from './actions';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { setUser, signIn, signUp } from "./actions";
 
 const initialState = null as null | User;
+// const initialState = {} as User;
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {},
   extraReducers: {
@@ -20,9 +21,9 @@ const userSlice = createSlice({
   },
 });
 
-const {reducer, actions} = userSlice;
+const { reducer, actions } = userSlice;
 
-export {reducer, actions};
+export { reducer, actions };
 
 export type User = {
   email: string;

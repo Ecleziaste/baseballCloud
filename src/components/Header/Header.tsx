@@ -8,9 +8,11 @@ import {
   LOGO_3_SVG,
 } from "../../assets/svg/paths";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../store/user/selectors";
 
 const Header: React.FC<Props> = () => {
-  const user = null;
+  const user = useSelector(selectUser);
 
   const [menu, setMenu] = useState(false);
   const menuEl = useRef<HTMLDivElement>(null);
