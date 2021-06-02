@@ -5,8 +5,13 @@ import ProgressBar from "../components/ProgressBar";
 import FeaturesProfile from "./components/FeaturesProfile";
 import EditProfile from "./components/EditProfile";
 import AppLayout from "../../../layouts";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser } from "../../../store/user/selectors";
+import Appeal from "./components/Appeal";
 
 const Profile: React.FC<Props> = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const [editBtn, setEditBtn] = useState(false);
   const [activeTab, setActiveTab] = useState(true);
 
@@ -31,30 +36,34 @@ const Profile: React.FC<Props> = () => {
           </LeftPanel>
         )}
 
-        <MainContent>
-          <SummaryEvents>
-            <PitcherSummary>
-              <SumTitle>Top Batting Values</SumTitle>
-              <SumRecord>
-                <ProgressBar title="Exit Velocity" avail="N/A" />
-                <ProgressBar title="Carry Distance" avail="N/A" />
-                <ProgressBar title="Launch Angle" avail="N/A" />
-              </SumRecord>
-            </PitcherSummary>
-            <RecentEvents>
-              <EvTitle>Recent Session Reports</EvTitle>
-              <EvData>No data currently linked to this profile</EvData>
-            </RecentEvents>
-          </SummaryEvents>
-          <InfoCard>
-            <TabBtnsWrapper>
-              <TabBtn isActive={activeTab} text="Batting"></TabBtn>
-              <TabBtn isActive={!activeTab} text="Session Reports"></TabBtn>
-              <TabBtn isActive={!activeTab} text="Comparison"></TabBtn>
-            </TabBtnsWrapper>
-            <InnerContent>There's no info yet!</InnerContent>
-          </InfoCard>
-        </MainContent>
+        {user!.data.u_name ? (
+          <MainContent>
+            <SummaryEvents>
+              <PitcherSummary>
+                <SumTitle>Top Batting Values</SumTitle>
+                <SumRecord>
+                  <ProgressBar title="Exit Velocity" avail="N/A" />
+                  <ProgressBar title="Carry Distance" avail="N/A" />
+                  <ProgressBar title="Launch Angle" avail="N/A" />
+                </SumRecord>
+              </PitcherSummary>
+              <RecentEvents>
+                <EvTitle>Recent Session Reports</EvTitle>
+                <EvData>No data currently linked to this profile</EvData>
+              </RecentEvents>
+            </SummaryEvents>
+            <InfoCard>
+              <TabBtnsWrapper>
+                <TabBtn isActive={activeTab} text="Batting"></TabBtn>
+                <TabBtn isActive={!activeTab} text="Session Reports"></TabBtn>
+                <TabBtn isActive={!activeTab} text="Comparison"></TabBtn>
+              </TabBtnsWrapper>
+              <InnerContent>There's no info yet!</InnerContent>
+            </InfoCard>
+          </MainContent>
+        ) : (
+          <Appeal></Appeal>
+        )}
       </Container>
     </AppLayout>
   );
