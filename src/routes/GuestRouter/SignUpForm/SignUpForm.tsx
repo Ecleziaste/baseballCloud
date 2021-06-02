@@ -7,8 +7,11 @@ import { CHECK_SVG } from "../../../assets/svg/paths";
 import { Link } from "react-router-dom";
 import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../../store/user/actions";
 
 const SignUpForm: React.FC<Props> = () => {
+  const dispatch = useDispatch();
   const [btnPress, setBtnPress] = useState(false);
   const [title, setTitle] = useState("Players");
   const [text, setText] = useState(
@@ -30,6 +33,7 @@ const SignUpForm: React.FC<Props> = () => {
   };
 
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
+  const [sameEmailError, sameEmailErrorSet] = useState<null | boolean>(null);
   const [pswdError, pswdErrorSet] = useState<null | boolean>(null);
   const [confError, confErrorSet] = useState<null | boolean>(null);
   const [lengthError, lengthErrorSet] = useState<null | boolean>(null);
@@ -47,6 +51,15 @@ const SignUpForm: React.FC<Props> = () => {
     if (value.password.length < 8) {
       lengthErrorSet(true);
     } else lengthErrorSet(null);
+    if (
+      !emailError &&
+      !sameEmailError &&
+      !pswdError &&
+      !confError &&
+      !lengthError
+    ) {
+      dispatch(signUp(value));
+    }
 
     console.log("value", value);
   };
@@ -101,6 +114,11 @@ const SignUpForm: React.FC<Props> = () => {
                       placeholder="Email"
                     />
                     {emailError && <ValidationText>Required</ValidationText>}
+                    {sameEmailError && (
+                      <ValidationText>
+                        Email has already been taken
+                      </ValidationText>
+                    )}
                   </FieldContainer>
                   <FieldContainer>
                     <FieldIcon>

@@ -8,10 +8,13 @@ import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
 import { useDispatch } from "react-redux";
 import { signIn } from "../../../store/user/actions";
+import { setCurrentProfile } from "../../../store/current_profile/actions";
 
 const SignInForm: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
+
+  const id = 469;
 
   const onSubmit = (value: any) => {
     if (!value.email || !value.password || value.password !== "12345678") {
@@ -19,7 +22,9 @@ const SignInForm: React.FC<Props> = () => {
     } else {
       emailErrorSet(null);
       dispatch(signIn(value));
+      // dispatch(setCurrentProfile(id));
     }
+    // dispatch(setCurrentProfile(id));
     console.log("value", value);
   };
 
