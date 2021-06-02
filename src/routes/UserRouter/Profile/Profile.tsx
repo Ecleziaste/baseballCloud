@@ -36,7 +36,7 @@ const Profile: React.FC<Props> = () => {
           </LeftPanel>
         )}
 
-        {user!.u_name ? (
+        {user!.u_name !== null ? (
           <MainContent>
             <SummaryEvents>
               <PitcherSummary>

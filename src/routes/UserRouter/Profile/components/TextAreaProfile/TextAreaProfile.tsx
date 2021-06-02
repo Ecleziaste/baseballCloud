@@ -16,7 +16,7 @@ const InputProfile: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
 
   return (
     <Container>
-      <Input
+      <TextArea
         // onChange={() => input.onChange(handleChange)}
         {...input}
         placeholder={placeholder}
@@ -33,7 +33,6 @@ const Container = styled.div`
   width: 100%;
 `;
 const Label = styled.label`
-  /* display: block; */
   display: none;
   position: absolute;
   width: 100%;
@@ -47,10 +46,10 @@ const Label = styled.label`
   color: transparent;
   text-decoration: none;
 `;
-const Input = styled.input`
-  /* z-index: 1; */
+const TextArea = styled.textarea`
   width: 100%;
-  padding: 0 16px;
+  height: 110px;
+  padding: 11px 16px;
   border-radius: 4px;
   background-color: #eff1f3;
   font-size: 16px;
@@ -58,6 +57,7 @@ const Input = styled.input`
   font-weight: 400;
   color: #667784;
   border: none;
+  resize: none;
   &:focus {
     outline: none;
     background-color: white;

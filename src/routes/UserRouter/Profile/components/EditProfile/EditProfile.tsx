@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Form, Field } from "react-final-form";
 import InputProfile from "../InputProfile";
 import TitleLine from "../TitleLine";
+import TextAreaProfile from "../TextAreaProfile";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const onSubmit = (value: Values) => {
@@ -28,6 +29,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                     name="firstName"
                     defaultValue="Chelovek"
                     placeholder="First Name *"
+                    label="First Name *"
                     component={InputProfile}
                   />
                 </SmallInputBox>
@@ -36,14 +38,131 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                     name="lastName"
                     defaultValue="Bat'kovich"
                     placeholder="Last Name *"
+                    label="Last Name *"
                     component={InputProfile}
                   />
                 </SmallInputBox>
               </FormBox>
+              <BigInputBox>
+                <Field
+                  name="position"
+                  defaultValue="First Base"
+                  label="Position in Game *"
+                  component={InputProfile}
+                />
+              </BigInputBox>
+              <BigInputBox>
+                <Field
+                  name="secondPosition"
+                  defaultValue="Catcher"
+                  label="Secondary Position in Game"
+                  component={InputProfile}
+                />
+              </BigInputBox>
               <TitleLine title="Personal Info" />
+              <BigInputBox>
+                <Field
+                  name="age"
+                  defaultValue="1"
+                  label="Age *"
+                  component={InputProfile}
+                />
+              </BigInputBox>
+              <FormBox>
+                <SmallInputBox>
+                  <Field
+                    name="feet"
+                    defaultValue="2"
+                    placeholder="Feet"
+                    label="Feet *"
+                    component={InputProfile}
+                  />
+                </SmallInputBox>
+                <SmallInputBox>
+                  <Field
+                    name="inches"
+                    defaultValue="3"
+                    placeholder="Inches"
+                    label="Inches"
+                    component={InputProfile}
+                  />
+                </SmallInputBox>
+              </FormBox>
+
+              <BigInputBox>
+                <Field
+                  name="weight"
+                  defaultValue="4"
+                  label="Weight *"
+                  placeholder="Weight *"
+                  component={InputProfile}
+                />
+              </BigInputBox>
+              <FormBox>
+                <SmallInputBox>
+                  <Field
+                    name="throws"
+                    defaultValue="5"
+                    placeholder="Throws *"
+                    label="Throws *"
+                    component={InputProfile}
+                  />
+                </SmallInputBox>
+                <SmallInputBox>
+                  <Field
+                    name="bats"
+                    defaultValue="6"
+                    placeholder="Bats *"
+                    label="Bats *"
+                    component={InputProfile}
+                  />
+                </SmallInputBox>
+              </FormBox>
+
               <TitleLine title="School" />
+              <BigInputBox>
+                <Field
+                  name="school"
+                  defaultValue="school"
+                  label="School *"
+                  component={InputProfile}
+                />
+              </BigInputBox>
+              <BigInputBox>
+                <Field
+                  name="schoolYear"
+                  defaultValue="school year"
+                  label="School Year "
+                  component={InputProfile}
+                />
+              </BigInputBox>
+              <BigInputBox>
+                <Field
+                  name="team"
+                  defaultValue="team"
+                  label="Team"
+                  component={InputProfile}
+                />
+              </BigInputBox>
               <TitleLine title="Facility" />
+              <BigInputBox>
+                <Field
+                  name="facility"
+                  defaultValue="facility"
+                  label="Facility"
+                  component={InputProfile}
+                />
+              </BigInputBox>
               <TitleLine title="About" />
+              <TextAreaBox>
+                <Field
+                  name="about"
+                  defaultValue="few words"
+                  label="Describe yourself in a few..."
+                  component={TextAreaProfile}
+                />
+              </TextAreaBox>
+
               <BtnsWrapper>
                 <CancelBtn onClick={() => toggleEditBtn(false)}>
                   Cancel
@@ -114,15 +233,22 @@ const FormBox = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  /* margin-top: 15px; */
   margin-bottom: 21px;
 `;
 const SmallInputBox = styled.div`
   display: flex;
   height: 40px;
   width: 48%;
-  /* padding: 0 16px; */
   transition: all 0.2s;
+`;
+const BigInputBox = styled(SmallInputBox)`
+  display: flex;
+  align-self: center;
+  width: 100%;
+  margin-bottom: 10px;
+`;
+const TextAreaBox = styled(BigInputBox)`
+  height: 142px;
 `;
 const BtnsWrapper = styled(FormBox)`
   margin: 0;
