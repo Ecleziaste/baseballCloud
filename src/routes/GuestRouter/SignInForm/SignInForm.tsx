@@ -117,7 +117,7 @@ const ValidationText = styled.div`
 const FieldIcon = styled.span`
   display: flex;
   position: absolute;
-  top: 13px;
+  top: 15px;
   left: 17px;
   color: #667784;
 `;

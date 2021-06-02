@@ -32,6 +32,7 @@ const SignUpForm: React.FC<Props> = () => {
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
   const [pswdError, pswdErrorSet] = useState<null | boolean>(null);
   const [confError, confErrorSet] = useState<null | boolean>(null);
+  const [lengthError, lengthErrorSet] = useState<null | boolean>(null);
 
   const onSubmit = (value: any) => {
     if (!value.email) {
@@ -43,6 +44,9 @@ const SignUpForm: React.FC<Props> = () => {
     if (value.password && value.password !== value.confirm) {
       confErrorSet(true);
     } else confErrorSet(null);
+    if (value.password.length < 8) {
+      lengthErrorSet(true);
+    } else lengthErrorSet(null);
 
     console.log("value", value);
   };
@@ -110,6 +114,11 @@ const SignUpForm: React.FC<Props> = () => {
                       secure
                     />
                     {pswdError && <ValidationText>Required</ValidationText>}
+                    {lengthError && (
+                      <ValidationText>
+                        Must contain more than 8 characters
+                      </ValidationText>
+                    )}
                   </FieldContainer>
                   <FieldContainer>
                     <FieldIcon>
@@ -175,7 +184,7 @@ const ValidationText = styled.div`
 const FieldIcon = styled.span`
   display: flex;
   position: absolute;
-  top: 13px;
+  top: 15px;
   left: 17px;
   align-items: baseline;
   color: #667784;
