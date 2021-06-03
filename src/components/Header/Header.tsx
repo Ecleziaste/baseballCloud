@@ -11,9 +11,11 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
 import { setUser } from "../../store/user/actions";
+import { selectCurrentProfile } from "../../store/current_profile/selectors";
 
 const Header: React.FC<Props> = () => {
   const dispatch = useDispatch();
+  const { data } = useSelector(selectCurrentProfile)!;
   const user = useSelector(selectUser);
   const [menu, setMenu] = useState(false);
   const menuEl = useRef<HTMLDivElement>(null);
@@ -66,7 +68,10 @@ const Header: React.FC<Props> = () => {
                 </ProfileLink>
               </AvatarWrapper>
               <ProfileButton onClick={() => toggleMenu(!menu)}>
-                <UserName>User Name</UserName>
+                <UserName>
+                  {data.current_profile.first_name +
+                    (" " + data.current_profile.last_name) || "Profile Name"}
+                </UserName>
                 <Span>
                   <Svg width="8" height="5" viewBox="0 0 8 5">
                     <Path d={TRIANGLE_ARROW_SVG}></Path>
