@@ -17,7 +17,7 @@ const SignInForm: React.FC<Props> = () => {
   const id = 469;
 
   const onSubmit = (value: any) => {
-    if (!value.email || !value.password || value.password !== "12345678") {
+    if (!value.email || !value.password) {
       emailErrorSet(true);
     } else {
       emailErrorSet(null);
