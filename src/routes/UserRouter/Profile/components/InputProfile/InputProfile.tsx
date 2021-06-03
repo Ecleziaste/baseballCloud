@@ -9,19 +9,9 @@ const InputProfile: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
   label,
   secure,
 }) => {
-  // const handleChange = (e: any): void => {
-  //   // (e: React.ChangeEvent<HTMLInputElement>)
-  //   console.log(e.target.value);
-  // };
-
   return (
     <Container>
-      <Input
-        // onChange={() => input.onChange(handleChange)}
-        {...input}
-        placeholder={placeholder}
-        secureTextEntry={secure}
-      />
+      <Input {...input} placeholder={placeholder} secureTextEntry={secure} />
       <Label className="VisibleLabel">{label}</Label>
     </Container>
   );
@@ -33,7 +23,6 @@ const Container = styled.div`
   width: 100%;
 `;
 const Label = styled.label`
-  /* display: block; */
   display: none;
   position: absolute;
   width: 100%;
@@ -48,7 +37,6 @@ const Label = styled.label`
   text-decoration: none;
 `;
 const Input = styled.input`
-  /* z-index: 1; */
   width: 100%;
   padding: 0 16px;
   border-radius: 4px;

@@ -3,8 +3,9 @@ import Axios, { AxiosInstance } from "axios";
 
 export class Http {
   constructor(private readonly _axios: AxiosInstance) {}
-  setAuthorizationHeader(token: string): void {
-    this._axios.defaults.headers.Authorization = `Bearer ${token}`;
+
+  setAuthorizationHeader(headers: { [key: string]: string }): void {
+    this._axios.defaults.headers = headers;
   }
   unsetAuthorizationHeader(): void {
     delete this._axios.defaults.headers.Authorization;

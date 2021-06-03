@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TabBtn from "../components/TabBtn";
 import ProgressBar from "../components/ProgressBar";
@@ -7,13 +7,20 @@ import EditProfile from "./components/EditProfile";
 import AppLayout from "../../../layouts";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../store/user/selectors";
+// import { selectCurrentProfile } from "../../../store/current_profile/selectors";
 import Appeal from "./components/Appeal";
+// import { setCurrentProfile } from "../../../store/current_profile/actions";
 
 const Profile: React.FC<Props> = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  // const profile = useSelector(selectCurrentProfile);
   const [editBtn, setEditBtn] = useState(false);
   const [activeTab, setActiveTab] = useState(true);
+
+  // useEffect(() => {
+  //   dispatch(setCurrentProfile({}));
+  // }, []);
 
   const toggleEditBtn = (value: boolean): void => {
     setEditBtn(value);
@@ -36,7 +43,9 @@ const Profile: React.FC<Props> = () => {
           </LeftPanel>
         )}
 
-        {user!.u_name !== null ? (
+        {/* profile?.current_profile.first_name */}
+
+        {user!.data.u_name !== null ? (
           <MainContent>
             <SummaryEvents>
               <PitcherSummary>

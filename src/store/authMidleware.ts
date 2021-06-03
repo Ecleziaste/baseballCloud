@@ -12,8 +12,8 @@ export const authMiddleware =
         http.setAuthorizationHeader(action.payload.token);
     }
     if (action.type === signIn.fulfilled.type) {
-      action.payload?.token &&
-        http.setAuthorizationHeader(action.payload.token);
+      action.payload?.headers &&
+        http.setAuthorizationHeader(action.payload?.headers);
     }
     if (action.type === REHYDRATE) {
       action.payload?.user?.token &&

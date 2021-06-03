@@ -14,18 +14,18 @@ const SignInForm: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
 
-  const id = 469;
+  // const id = 469;
+  // const id = 157;
 
-  const onSubmit = (value: any) => {
+  const onSubmit = async (value: any) => {
     if (!value.email || !value.password) {
       emailErrorSet(true);
     } else {
       emailErrorSet(null);
-      dispatch(signIn(value));
-      // dispatch(setCurrentProfile(id));
+      await dispatch(signIn(value));
+      dispatch(setCurrentProfile({}));
+      // await dispatch(setCurrentProfile({}));
     }
-    // dispatch(setCurrentProfile(id));
-    console.log("value", value);
   };
 
   return (
@@ -39,6 +39,10 @@ const SignInForm: React.FC<Props> = () => {
             </FormHeader>
 
             <Form
+              initialValues={{
+                email: "test@example.com",
+                password: "12345678",
+              }}
               onSubmit={onSubmit}
               render={({ handleSubmit }) => (
                 <FormContainer>
@@ -167,7 +171,7 @@ const Text = styled.div`
   color: #667784;
   font-size: 16px;
 `;
-const FormContainer = styled.div`
+const FormContainer = styled.form`
   display: flex;
   max-width: 100%;
   flex-flow: column nowrap;

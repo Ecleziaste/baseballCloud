@@ -13,17 +13,23 @@ import {
   THROWS,
   BATS,
 } from "../../../../../assets/svg/paths";
+import { useSelector } from "react-redux";
+import { selectCurrentProfile } from "../../../../../store/current_profile/selectors";
 
 const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
+  const { data } = useSelector(selectCurrentProfile)!;
+
   return (
     <Container>
       <Photo>
         <ImageBox>
           <Image />
         </ImageBox>
-        <Name>Chelovek Bat'kovich</Name>
-        <FirstRole>First base</FirstRole>
-        <SecondRole>Catcher</SecondRole>
+        <Name>
+          {data.current_profile.first_name} {data.current_profile.last_name}
+        </Name>
+        <FirstRole>{data.current_profile.position}</FirstRole>
+        <SecondRole>{data.current_profile.position2}</SecondRole>
         <EditBtn onClick={() => toggleEditBtn(true)}>
           <Span>
             <Svg
@@ -52,7 +58,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </Svg>
             }
             text="Age"
-            value="22"
+            value={String(data.current_profile.age)}
           />
           <Item
             svg={
@@ -64,7 +70,12 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </Svg>
             }
             text="Height"
-            value="7 ft 0 in"
+            value={
+              String(data.current_profile.feet) +
+              " ft " +
+              String(data.current_profile.inches) +
+              " in"
+            }
           />
           <Item
             svg={
@@ -76,7 +87,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </Svg>
             }
             text="Weight"
-            value="78 lbs"
+            value={String(data.current_profile.weight) + " lbs"}
           />
           <Item
             svg={
@@ -87,7 +98,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </Svg>
             }
             text="Throws"
-            value="R"
+            value={String(data.current_profile.throws_hand)}
           />
           <Item
             svg={
@@ -98,15 +109,27 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </Svg>
             }
             text="Bats"
-            value="L"
+            value={String(data.current_profile.bats_hand)}
           />
         </PersonalInfo>
-        <InnerInfo title="School" text="Hogwarts" />
-        <InnerInfo title="School year" text="asdas" />
-        <InnerInfo title="Team" text="ass" />
-        <InnerInfo title="Facility" text="eqwe" />
+        <InnerInfo
+          title="School"
+          text={String(data.current_profile.school.name)}
+        />
+        <InnerInfo
+          title="School year"
+          text={String(data.current_profile.school_year)}
+        />
+        <InnerInfo
+          title="Team"
+          text={String(data.current_profile.teams[0].name)}
+        />
+        <InnerInfo
+          title="Facility"
+          text={String(data.current_profile.facilities[0].u_name)}
+        />
         <TitleLine title="About"></TitleLine>
-        <Text> some words about person</Text>
+        <Text>{String(data.current_profile.biography)}</Text>
       </Info>
     </Container>
   );

@@ -13,12 +13,13 @@ export const signUp = createAsyncThunk<any, Params>(
   }
 );
 
-export const signIn = createAsyncThunk<User, SignInParams>(
+export const signIn = createAsyncThunk<any, SignInParams>(
   "user/signIn",
   async (params) => {
-    const { data } = await signInApi(params);
-
-    return data;
+    const response = await signInApi(params);
+    const { data, headers } = response;
+    console.log(data, headers);
+    return { data, headers };
   }
 );
 
