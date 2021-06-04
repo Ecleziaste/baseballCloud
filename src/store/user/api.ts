@@ -8,9 +8,8 @@ export const signUpApi = (
   payload: SignUpParams
 ): AxiosPromise<{
   // FIXME:
-  status: string;
   data: User;
-  headers: Headers;
+  status: string;
 }> => {
   return http.post("/auth", payload);
 };

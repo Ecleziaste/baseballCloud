@@ -13,17 +13,20 @@ const userSlice = createSlice({
   extraReducers: {
     [signUp.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<{ status: string; data: User; headers: any }>
+      {
+        payload,
+      }: PayloadAction<{ status: string; data: User; headers: Headers }>
     ) => {
       console.log("signUp payload", payload);
       // FIXME:
-      // if (payload.status === "success") {
-      state.headers = payload.headers;
-      state.user = payload.data;
-      return state;
-      // }
+      if (payload.status === "success") {
+        state.headers = payload.headers;
+        state.user = payload.data;
+        console.log("sign up succesful");
+        return state;
+      }
 
-      // return payload;
+      return;
     },
     [signIn.fulfilled.type]: (
       state,

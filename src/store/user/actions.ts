@@ -8,11 +8,15 @@ export const signOut = createAction("user/signOut");
 export const signUp = createAsyncThunk<any, SignUpParams>(
   "user/signUp",
   async (params) => {
-    const { data } = await signUpApi(params);
+    const {
+      data: { status },
+      data: { data },
+      headers,
+    } = await signUpApi(params);
 
-    console.log(data);
+    console.log(data, headers, status);
 
-    return data;
+    return { data, headers, status };
   }
   // const {
   //   // FIXME: почему number??
@@ -34,7 +38,7 @@ export const signIn = createAsyncThunk<any, SignInParams>(
       headers,
     } = await signInApi(params);
 
-    console.log(data);
+    console.log(data, headers);
 
     return { data, headers };
   }
