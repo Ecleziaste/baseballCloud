@@ -17,11 +17,11 @@ const userSlice = createSlice({
     ) => {
       console.log("signUp payload", payload);
       // FIXME:
-      if (payload.status === "success") {
-        state.headers = payload.headers;
-        state.user = payload.data;
-        return state;
-      }
+      // if (payload.status === "success") {
+      state.headers = payload.headers;
+      state.user = payload.data;
+      return state;
+      // }
 
       // return payload;
     },

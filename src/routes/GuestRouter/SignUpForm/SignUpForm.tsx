@@ -65,7 +65,7 @@ const SignUpForm: React.FC<Props> = () => {
       // FIXME:
       await dispatch(signUp({ role, ...value }));
       // await dispatch(signIn(value));
-      dispatch(setCurrentProfile({}));
+      // dispatch(setCurrentProfile({}));
     }
   };
 
@@ -78,7 +78,6 @@ const SignUpForm: React.FC<Props> = () => {
               onSubmit={onSubmit}
               render={({ handleSubmit }) => (
                 <FormContainer>
-                  {/* <Field name="role"> */}
                   <BtnsWrapper>
                     <BtnLeft isActive={btnPress} onClick={handleLeftBtnClick}>
                       <BtnIcon>
@@ -104,7 +103,6 @@ const SignUpForm: React.FC<Props> = () => {
                       &nbsp;Sign Up as Scout
                     </BtnRight>
                   </BtnsWrapper>
-                  {/* </Field> */}
 
                   <FormHeader>
                     <Title>{title}</Title>

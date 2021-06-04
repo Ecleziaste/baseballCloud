@@ -11,8 +11,12 @@ import Appeal from "./components/Appeal";
 
 const Profile: React.FC<Props> = () => {
   const profile = useSelector(selectCurrentProfile);
-  const [editBtn, setEditBtn] = useState(false);
+  const [editBtn, setEditBtn] = useState(true);
   const [activeTab, setActiveTab] = useState(true);
+
+  // if (profile?.first_name === null) {
+  //   setEditBtn(true);
+  // }
 
   const toggleEditBtn = (value: boolean): void => {
     setEditBtn(value);

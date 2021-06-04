@@ -10,7 +10,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "profile"],
+  // blacklist: ["auth", "profile"],
 };
 
 export const rootReducer = (state: any, action: any) => {
