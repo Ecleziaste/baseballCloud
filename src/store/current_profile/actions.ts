@@ -6,9 +6,13 @@ export const setCurrentProfile = createAsyncThunk<
   CurrentProfile,
   CurrentProfileParams
 >("currentProfile/set", async (params) => {
-  const data = await currentProfileApi(params);
+  const {
+    data: {
+      data: { current_profile },
+    },
+  } = await currentProfileApi(params);
 
-  return data;
+  return current_profile;
 });
 
 export type CurrentProfileParams = {};

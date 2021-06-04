@@ -16,7 +16,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   //   dispatch(setCurrentProfile({}));
   // }, []);
 
-  const { data } = useSelector(selectCurrentProfile)!;
+  const current_profile = useSelector(selectCurrentProfile)!;
 
   const onSubmit = (value: Values) => {
     console.log("value", value);
@@ -39,7 +39,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <SmallInputBox>
                   <Field
                     name="firstName"
-                    defaultValue={data.current_profile.first_name || ""}
+                    defaultValue={current_profile.first_name || ""}
                     placeholder="First Name *"
                     label="First Name *"
                     component={InputProfile}
@@ -48,7 +48,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <SmallInputBox>
                   <Field
                     name="lastName"
-                    defaultValue={data.current_profile.last_name || ""}
+                    defaultValue={current_profile.last_name || ""}
                     placeholder="Last Name *"
                     label="Last Name *"
                     component={InputProfile}
@@ -58,7 +58,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <BigInputBox>
                 <Field
                   name="position"
-                  defaultValue={data.current_profile.position || ""}
+                  defaultValue={current_profile.position || ""}
                   label="Position in Game *"
                   component={InputProfile}
                 />
@@ -66,7 +66,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <BigInputBox>
                 <Field
                   name="position2"
-                  defaultValue={data.current_profile.position2 || ""}
+                  defaultValue={current_profile.position2 || ""}
                   label="Secondary Position in Game"
                   component={InputProfile}
                 />
@@ -75,7 +75,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <BigInputBox>
                 <Field
                   name="age"
-                  defaultValue={String(data.current_profile.age) || ""}
+                  defaultValue={String(current_profile.age) || ""}
                   label="Age *"
                   component={InputProfile}
                 />
@@ -84,7 +84,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <SmallInputBox>
                   <Field
                     name="feet"
-                    defaultValue={String(data.current_profile.feet) || ""}
+                    defaultValue={String(current_profile.feet) || ""}
                     placeholder="Feet"
                     label="Feet *"
                     component={InputProfile}
@@ -93,7 +93,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <SmallInputBox>
                   <Field
                     name="inches"
-                    defaultValue={String(data.current_profile.inches) || ""}
+                    defaultValue={String(current_profile.inches) || ""}
                     placeholder="Inches"
                     label="Inches"
                     component={InputProfile}
@@ -104,7 +104,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <BigInputBox>
                 <Field
                   name="weight"
-                  defaultValue={String(data.current_profile.weight) || ""}
+                  defaultValue={String(current_profile.weight) || ""}
                   label="Weight *"
                   placeholder="Weight *"
                   component={InputProfile}
@@ -115,7 +115,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                   <Field
                     name="throws"
                     defaultValue={
-                      String(data.current_profile.throws_hand) || ""
+                      String(current_profile.throws_hand) || ""
                     }
                     placeholder="Throws *"
                     label="Throws *"
@@ -125,7 +125,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <SmallInputBox>
                   <Field
                     name="bats"
-                    defaultValue={String(data.current_profile.bats_hand) || ""}
+                    defaultValue={String(current_profile.bats_hand) || ""}
                     placeholder="Bats *"
                     label="Bats *"
                     component={InputProfile}
@@ -137,7 +137,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <BigInputBox>
                 <Field
                   name="school"
-                  defaultValue={String(data.current_profile.school) || ""}
+                  defaultValue={String(current_profile.school) || ""}
                   label="School *"
                   component={InputProfile}
                 />
@@ -145,7 +145,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <BigInputBox>
                 <Field
                   name="schoolYear"
-                  defaultValue={String(data.current_profile.school_year) || ""}
+                  defaultValue={String(current_profile.school_year) || ""}
                   label="School Year "
                   component={InputProfile}
                 />
@@ -153,7 +153,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <BigInputBox>
                 <Field
                   name="team"
-                  defaultValue={String(data.current_profile.teams) || ""}
+                  defaultValue={String(current_profile.teams) || ""}
                   label="Team"
                   component={InputProfile}
                 />
@@ -162,7 +162,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <BigInputBox>
                 <Field
                   name="facility"
-                  defaultValue={String(data.current_profile.facilities) || ""}
+                  defaultValue={String(current_profile.facilities) || ""}
                   label="Facility"
                   component={InputProfile}
                 />
@@ -171,7 +171,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <TextAreaBox>
                 <Field
                   name="bio"
-                  defaultValue={String(data.current_profile.biography) || ""}
+                  defaultValue={String(current_profile.biography) || ""}
                   label="Describe yourself in a few..."
                   component={TextAreaProfile}
                 />

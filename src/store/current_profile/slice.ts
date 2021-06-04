@@ -22,25 +22,21 @@ const { reducer, actions } = currentProfileSlice;
 export { reducer, actions };
 
 export type CurrentProfile = {
-  data: {
-    current_profile: {
-      id: number;
-      first_name: string;
-      last_name: string;
-      position: string;
-      position2: string;
-      avatar: string;
-      throws_hand: string;
-      bats_hand: string;
-      biography: string;
-      school_year: string;
-      feet: number;
-      inches: number;
-      weight: number;
-      age: number;
-      school: { id: number; name: string };
-      teams: [{ id: number; name: string }];
-      facilities: [{ id: number; email: string; u_name: string }];
-    };
-  };
+  id: number;
+  first_name: string;
+  last_name: string;
+  position: string;
+  position2: string;
+  avatar: string;
+  throws_hand: string;
+  bats_hand: string;
+  biography: string;
+  school_year: string;
+  feet: number;
+  inches: number;
+  weight: number;
+  age: number;
+  school: { id: number; name: string };
+  teams: [{ id: number; name: string }];
+  facilities: [{ id: number; email: string; u_name: string }];
 };

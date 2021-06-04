@@ -10,20 +10,17 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
-import { setUser } from "../../store/user/actions";
+import { signOut } from "../../store/user/actions";
 import { selectCurrentProfile } from "../../store/current_profile/selectors";
 
 const Header: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const { data } = useSelector(selectCurrentProfile)!;
+  const current_profile = useSelector(selectCurrentProfile);
   const user = useSelector(selectUser);
   const [menu, setMenu] = useState(false);
   const menuEl = useRef<HTMLDivElement>(null);
   const toggleMenu = (value: boolean) => {
     setMenu(value);
-  };
-  const logOut = () => {
-    dispatch(setUser(null));
   };
 
   const handleClickOutside = (event: Event) => {
@@ -69,8 +66,8 @@ const Header: React.FC<Props> = () => {
               </AvatarWrapper>
               <ProfileButton onClick={() => toggleMenu(!menu)}>
                 <UserName>
-                  {data.current_profile.first_name +
-                    (" " + data.current_profile.last_name) || "Profile Name"}
+                  {`${current_profile?.first_name} ${current_profile?.last_name}` ||
+                    "Profile Name"}
                 </UserName>
                 <Span>
                   <Svg width="8" height="5" viewBox="0 0 8 5">
@@ -81,7 +78,7 @@ const Header: React.FC<Props> = () => {
               {menu && (
                 <DropdownMenu ref={menuEl}>
                   <ProfileScreenLink to="profile">My Profile</ProfileScreenLink>
-                  <ExitLink onClick={logOut} to="#">
+                  <ExitLink onClick={() => dispatch(signOut())} to="#">
                     Log Out
                   </ExitLink>
                 </DropdownMenu>

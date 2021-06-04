@@ -3,6 +3,7 @@ import { signUpApi, signInApi } from "../user/api";
 import { User } from "./slice";
 
 export const setUser = createAction<any>("user/set");
+export const signOut = createAction("user/signOut");
 
 export const signUp = createAsyncThunk<any, Params>(
   "user/signUp",
@@ -16,8 +17,11 @@ export const signUp = createAsyncThunk<any, Params>(
 export const signIn = createAsyncThunk<any, SignInParams>(
   "user/signIn",
   async (params) => {
-    const response = await signInApi(params);
-    const { data, headers } = response;
+    const {
+      data: { data },
+      headers,
+    } = await signInApi(params);
+
     console.log(data, headers);
     return { data, headers };
   }
