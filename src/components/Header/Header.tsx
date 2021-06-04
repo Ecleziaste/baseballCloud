@@ -66,8 +66,9 @@ const Header: React.FC<Props> = () => {
               </AvatarWrapper>
               <ProfileButton onClick={() => toggleMenu(!menu)}>
                 <UserName>
-                  {`${current_profile?.first_name} ${current_profile?.last_name}` ||
-                    "Profile Name"}
+                  {`${current_profile?.first_name || "Profile"} ${
+                    current_profile?.last_name || "Name"
+                  }`}
                 </UserName>
                 <Span>
                   <Svg width="8" height="5" viewBox="0 0 8 5">
@@ -105,7 +106,6 @@ const DropdownMenu = styled.div`
   box-shadow: 0 3px 8px 0 rgb(0 0 0 / 15%);
   border: solid 1px #ebebeb;
   z-index: 100;
-
   &:before {
     content: "";
     width: 0;

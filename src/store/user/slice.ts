@@ -11,8 +11,19 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [signUp.fulfilled.type]: (state, action: PayloadAction<any>) => {
-      return action.payload;
+    [signUp.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<{ status: string; data: User; headers: any }>
+    ) => {
+      console.log("signUp payload", payload);
+      // FIXME:
+      if (payload.status === "success") {
+        state.headers = payload.headers;
+        state.user = payload.data;
+        return state;
+      }
+
+      // return payload;
     },
     [signIn.fulfilled.type]: (
       state,

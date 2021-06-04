@@ -37,6 +37,7 @@ const Content = styled.div`
   height: 100%;
   overflow: hidden;
 `;
+// нужно скроллить картинку с формой при перекрывании хедером\футером
 
 export default AppLayout;
 

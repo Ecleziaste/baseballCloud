@@ -1,33 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import TabBtn from "../components/TabBtn";
 import ProgressBar from "../components/ProgressBar";
 import FeaturesProfile from "./components/FeaturesProfile";
 import EditProfile from "./components/EditProfile";
 import AppLayout from "../../../layouts";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUser } from "../../../store/user/selectors";
-// import { selectCurrentProfile } from "../../../store/current_profile/selectors";
+import { useSelector } from "react-redux";
+import { selectCurrentProfile } from "../../../store/current_profile/selectors";
 import Appeal from "./components/Appeal";
-// import { setCurrentProfile } from "../../../store/current_profile/actions";
 
 const Profile: React.FC<Props> = () => {
-  // const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  // const profile = useSelector(selectCurrentProfile);
+  const profile = useSelector(selectCurrentProfile);
   const [editBtn, setEditBtn] = useState(false);
   const [activeTab, setActiveTab] = useState(true);
 
-  // useEffect(() => {
-  //   dispatch(setCurrentProfile({}));
-  // }, []);
-
   const toggleEditBtn = (value: boolean): void => {
     setEditBtn(value);
-  };
-
-  const onSubmit = (value: Values) => {
-    console.log("value", value);
   };
 
   return (
@@ -43,7 +31,7 @@ const Profile: React.FC<Props> = () => {
           </LeftPanel>
         )}
 
-        {user?.u_name !== null ? (
+        {profile?.first_name !== null ? (
           <MainContent>
             <SummaryEvents>
               <PitcherSummary>
@@ -141,7 +129,7 @@ const LeftPanel = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 328px;
+  width: 265px;
   max-width: 100%;
   background: #fff;
   border-left: 1px solid rgba(0, 0, 0, 0.1);

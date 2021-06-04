@@ -14,9 +14,6 @@ const SignInForm: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
 
-  // const id = 469;
-  // const id = 157;
-
   const onSubmit = async (value: any) => {
     if (!value.email || !value.password) {
       emailErrorSet(true);

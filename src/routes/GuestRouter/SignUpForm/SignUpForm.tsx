@@ -8,11 +8,12 @@ import { Link } from "react-router-dom";
 import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
 import { useDispatch } from "react-redux";
-import { signUp } from "../../../store/user/actions";
+import { signUp, signIn } from "../../../store/user/actions";
+import { setCurrentProfile } from "../../../store/current_profile/actions";
 
 const SignUpForm: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const [btnPress, setBtnPress] = useState(false);
+  const [btnPress, setBtnPress] = useState(true);
   const [title, setTitle] = useState("Players");
   const [text, setText] = useState(
     " Players have their own profile within the system and plan on having data collected."
@@ -23,6 +24,7 @@ const SignUpForm: React.FC<Props> = () => {
     setText(
       " Players have their own profile within the system and plan on having data collected."
     );
+    setRole("player");
   };
   const handleRightBtnClick = () => {
     setBtnPress(false);
@@ -30,22 +32,24 @@ const SignUpForm: React.FC<Props> = () => {
     setText(
       "Coaches and scouts can view players in the system but do not have their own profile."
     );
+    setRole("scout");
   };
 
+  const [role, setRole] = useState<string>("player");
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
   const [sameEmailError, sameEmailErrorSet] = useState<null | boolean>(null);
   const [pswdError, pswdErrorSet] = useState<null | boolean>(null);
   const [confError, confErrorSet] = useState<null | boolean>(null);
   const [lengthError, lengthErrorSet] = useState<null | boolean>(null);
 
-  const onSubmit = (value: any) => {
+  const onSubmit = async (value: any) => {
     if (!value.email) {
       emailErrorSet(true);
     } else emailErrorSet(null);
     if (!value.password) {
       pswdErrorSet(true);
     } else pswdErrorSet(null);
-    if (value.password && value.password !== value.confirm) {
+    if (value.password && value.password !== value.password_confirmation) {
       confErrorSet(true);
     } else confErrorSet(null);
     if (value.password.length < 8) {
@@ -58,10 +62,11 @@ const SignUpForm: React.FC<Props> = () => {
       !confError &&
       !lengthError
     ) {
-      dispatch(signUp(value));
+      // FIXME:
+      await dispatch(signUp({ role, ...value }));
+      // await dispatch(signIn(value));
+      dispatch(setCurrentProfile({}));
     }
-
-    console.log("value", value);
   };
 
   return (
@@ -69,37 +74,42 @@ const SignUpForm: React.FC<Props> = () => {
       <GuestLayout>
         <Container>
           <FormWrapper>
-            <BtnsWrapper>
-              <BtnLeft isActive={btnPress} onClick={handleLeftBtnClick}>
-                <BtnIcon>
-                  {btnPress && (
-                    <Svg width="14" height="15" viewBox="0 0 14 15">
-                      <Path fill="#FFF" d={CHECK_SVG}></Path>
-                    </Svg>
-                  )}
-                </BtnIcon>
-                Sign Up as Player
-              </BtnLeft>
-              <BtnRight isActive={!btnPress} onClick={handleRightBtnClick}>
-                <BtnIcon>
-                  {!btnPress && (
-                    <Svg width="14" height="15" viewBox="0 0 14 15">
-                      <Path fill="#FFF" d={CHECK_SVG}></Path>
-                    </Svg>
-                  )}
-                </BtnIcon>
-                &nbsp;Sign Up as Scout
-              </BtnRight>
-            </BtnsWrapper>
-            <FormHeader>
-              <Title>{title}</Title>
-              <Text>{text}</Text>
-            </FormHeader>
-
             <Form
               onSubmit={onSubmit}
               render={({ handleSubmit }) => (
                 <FormContainer>
+                  {/* <Field name="role"> */}
+                  <BtnsWrapper>
+                    <BtnLeft isActive={btnPress} onClick={handleLeftBtnClick}>
+                      <BtnIcon>
+                        {btnPress && (
+                          <Svg width="14" height="15" viewBox="0 0 14 15">
+                            <Path fill="#FFF" d={CHECK_SVG}></Path>
+                          </Svg>
+                        )}
+                      </BtnIcon>
+                      Sign Up as Player
+                    </BtnLeft>
+                    <BtnRight
+                      isActive={!btnPress}
+                      onClick={handleRightBtnClick}
+                    >
+                      <BtnIcon>
+                        {!btnPress && (
+                          <Svg width="14" height="15" viewBox="0 0 14 15">
+                            <Path fill="#FFF" d={CHECK_SVG}></Path>
+                          </Svg>
+                        )}
+                      </BtnIcon>
+                      &nbsp;Sign Up as Scout
+                    </BtnRight>
+                  </BtnsWrapper>
+                  {/* </Field> */}
+
+                  <FormHeader>
+                    <Title>{title}</Title>
+                    <Text>{text}</Text>
+                  </FormHeader>
                   <FieldContainer>
                     <FieldIcon>
                       <UserIcon
@@ -146,7 +156,7 @@ const SignUpForm: React.FC<Props> = () => {
                       ></CheckIcon>
                     </FieldIcon>
                     <Field
-                      name="confirm"
+                      name="password_confirmation"
                       type="password"
                       component={InputField}
                       placeholder="Confirm Password"

@@ -30,10 +30,13 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
           <Image />
         </ImageBox>
         <Name>
-          {current_profile.first_name} {current_profile.last_name}
+          {` ${current_profile.first_name || ""} ${
+            current_profile.last_name || ""
+          }`}
         </Name>
-        <FirstRole>{current_profile.position}</FirstRole>
-        <SecondRole>{current_profile.position2}</SecondRole>
+
+        <FirstRole>{current_profile.position || ""}</FirstRole>
+        <SecondRole>{current_profile.position2 || ""}</SecondRole>
         <EditBtn onClick={() => toggleEditBtn(true)}>
           <Span>
             <Svg
@@ -62,7 +65,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </Svg>
             }
             text="Age"
-            value={String(current_profile.age)}
+            value={`${current_profile.age || ""}`}
           />
           <Item
             svg={
@@ -74,12 +77,9 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </Svg>
             }
             text="Height"
-            value={
-              String(current_profile.feet) +
-              " ft " +
-              String(current_profile.inches) +
-              " in"
-            }
+            value={`${current_profile.feet || ""} ft ${
+              current_profile.inches || ""
+            } in`}
           />
           <Item
             svg={
@@ -91,7 +91,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </Svg>
             }
             text="Weight"
-            value={String(current_profile.weight) + " lbs"}
+            value={`${current_profile.weight} lbs`}
           />
           <Item
             svg={
@@ -102,7 +102,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </Svg>
             }
             text="Throws"
-            value={String(current_profile.throws_hand)}
+            value={`${current_profile.throws_hand || ""}`}
           />
           <Item
             svg={
@@ -113,21 +113,27 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </Svg>
             }
             text="Bats"
-            value={String(current_profile.bats_hand)}
+            value={`${current_profile.bats_hand || ""}`}
           />
         </PersonalInfo>
-        <InnerInfo title="School" text={String(current_profile.school.name)} />
+        <InnerInfo
+          title="School"
+          text={`${current_profile.school?.name || ""}`}
+        />
         <InnerInfo
           title="School year"
-          text={String(current_profile.school_year)}
+          text={`${current_profile.school_year || ""}`}
         />
-        <InnerInfo title="Team" text={String(current_profile.teams[0].name)} />
+        <InnerInfo
+          title="Team"
+          text={`${current_profile.teams[0]?.name || ""}`}
+        />
         <InnerInfo
           title="Facility"
-          text={String(current_profile.facilities[0].u_name)}
+          text={`${current_profile.facilities[0]?.u_name || ""}`}
         />
         <TitleLine title="About"></TitleLine>
-        <Text>{String(current_profile.biography)}</Text>
+        <Text>{`${current_profile.biography || ""}`}</Text>
       </Info>
     </Container>
   );

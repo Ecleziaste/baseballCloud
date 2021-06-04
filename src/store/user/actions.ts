@@ -5,13 +5,25 @@ import { User } from "./slice";
 export const setUser = createAction<any>("user/set");
 export const signOut = createAction("user/signOut");
 
-export const signUp = createAsyncThunk<any, Params>(
+export const signUp = createAsyncThunk<any, SignUpParams>(
   "user/signUp",
   async (params) => {
     const { data } = await signUpApi(params);
 
+    console.log(data);
+
     return data;
   }
+  // const {
+  //   // FIXME: почему number??
+  //   status,
+  //   data: { data },
+  //   headers,
+  // } = await signUpApi(params);
+
+  // console.log(data);
+
+  // return { status, data, headers };
 );
 
 export const signIn = createAsyncThunk<any, SignInParams>(
@@ -22,10 +34,17 @@ export const signIn = createAsyncThunk<any, SignInParams>(
       headers,
     } = await signInApi(params);
 
-    console.log(data, headers);
+    console.log(data);
+
     return { data, headers };
   }
 );
 
-type Params = { email: string; password: string; name: string };
-type SignInParams = { email: string; password: string };
+export type SignUpParams = {
+  email: string;
+  password: string;
+  password_confirmation: string;
+  role: string;
+};
+
+export type SignInParams = { email: string; password: string };
