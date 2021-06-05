@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import TabBtn from "../components/TabBtn";
 import ProgressBar from "../components/ProgressBar";
-import FeaturesProfile from "./components/FeaturesProfile";
-import EditProfile from "./components/EditProfile";
+import FeaturesProfile from "./FeaturesProfile";
+import EditProfile from "./EditProfile";
 import AppLayout from "../../../layouts";
 import { useSelector } from "react-redux";
 import { selectCurrentProfile } from "../../../store/current_profile/selectors";
@@ -14,11 +14,8 @@ const Profile: React.FC<Props> = () => {
   const [editBtn, setEditBtn] = useState(true);
   const [activeTab, setActiveTab] = useState(true);
 
-  // if (profile?.first_name === null) {
-  //   setEditBtn(true);
-  // }
-
   const toggleEditBtn = (value: boolean): void => {
+    // if (profile?.first_name === null)
     setEditBtn(value);
   };
 
@@ -61,7 +58,9 @@ const Profile: React.FC<Props> = () => {
             </InfoCard>
           </MainContent>
         ) : (
-          <Appeal></Appeal>
+          <MainContent>
+            <Appeal></Appeal>
+          </MainContent>
         )}
       </Container>
     </AppLayout>
@@ -133,7 +132,8 @@ const LeftPanel = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 265px;
+  width: 328px;
+  /* width: 265px; */
   max-width: 100%;
   background: #fff;
   border-left: 1px solid rgba(0, 0, 0, 0.1);

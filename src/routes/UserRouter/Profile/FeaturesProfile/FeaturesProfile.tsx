@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Item from "../Item";
-import InnerInfo from "../InnerInfo";
-import TitleLine from "../TitleLine";
+import Item from "../components/Item";
+import InnerInfo from "../components/InnerInfo";
+import TitleLine from "../components/TitleLine";
 import {
   EDIT,
   AGE_1,
@@ -12,9 +12,9 @@ import {
   WEIGHT_2,
   THROWS,
   BATS,
-} from "../../../../../assets/svg/paths";
+} from "../../../../assets/svg/paths";
 import { useSelector } from "react-redux";
-import { selectCurrentProfile } from "../../../../../store/current_profile/selectors";
+import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
 
 const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const current_profile = useSelector(selectCurrentProfile);

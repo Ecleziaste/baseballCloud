@@ -1,21 +1,14 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Form, Field } from "react-final-form";
-import InputProfile from "../InputProfile";
-import TitleLine from "../TitleLine";
-import TextAreaProfile from "../TextAreaProfile";
+import InputProfile from "../components/InputProfile";
+import InputDropdown from "../components/InputDropdown";
+import TitleLine from "../components/TitleLine";
+import TextAreaProfile from "../components/TextAreaProfile";
 import { useSelector } from "react-redux";
-import { selectCurrentProfile } from "../../../../../store/current_profile/selectors";
-// import { useDispatch } from "react-redux";
-// import { setCurrentProfile } from "../../../../../store/current_profile/actions";
+import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(setCurrentProfile({}));
-  // }, []);
-
   const current_profile = useSelector(selectCurrentProfile)!;
 
   const onSubmit = (value: Values) => {
@@ -57,11 +50,12 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               </FormBox>
               <BigInputBox>
                 <Field
+                  // onFocus={() => console.log("hey")}
                   name="position"
                   defaultValue={current_profile?.position || ""}
                   label="Position in Game *"
                   placeholder="Position in Game *"
-                  component={InputProfile}
+                  component={InputDropdown}
                 />
               </BigInputBox>
               <BigInputBox>
@@ -70,7 +64,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                   defaultValue={current_profile?.position2 || ""}
                   label="Secondary Position in Game"
                   placeholder="Secondary Position in Game"
-                  component={InputProfile}
+                  component={InputDropdown}
                 />
               </BigInputBox>
               <TitleLine title="Personal Info" />
@@ -120,7 +114,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                     defaultValue={current_profile?.throws_hand || ""}
                     placeholder="Throws *"
                     label="Throws *"
-                    component={InputProfile}
+                    component={InputDropdown}
                   />
                 </SmallInputBox>
                 <SmallInputBox>
@@ -129,7 +123,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                     defaultValue={current_profile?.bats_hand || ""}
                     placeholder="Bats *"
                     label="Bats *"
-                    component={InputProfile}
+                    component={InputDropdown}
                   />
                 </SmallInputBox>
               </FormBox>
@@ -141,7 +135,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                   defaultValue={current_profile?.school?.name || ""}
                   placeholder="School"
                   label="School *"
-                  component={InputProfile}
+                  component={InputDropdown}
                 />
               </BigInputBox>
               <BigInputBox>
@@ -150,7 +144,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                   defaultValue={current_profile?.school_year || ""}
                   placeholder="School Year"
                   label="School Year "
-                  component={InputProfile}
+                  component={InputDropdown}
                 />
               </BigInputBox>
               <BigInputBox>
@@ -159,7 +153,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                   defaultValue={String(current_profile?.teams) || ""}
                   placeholder="Team"
                   label="Team"
-                  component={InputProfile}
+                  component={InputDropdown}
                 />
               </BigInputBox>
               <TitleLine title="Facility" />
@@ -169,7 +163,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                   defaultValue={String(current_profile?.facilities) || ""}
                   placeholder="Facility"
                   label="Facility"
-                  component={InputProfile}
+                  component={InputDropdown}
                 />
               </BigInputBox>
               <TitleLine title="About" />
@@ -282,13 +276,11 @@ const CancelBtn = styled.button`
   border-radius: 4px;
   border: solid 1px #d1d7db;
   background-color: #fff;
-  /* box-shadow: 0 2px 25px 0 rgb(0 0 0 / 0%); */
   box-shadow: none;
   font-size: 16px;
   line-height: 19px;
   font-weight: 400;
   cursor: pointer;
-
   &:hover {
     border: solid 1px #48bbff;
     color: #48bbff;
