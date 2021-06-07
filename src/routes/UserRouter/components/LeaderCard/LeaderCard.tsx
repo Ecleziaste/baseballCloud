@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Favourite from "../Favourite";
+import UnFavourite from "../UnFavourite";
 
 const LeaderCard: React.FC<Props> = () => {
   const [heartBtn, setHeartBtn] = useState<boolean>(false);
@@ -18,15 +20,7 @@ const LeaderCard: React.FC<Props> = () => {
       <TABLE_TITLE_8>Distance</TABLE_TITLE_8>
       <TABLE_TITLE_9>
         <HeartBtn onClick={() => setHeartBtn(!heartBtn)}>
-          {heartBtn ? (
-            <HeartFilledBox className="fa fa-heart">
-              <HeartFilled></HeartFilled>
-            </HeartFilledBox>
-          ) : (
-            <HeartEmptyBox className="fa fa-heart-o">
-              <HeartEmpty></HeartEmpty>
-            </HeartEmptyBox>
-          )}
+          {heartBtn ? <Favourite /> : <UnFavourite />}
         </HeartBtn>
       </TABLE_TITLE_9>
     </CardContent>
@@ -85,20 +79,6 @@ const TABLE_TITLE_9 = styled(TABLE_TITLE)`
 `;
 const HeartBtn = styled.div`
   display: flex;
-`;
-const HeartEmptyBox = styled.span`
-  display: flex;
-  color: #48bbff;
-`;
-const HeartEmpty = styled.i`
-  content: "\f08a";
-`;
-const HeartFilledBox = styled.span`
-  display: flex;
-  color: #48bbff;
-`;
-const HeartFilled = styled.i`
-  content: "\f004";
 `;
 
 export default LeaderCard;
