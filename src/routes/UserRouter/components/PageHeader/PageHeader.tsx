@@ -14,6 +14,7 @@ const PageHeader = styled.div`
   padding: 16px;
   display: flex;
   justify-content: space-between;
+  
 `;
 const Title = styled.div`
   font-size: 24px;
@@ -30,7 +31,6 @@ const DropdownContainer = styled.div`
   justify-content: flex-end;
   flex-flow: row wrap;
 `;
-
 
 export default Network;
 

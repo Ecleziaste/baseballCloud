@@ -8,7 +8,7 @@ import Leaderboard from "./Leaderboard";
 const UserRouter: React.FC<Props> = () => {
   return (
     <>
-      <Redirect to="/profile" />
+      {/* <Redirect to="/profile" /> */}
       <Switch>
         <Route component={Profile} exact path="/profile" />
         <Route component={Leaderboard} path="/leaderboard" />

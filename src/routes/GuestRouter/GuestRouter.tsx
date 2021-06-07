@@ -7,7 +7,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 const GuestRouter: React.FC<Props> = () => {
   return (
     <>
-      <Redirect to="/login" />
+      {/* <Redirect to="/login" /> */}
       <Switch>
         <Route component={SignInForm} exact path="/login" />
         <Route component={SignUpForm} path="/registration" />

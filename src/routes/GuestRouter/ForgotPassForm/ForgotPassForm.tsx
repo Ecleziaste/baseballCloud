@@ -42,7 +42,6 @@ const ForgotPassForm: React.FC<Props> = () => {
                         ></UserIcon>
                       </FieldIcon>
                       <Field
-                        // validate={undefined}
                         value={"undefined"}
                         name="email"
                         type="email"

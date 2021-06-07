@@ -211,6 +211,7 @@ const AvatarWrapper = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 50%;
+  margin-right: 2px;
 `;
 const ProfileLink = styled(Link)`
   cursor: pointer;
