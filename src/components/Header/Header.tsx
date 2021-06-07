@@ -7,13 +7,18 @@ import {
   LOGO_2_SVG,
   LOGO_3_SVG,
 } from "../../assets/svg/paths";
-import { Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
 import { signOut } from "../../store/user/actions";
 import { selectCurrentProfile } from "../../store/current_profile/selectors";
 
 const Header: React.FC<Props> = () => {
+  const location = useLocation();
+  const { pathname } = location;
+  //Javascript split method to get the name of the path in array
+  const splitLocation = pathname.split("/");
+
   const dispatch = useDispatch();
   const current_profile = useSelector(selectCurrentProfile);
   const user = useSelector(selectUser);
@@ -53,8 +58,8 @@ const Header: React.FC<Props> = () => {
         <UserMenu>
           <NavBar>
             <Nav>
-              <NavLink to="leaderboard">Leaderboard</NavLink>
-              <NavLink to="network">Network</NavLink>
+              <MenuLink to="leaderboard">Leaderboard</MenuLink>
+              <MenuLink to="network">Network</MenuLink>
             </Nav>
           </NavBar>
           <UserWrapper>
@@ -161,14 +166,14 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
 `;
-const NavLink = styled(Link)`
+const MenuLink = styled(NavLink)`
   padding: 0 8px;
   color: #788b99;
   cursor: pointer;
   text-decoration: none;
   position: relative;
   &:hover {
-    &:after {
+    &::after {
       border-bottom: 4px solid #cbcccd;
       content: "";
       display: block;
@@ -176,6 +181,22 @@ const NavLink = styled(Link)`
       right: 0;
       position: absolute;
       bottom: -16px;
+    }
+  }
+  &.active {
+    &::after {
+      border-bottom: 4px solid #788b99;
+      content: "";
+      display: block;
+      left: 0;
+      right: 0;
+      position: absolute;
+      bottom: -16px;
+    }
+  }
+  &:hover {
+    &::after {
+      border-bottom: 4px solid #cbcccd;
     }
   }
 `;

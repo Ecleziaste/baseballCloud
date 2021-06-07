@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import AppLayout from "../../../layouts";
+import PageHeader from "../components/PageHeader";
 
 const Network: React.FC<Props> = () => {
-  return <Container></Container>;
+  return (
+    <AppLayout>
+      <PageHeader title="Network" />
+    </AppLayout>
+  );
 };
-
-const Container = styled.div``;
 
 export default Network;
 
