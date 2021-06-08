@@ -11,14 +11,21 @@ import SelectableText from "../../../components/SelectableText";
 const Leaderboard: React.FC<Props> = () => {
   const [activeTab, setActiveTab] = useState(true);
 
-  const [menu, setMenu] = useState(false);
+  const [exit, setExit] = useState(false);
+  const [date, setDate] = useState(false);
+  const [team, setTeam] = useState(false);
+  const [school, setSchool] = useState(false);
+  const [position, setPosition] = useState(false);
+  const [age, setAge] = useState(false);
+  const [all, setAll] = useState(false);
   const menuEl = useRef<HTMLDivElement>(null);
-  const toggleMenu = (value: boolean) => {
-    setMenu(value);
-  };
+
   const handleClickOutside = (event: Event) => {
     if (menuEl.current && !menuEl.current.contains(event.target as Node)) {
-      toggleMenu(false);
+      setExit(false);
+      setDate(false);
+      setPosition(false);
+      setAll(false);
     }
   };
   useEffect(() => {
@@ -31,15 +38,49 @@ const Leaderboard: React.FC<Props> = () => {
   return (
     <AppLayout>
       <Main>
-        <PageHeader title="Leaderboard" />
+        <HeaderRow>
+          <PageHeader title="Leaderboard" />
+          <Selectables>
+            <HeaderDropdown onClick={() => setDate(!date)}>
+              <Select isActive={date}>Date</Select>
+              {date && (
+                <DropDownSimple width="178px" refer={menuEl}>
+                  <SelectableText text="All"></SelectableText>
+                  <SelectableText text="Last Week"></SelectableText>
+                  <SelectableText text="Month"></SelectableText>
+                </DropDownSimple>
+              )}
+            </HeaderDropdown>
+            <HeaderDropdown onClick={() => setPosition(!position)}>
+              <Select isActive={position}>Position</Select>
+              {position && (
+                <DropDownSimple width="178px" refer={menuEl}>
+                  <SelectableText text="All"></SelectableText>
+                  <SelectableText text="Catcher"></SelectableText>
+                  <SelectableText text="First Base"></SelectableText>
+                </DropDownSimple>
+              )}
+            </HeaderDropdown>
+            <HeaderDropdown onClick={() => setAll(!all)}>
+              <Select isActive={all}>All</Select>
+              {all && (
+                <DropDownSimple width="178px" refer={menuEl}>
+                  <SelectableText text="All"></SelectableText>
+                  <SelectableText text="Favourite"></SelectableText>
+                </DropDownSimple>
+              )}
+            </HeaderDropdown>
+          </Selectables>
+        </HeaderRow>
+
         <Container>
           <TabBtnsWrapper>
             <TabBtn isActive={activeTab} text="Batting"></TabBtn>
             <TabBtn isActive={!activeTab} text="Pitching"></TabBtn>
           </TabBtnsWrapper>
-          <TableDropdown onClick={() => toggleMenu(!menu)}>
-            <Select>Exit Velocity</Select>
-            {menu && (
+          <TableDropdown onClick={() => setExit(!exit)}>
+            <Select isActive={exit}>Exit Velocity</Select>
+            {exit && (
               <DropDownSimple width="178px" refer={menuEl}>
                 <SelectableText text="Exit Velocity"></SelectableText>
                 <SelectableText text="Carry Distance"></SelectableText>
@@ -101,11 +142,19 @@ const TableHeaders = styled.div`
   font-weight: 300;
   color: #667784;
 `;
+const HeaderRow = styled(Container)``;
+const Selectables = styled.div`
+  display: flex;
+`;
 const TableDropdown = styled.div`
   padding-right: 23px;
   margin-right: 23px;
   position: relative;
   /* top: 18px; */
+`;
+const HeaderDropdown = styled.div`
+  padding: 0 10px;
+  position: relative;
 `;
 const TableBody = styled.div`
   display: flex;

@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BLUE_ARROW } from "../../assets/svg/paths";
 
-const Select: React.FC<Props> = ({ children }) => {
+const Select: React.FC<Props> = ({ children, isActive }) => {
+  // const [rotate, setRotate] = useState(isActive);
+  // console.log(rotate);
+
   return (
-    <Container>
+    <Container
+    //  onClick={() => setRotate(!rotate)}
+    >
       {children}
-      <Span>
+      <Span changeRotation={isActive}>
         <Svg width="16" height="9" viewBox="0 0 16 9">
           <Path fill="#48BBFF" fill-rule="nonzero" d={BLUE_ARROW}></Path>
         </Svg>
@@ -32,14 +37,12 @@ const Container = styled.div`
     top: -2px;
   }
 `;
-
-const Span = styled.span`
+const Span = styled.span<{ changeRotation: boolean }>`
   display: flex;
   margin-left: 6px;
-  rotate: false;
-  transform: rotate(180deg);
   margin-top: 6px;
   width: 16px;
+  transform: ${(props) => (props.changeRotation ? "rotate(180deg)" : "none")};
   height: 9px;
   font-size: 16px;
   line-height: 1.19;
@@ -61,4 +64,4 @@ const Path = styled.path`
 
 export default Select;
 
-type Props = {};
+type Props = { isActive: boolean };
