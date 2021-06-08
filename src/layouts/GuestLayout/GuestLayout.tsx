@@ -16,7 +16,7 @@ const Container = styled.div`
   background-image: url(${MAIN_SRC});
   background-position: top center;
   background-size: cover;
-  overflow: hidden;
+  overflow: auto;
 `;
 
 export default GuestLayout;

@@ -7,18 +7,16 @@ import {
   LOGO_2_SVG,
   LOGO_3_SVG,
 } from "../../assets/svg/paths";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
 import { signOut } from "../../store/user/actions";
 import { selectCurrentProfile } from "../../store/current_profile/selectors";
+import DropdownSimple from "../DropdownSimple";
+import SelectableText from "../SelectableText";
+import DefaultIcon from "../DefaultIcon";
 
 const Header: React.FC<Props> = () => {
-  const location = useLocation();
-  const { pathname } = location;
-  //Javascript split method to get the name of the path in array
-  const splitLocation = pathname.split("/");
-
   const dispatch = useDispatch();
   const current_profile = useSelector(selectCurrentProfile);
   const user = useSelector(selectUser);
@@ -75,19 +73,22 @@ const Header: React.FC<Props> = () => {
                     current_profile?.last_name || "Name"
                   }`}
                 </UserName>
-                <Span>
-                  <Svg width="8" height="5" viewBox="0 0 8 5">
-                    <Path d={TRIANGLE_ARROW_SVG}></Path>
-                  </Svg>
-                </Span>
+                <DefaultIcon
+                  width="8"
+                  height="5"
+                  viewBox="0 0 8 5"
+                  d={TRIANGLE_ARROW_SVG}
+                />
               </ProfileButton>
               {menu && (
-                <DropdownMenu ref={menuEl}>
-                  <ProfileScreenLink to="profile">My Profile</ProfileScreenLink>
-                  <ExitLink onClick={() => dispatch(signOut())} to="#">
-                    Log Out
+                <DropdownSimple width="94%" refer={menuEl}>
+                  <ProfileScreenLink to="profile">
+                    <SelectableText text="My Profile" />
+                  </ProfileScreenLink>
+                  <ExitLink onClick={() => dispatch(signOut())} to="/login">
+                    <SelectableText text="Log Out" />
                   </ExitLink>
-                </DropdownMenu>
+                </DropdownSimple>
               )}
             </User>
           </UserWrapper>
@@ -97,47 +98,8 @@ const Header: React.FC<Props> = () => {
   );
 };
 
-const DropdownMenu = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  width: 178px;
-  position: absolute;
-  top: 100%;
-  right: -5px;
-  margin-top: 12px;
-  padding: 8px 0;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 3px 8px 0 rgb(0 0 0 / 15%);
-  border: solid 1px #ebebeb;
-  z-index: 100;
-  &:before {
-    content: "";
-    width: 0;
-    height: 0;
-    position: absolute;
-    top: -8px;
-    right: 25px;
-    z-index: 100;
-    border-style: solid;
-    border-width: 0 8px 8px 8px;
-    border-color: transparent transparent #fff transparent;
-  }
-`;
 const ProfileScreenLink = styled(Link)`
-  display: block;
-  padding: 8px 16px;
-  background: #fff;
-  line-height: 1;
-  font-size: 16px;
-  line-height: 1.13;
-  font-weight: 400;
-  color: #788b99;
-  cursor: pointer;
   text-decoration: none;
-  &:hover {
-    background: #ecf8ff;
-  }
 `;
 const ExitLink = styled(ProfileScreenLink)``;
 const Container = styled.div`
@@ -148,7 +110,6 @@ const Container = styled.div`
   padding: 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background: #fff;
-  /* overflow: hidden; */
 `;
 const LogoContainer = styled(Link)`
   cursor: pointer;

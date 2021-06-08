@@ -9,20 +9,20 @@ const LeaderCard: React.FC<Props> = () => {
   return (
     <CardContent>
       <TitleWrapper>
-        <TABLE_TITLE_1>1</TABLE_TITLE_1>
+        <TITLE_1>1</TITLE_1>
       </TitleWrapper>
-      <TABLE_TITLE_2>Batter Name</TABLE_TITLE_2>
-      <TABLE_TITLE_3>Age</TABLE_TITLE_3>
-      <TABLE_TITLE_4>School</TABLE_TITLE_4>
-      <TABLE_TITLE_5>Teams</TABLE_TITLE_5>
-      <TABLE_TITLE_6>Exit Velocity</TABLE_TITLE_6>
-      <TABLE_TITLE_7>Launch Angle</TABLE_TITLE_7>
-      <TABLE_TITLE_8>Distance</TABLE_TITLE_8>
-      <TABLE_TITLE_9>
+      <TITLE_2>Batter Name</TITLE_2>
+      <TITLE_3>Age</TITLE_3>
+      <TITLE_4>School</TITLE_4>
+      <TITLE_5>Teams</TITLE_5>
+      <TITLE_6>Exit Velocity</TITLE_6>
+      <TITLE_7>Launch Angle</TITLE_7>
+      <TITLE_8>Distance</TITLE_8>
+      <TITLE_9>
         <HeartBtn onClick={() => setHeartBtn(!heartBtn)}>
           {heartBtn ? <Favourite /> : <UnFavourite />}
         </HeartBtn>
-      </TABLE_TITLE_9>
+      </TITLE_9>
     </CardContent>
   );
 };
@@ -40,40 +40,40 @@ const CardContent = styled.div`
   font-weight: 400;
   color: #414f5a;
 `;
-const TABLE_TITLE = styled.div`
+const TITLE = styled.div`
   display: flex;
   max-width: 100%;
   justify-content: flex-start;
   text-overflow: ellipsis;
 `;
-const TitleWrapper = styled(TABLE_TITLE)`
+const TitleWrapper = styled(TITLE)`
   padding-left: 6px;
   width: 6%;
 `;
-const TABLE_TITLE_1 = styled(TABLE_TITLE)``;
-const TABLE_TITLE_2 = styled(TABLE_TITLE)`
+const TITLE_1 = styled(TITLE)``;
+const TITLE_2 = styled(TITLE)`
   width: 14%;
   cursor: pointer;
 `;
-const TABLE_TITLE_3 = styled(TABLE_TITLE)`
+const TITLE_3 = styled(TITLE)`
   width: 5%;
 `;
-const TABLE_TITLE_4 = styled(TABLE_TITLE)`
+const TITLE_4 = styled(TITLE)`
   width: 14%;
 `;
-const TABLE_TITLE_5 = styled(TABLE_TITLE)`
+const TITLE_5 = styled(TITLE)`
   width: 14.5%;
 `;
-const TABLE_TITLE_6 = styled(TABLE_TITLE)`
+const TITLE_6 = styled(TITLE)`
   width: 14.5%;
 `;
-const TABLE_TITLE_7 = styled(TABLE_TITLE)`
+const TITLE_7 = styled(TITLE)`
   width: 14.5%;
 `;
-const TABLE_TITLE_8 = styled(TABLE_TITLE)`
+const TITLE_8 = styled(TITLE)`
   width: 10%;
 `;
-const TABLE_TITLE_9 = styled(TABLE_TITLE)`
+const TITLE_9 = styled(TITLE)`
   cursor: pointer;
   justify-content: flex-end;
 `;

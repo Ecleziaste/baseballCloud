@@ -1,12 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import AppLayout from "../../../layouts";
 import TabBtn from "../components/TabBtn";
 import PageHeader from "../components/PageHeader";
 import LeaderCard from "../components/LeaderCard";
+import Select from "../../../components/Select";
+import DropDownSimple from "../../../components/DropdownSimple";
+import SelectableText from "../../../components/SelectableText";
 
 const Leaderboard: React.FC<Props> = () => {
   const [activeTab, setActiveTab] = useState(true);
+
+  const [menu, setMenu] = useState(false);
+  const menuEl = useRef<HTMLDivElement>(null);
+  const toggleMenu = (value: boolean) => {
+    setMenu(value);
+  };
+  const handleClickOutside = (event: Event) => {
+    if (menuEl.current && !menuEl.current.contains(event.target as Node)) {
+      toggleMenu(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  });
 
   return (
     <AppLayout>
@@ -17,7 +37,15 @@ const Leaderboard: React.FC<Props> = () => {
             <TabBtn isActive={activeTab} text="Batting"></TabBtn>
             <TabBtn isActive={!activeTab} text="Pitching"></TabBtn>
           </TabBtnsWrapper>
-          <div>Exit Velocity</div>
+          <TableDropdown onClick={() => toggleMenu(!menu)}>
+            <Select>Exit Velocity</Select>
+            {menu && (
+              <DropDownSimple width="178px" refer={menuEl}>
+                <SelectableText text="Exit Velocity"></SelectableText>
+                <SelectableText text="Carry Distance"></SelectableText>
+              </DropDownSimple>
+            )}
+          </TableDropdown>
         </Container>
         <PageBody>
           <TableHeaders>
@@ -72,6 +100,12 @@ const TableHeaders = styled.div`
   line-height: 1;
   font-weight: 300;
   color: #667784;
+`;
+const TableDropdown = styled.div`
+  padding-right: 23px;
+  margin-right: 23px;
+  position: relative;
+  /* top: 18px; */
 `;
 const TableBody = styled.div`
   display: flex;

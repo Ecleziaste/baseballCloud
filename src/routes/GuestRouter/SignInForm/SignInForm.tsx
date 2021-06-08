@@ -20,8 +20,7 @@ const SignInForm: React.FC<Props> = () => {
     } else {
       emailErrorSet(null);
       await dispatch(signIn(value));
-      dispatch(setCurrentProfile({}));
-      // await dispatch(setCurrentProfile({}));
+      await dispatch(setCurrentProfile({}));
     }
   };
 

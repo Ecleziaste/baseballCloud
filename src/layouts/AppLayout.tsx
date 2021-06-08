@@ -9,9 +9,7 @@ const AppLayout: React.FC<Props> = ({ children }) => {
       <HeaderWrapper>
         <Header />
       </HeaderWrapper>
-
       <Content>{children}</Content>
-
       <FooterWrapper>
         <Footer />
       </FooterWrapper>
@@ -24,6 +22,7 @@ const Wrapper = styled.div`
   flex-flow: column nowrap;
   justify-content: space-between;
   height: 100vh;
+  overflow: hidden;
 `;
 const HeaderWrapper = styled.div`
   width: 100%;
@@ -37,7 +36,6 @@ const Content = styled.div`
   height: 100%;
   overflow: hidden;
 `;
-// нужно скроллить картинку с формой при перекрывании хедером\футером
 
 export default AppLayout;
 
