@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { BLUE_ARROW } from "../../assets/svg/paths";
 
 const Select: React.FC<Props> = ({ children, isActive }) => {
-  // const [rotate, setRotate] = useState(isActive);
-  // console.log(rotate);
-
   return (
-    <Container
-    //  onClick={() => setRotate(!rotate)}
-    >
+    <Container>
       {children}
       <Span changeRotation={isActive}>
         <Svg width="16" height="9" viewBox="0 0 16 9">

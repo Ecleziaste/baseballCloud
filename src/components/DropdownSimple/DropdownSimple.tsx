@@ -1,15 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-const DropdownSimple: React.FC<Props> = ({ width, children, refer }) => {
+const DropdownSimple: React.FC<Props> = ({
+  width,
+  height,
+  children,
+  refer,
+}) => {
   return (
-    <DropdownMenu width={width} ref={refer}>
+    <DropdownMenu width={width} height={height} ref={refer}>
       {children}
     </DropdownMenu>
   );
 };
 
-const DropdownMenu = styled.div<{ width: string }>`
+const DropdownMenu = styled.div<{ width: string; height: string }>`
   display: flex;
   flex-flow: column nowrap;
   width: ${(props) => props.width};
@@ -23,8 +28,13 @@ const DropdownMenu = styled.div<{ width: string }>`
   box-shadow: 0 3px 8px 0 rgb(0 0 0 / 15%);
   border: solid 1px #ebebeb;
   z-index: 100;
-  height: auto;
-  overflow: visible;
+  height: ${(props) => props.height};
+  overflow: ${(props) => {
+    if (props.height === "188px") {
+      return "auto";
+    }
+    return "visible";
+  }};
   &:before {
     content: "";
     width: 0;
@@ -53,4 +63,8 @@ const DropdownMenu = styled.div<{ width: string }>`
 
 export default DropdownSimple;
 
-type Props = { width: string; refer?: React.RefObject<HTMLDivElement> };
+type Props = {
+  width: string;
+  height: string;
+  refer?: React.RefObject<HTMLDivElement>;
+};

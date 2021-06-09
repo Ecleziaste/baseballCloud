@@ -7,6 +7,7 @@ import LeaderCard from "../components/LeaderCard";
 import Select from "../../../components/Select";
 import DropDownSimple from "../../../components/DropdownSimple";
 import SelectableText from "../../../components/SelectableText";
+import SelectInput from "../components/SelectInput";
 
 const Leaderboard: React.FC<Props> = () => {
   const [activeTab, setActiveTab] = useState(true);
@@ -44,27 +45,43 @@ const Leaderboard: React.FC<Props> = () => {
             <HeaderDropdown onClick={() => setDate(!date)}>
               <Select isActive={date}>Date</Select>
               {date && (
-                <DropDownSimple width="178px" refer={menuEl}>
+                <DropDownSimple height="auto" width="178px" refer={menuEl}>
                   <SelectableText text="All"></SelectableText>
                   <SelectableText text="Last Week"></SelectableText>
                   <SelectableText text="Month"></SelectableText>
                 </DropDownSimple>
               )}
             </HeaderDropdown>
+
+            <HeaderInput onClick={() => setSchool(!school)}>
+              <Select isActive={school}>School</Select>
+            </HeaderInput>
+            <HeaderInput onClick={() => setTeam(!team)}>
+              <Select isActive={team}>Team</Select>
+            </HeaderInput>
+
             <HeaderDropdown onClick={() => setPosition(!position)}>
               <Select isActive={position}>Position</Select>
               {position && (
-                <DropDownSimple width="178px" refer={menuEl}>
+                <DropDownSimple height="188px" width="106%" refer={menuEl}>
                   <SelectableText text="All"></SelectableText>
                   <SelectableText text="Catcher"></SelectableText>
                   <SelectableText text="First Base"></SelectableText>
+                  <SelectableText text="Second Base"></SelectableText>
+                  <SelectableText text="Shortstop "></SelectableText>
+                  <SelectableText text="Third Base"></SelectableText>
                 </DropDownSimple>
               )}
             </HeaderDropdown>
+
+            <HeaderInput onClick={() => setAge(!age)}>
+              <Select isActive={age}>Age</Select>
+            </HeaderInput>
+
             <HeaderDropdown onClick={() => setAll(!all)}>
               <Select isActive={all}>All</Select>
               {all && (
-                <DropDownSimple width="178px" refer={menuEl}>
+                <DropDownSimple height="auto" width="180%" refer={menuEl}>
                   <SelectableText text="All"></SelectableText>
                   <SelectableText text="Favourite"></SelectableText>
                 </DropDownSimple>
@@ -81,7 +98,7 @@ const Leaderboard: React.FC<Props> = () => {
           <TableDropdown onClick={() => setExit(!exit)}>
             <Select isActive={exit}>Exit Velocity</Select>
             {exit && (
-              <DropDownSimple width="178px" refer={menuEl}>
+              <DropDownSimple height="auto" width="178px" refer={menuEl}>
                 <SelectableText text="Exit Velocity"></SelectableText>
                 <SelectableText text="Carry Distance"></SelectableText>
               </DropDownSimple>
@@ -145,17 +162,18 @@ const TableHeaders = styled.div`
 const HeaderRow = styled(Container)``;
 const Selectables = styled.div`
   display: flex;
+  margin-right: 24px;
 `;
 const TableDropdown = styled.div`
   padding-right: 23px;
   margin-right: 23px;
   position: relative;
-  /* top: 18px; */
 `;
 const HeaderDropdown = styled.div`
-  padding: 0 10px;
+  padding-right: 22px;
   position: relative;
 `;
+const HeaderInput = styled(HeaderDropdown)``;
 const TableBody = styled.div`
   display: flex;
   flex-direction: column;

@@ -81,7 +81,7 @@ const Header: React.FC<Props> = () => {
                 />
               </ProfileButton>
               {menu && (
-                <DropdownSimple width="94%" refer={menuEl}>
+                <DropdownSimple height="auto" width="94%" refer={menuEl}>
                   <ProfileScreenLink to="profile">
                     <SelectableText text="My Profile" />
                   </ProfileScreenLink>
