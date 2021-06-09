@@ -6,13 +6,22 @@ const DropdownSimple: React.FC<Props> = ({
   height,
   children,
   refer,
+  // options,
+  // onSelect,
+  // type,
 }) => {
   return (
     <DropdownMenu width={width} height={height} ref={refer}>
       {children}
+      {/* {options.map(o => {
+        return <Text onClick(() => onSelect({type: type,  text: '123213'}))>{o}</Text>
+      })} */}
     </DropdownMenu>
   );
 };
+
+// const options = ['123', '123']
+// const onSelect = (text) => void
 
 const DropdownMenu = styled.div<{ width: string; height: string }>`
   display: flex;

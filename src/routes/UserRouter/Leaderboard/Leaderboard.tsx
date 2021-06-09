@@ -12,6 +12,16 @@ import SelectInput from "../components/SelectInput";
 const Leaderboard: React.FC<Props> = () => {
   const [activeTab, setActiveTab] = useState(true);
 
+  const [selects, setSelects] = useState<Selects>({
+    team: "123",
+    position: "catcher",
+    favorite: 1,
+    type: "exit_velocity",
+    date: "last_week",
+  });
+
+  useEffect(() => {}, [selects]);
+
   const [exit, setExit] = useState(false);
   const [date, setDate] = useState(false);
   const [team, setTeam] = useState(false);
@@ -35,6 +45,11 @@ const Leaderboard: React.FC<Props> = () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
   });
+  // const selectOption = ({type, text}) => {
+  //   const newSelctedData = {...selects, type: text}
+
+  // setSelects(newSelctedData)
+  // }
 
   return (
     <AppLayout>
@@ -43,14 +58,15 @@ const Leaderboard: React.FC<Props> = () => {
           <PageHeader title="Leaderboard" />
           <Selectables>
             <HeaderDropdown onClick={() => setDate(!date)}>
-              <Select isActive={date}>Date</Select>
-              {date && (
-                <DropDownSimple height="auto" width="178px" refer={menuEl}>
-                  <SelectableText text="All"></SelectableText>
-                  <SelectableText text="Last Week"></SelectableText>
-                  <SelectableText text="Month"></SelectableText>
-                </DropDownSimple>
-              )}
+              <Select>Date</Select>
+              <DropDownSimple height="auto" width="178px" refer={menuEl}>
+                <select>
+                  <options></options>
+                </select>
+                <SelectableText text="All" />
+                <SelectableText text="Last Week" />
+                <SelectableText text="Month" />
+              </DropDownSimple>
             </HeaderDropdown>
 
             <HeaderInput onClick={() => setSchool(!school)}>
@@ -64,12 +80,12 @@ const Leaderboard: React.FC<Props> = () => {
               <Select isActive={position}>Position</Select>
               {position && (
                 <DropDownSimple height="188px" width="106%" refer={menuEl}>
-                  <SelectableText text="All"></SelectableText>
-                  <SelectableText text="Catcher"></SelectableText>
-                  <SelectableText text="First Base"></SelectableText>
-                  <SelectableText text="Second Base"></SelectableText>
-                  <SelectableText text="Shortstop "></SelectableText>
-                  <SelectableText text="Third Base"></SelectableText>
+                  <SelectableText text="All" />
+                  <SelectableText text="Catcher" />
+                  <SelectableText text="First Base" />
+                  <SelectableText text="Second Base" />
+                  <SelectableText text="Shortstop " />
+                  <SelectableText text="Third Base" />
                 </DropDownSimple>
               )}
             </HeaderDropdown>
@@ -82,8 +98,8 @@ const Leaderboard: React.FC<Props> = () => {
               <Select isActive={all}>All</Select>
               {all && (
                 <DropDownSimple height="auto" width="180%" refer={menuEl}>
-                  <SelectableText text="All"></SelectableText>
-                  <SelectableText text="Favourite"></SelectableText>
+                  <SelectableText text="All" />
+                  <SelectableText text="Favourite" />
                 </DropDownSimple>
               )}
             </HeaderDropdown>
@@ -99,8 +115,8 @@ const Leaderboard: React.FC<Props> = () => {
             <Select isActive={exit}>Exit Velocity</Select>
             {exit && (
               <DropDownSimple height="auto" width="178px" refer={menuEl}>
-                <SelectableText text="Exit Velocity"></SelectableText>
-                <SelectableText text="Carry Distance"></SelectableText>
+                <SelectableText text="Exit Velocity" />
+                <SelectableText text="Carry Distance" />
               </DropDownSimple>
             )}
           </TableDropdown>
@@ -218,3 +234,11 @@ const TABLE_TITLE_9 = styled(TABLE_TITLE)`
 export default Leaderboard;
 
 type Props = {};
+
+type Selects = {
+  team?: string | undefined;
+  position?: string | undefined;
+  favorite?: number | undefined;
+  type?: string | undefined;
+  date?: string | undefined;
+};

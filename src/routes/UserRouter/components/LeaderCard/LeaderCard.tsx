@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Favourite from "../Favourite";
 import UnFavourite from "../UnFavourite";
+import { Link } from "react-router-dom";
 
 const LeaderCard: React.FC<Props> = () => {
   const [heartBtn, setHeartBtn] = useState<boolean>(false);
@@ -51,9 +52,17 @@ const TitleWrapper = styled(TITLE)`
   width: 6%;
 `;
 const TITLE_1 = styled(TITLE)``;
-const TITLE_2 = styled(TITLE)`
+const TITLE_2 = styled(Link)`
+  display: flex;
+  max-width: 100%;
+  justify-content: flex-start;
+  text-overflow: ellipsis;
   width: 14%;
   cursor: pointer;
+  &:hover {
+    color: #337ab7;
+    text-decoration: underline;
+  }
 `;
 const TITLE_3 = styled(TITLE)`
   width: 5%;
