@@ -1,31 +1,31 @@
 import React from "react";
 import styled from "styled-components";
 
-const DropdownSimple: React.FC<Props> = ({
-  width,
-  height,
+const Dropdown: React.FC<Props> = ({
   children,
+  options,
+  onSelect,
   refer,
-  // options,
-  // onSelect,
   // type,
 }) => {
+  const width = "none";
+  // const onSelect = (text) => void
+
   return (
-    <DropdownMenu width={width} height={height} ref={refer}>
+    <DropdownMenu width={width} options={options} ref={refer}>
       {children}
-      {/* {options.map(o => {
-        return <Text onClick(() => onSelect({type: type,  text: '123213'}))>{o}</Text>
-      })} */}
+      {options.map((o) => {
+        return <Option onClick={() => onSelect(o)}>{o}</Option>;
+      })}
+      {/* onClick={() => onSelect({type: type,  text: '123213'})} */}
     </DropdownMenu>
   );
 };
 
-// const options = ['123', '123']
-// const onSelect = (text) => void
-
-const DropdownMenu = styled.div<{ width: string; height: string }>`
+const DropdownMenu = styled.div<{ width: string; options: Array<string> }>`
   display: flex;
   flex-flow: column nowrap;
+  text-align: left;
   width: ${(props) => props.width};
   position: absolute;
   top: 100%;
@@ -37,9 +37,14 @@ const DropdownMenu = styled.div<{ width: string; height: string }>`
   box-shadow: 0 3px 8px 0 rgb(0 0 0 / 15%);
   border: solid 1px #ebebeb;
   z-index: 100;
-  height: ${(props) => props.height};
+  height: ${(props) => {
+    if (props.options.length > 3) {
+      return "188px";
+    }
+    return "auto";
+  }};
   overflow: ${(props) => {
-    if (props.height === "188px") {
+    if (props.options.length > 3) {
       return "auto";
     }
     return "visible";
@@ -69,11 +74,27 @@ const DropdownMenu = styled.div<{ width: string; height: string }>`
     border-color: transparent transparent rgba(0, 0, 0, 0.15) transparent;
   }
 `;
+const Option = styled.option`
+  display: block;
+  padding: 8px 16px;
+  background: #fff;
+  line-height: 1;
+  font-size: 16px;
+  line-height: 1.13;
+  font-weight: 400;
+  color: #788b99;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    background: #ecf8ff;
+  }
+`;
 
-export default DropdownSimple;
+export default Dropdown;
 
 type Props = {
-  width: string;
-  height: string;
+  handleClick?: (val: boolean) => void | undefined;
+  options: Array<string>;
+  onSelect: (text: string) => void;
   refer?: React.RefObject<HTMLDivElement>;
 };

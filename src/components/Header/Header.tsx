@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import {
   TRIANGLE_ARROW_SVG,
@@ -12,8 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
 import { signOut } from "../../store/user/actions";
 import { selectCurrentProfile } from "../../store/current_profile/selectors";
-import DropdownSimple from "../DropdownSimple";
-import SelectableText from "../SelectableText";
+import Dropdown from "../Dropdown";
 import DefaultIcon from "../DefaultIcon";
 
 const Header: React.FC<Props> = () => {
@@ -21,10 +20,11 @@ const Header: React.FC<Props> = () => {
   const current_profile = useSelector(selectCurrentProfile);
   const user = useSelector(selectUser);
   const [menu, setMenu] = useState(false);
-  const menuEl = useRef<HTMLDivElement>(null);
   const toggleMenu = (value: boolean) => {
     setMenu(value);
   };
+
+  const menuEl = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: Event) => {
     if (menuEl.current && !menuEl.current.contains(event.target as Node)) {
@@ -81,14 +81,14 @@ const Header: React.FC<Props> = () => {
                 />
               </ProfileButton>
               {menu && (
-                <DropdownSimple height="auto" width="94%" refer={menuEl}>
+                <Dropdown onSelect={() => {}} options={[]} refer={menuEl}>
                   <ProfileScreenLink to="profile">
-                    <SelectableText text="My Profile" />
+                    <SelectableText>My Profile</SelectableText>
                   </ProfileScreenLink>
                   <ExitLink onClick={() => dispatch(signOut())} to="/login">
-                    <SelectableText text="Log Out" />
+                    <SelectableText>Log Out</SelectableText>
                   </ExitLink>
-                </DropdownSimple>
+                </Dropdown>
               )}
             </User>
           </UserWrapper>
@@ -221,6 +221,21 @@ const Svg = styled.svg`
   fill: currentColor;
 `;
 const Path = styled.path``;
+const SelectableText = styled.option`
+  display: block;
+  padding: 8px 16px;
+  background: #fff;
+  line-height: 1;
+  font-size: 16px;
+  line-height: 1.13;
+  font-weight: 400;
+  color: #788b99;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    background: #ecf8ff;
+  }
+`;
 
 export default Header;
 

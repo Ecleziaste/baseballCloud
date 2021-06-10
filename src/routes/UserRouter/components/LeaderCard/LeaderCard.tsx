@@ -12,7 +12,9 @@ const LeaderCard: React.FC<Props> = () => {
       <TitleWrapper>
         <TITLE_1>1</TITLE_1>
       </TitleWrapper>
-      <TITLE_2>Batter Name</TITLE_2>
+      <TITLE_2>
+        <Name>Batter Name</Name>
+      </TITLE_2>
       <TITLE_3>Age</TITLE_3>
       <TITLE_4>School</TITLE_4>
       <TITLE_5>Teams</TITLE_5>
@@ -40,6 +42,9 @@ const CardContent = styled.div`
   line-height: 1.13;
   font-weight: 400;
   color: #414f5a;
+  &:hover {
+    background-color: #ecf8ff;
+  }
 `;
 const TITLE = styled.div`
   display: flex;
@@ -52,15 +57,18 @@ const TitleWrapper = styled(TITLE)`
   width: 6%;
 `;
 const TITLE_1 = styled(TITLE)``;
-const TITLE_2 = styled(Link)`
+const TITLE_2 = styled(TITLE)`
+  width: 14%;
+`;
+const Name = styled.div`
   display: flex;
   max-width: 100%;
   justify-content: flex-start;
   text-overflow: ellipsis;
-  width: 14%;
   cursor: pointer;
+  text-decoration: none;
   &:hover {
-    color: #337ab7;
+    color: #48bbff;
     text-decoration: underline;
   }
 `;

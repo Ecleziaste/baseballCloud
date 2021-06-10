@@ -1,13 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AppLayout from "../../../layouts";
 import TabBtn from "../components/TabBtn";
 import PageHeader from "../components/PageHeader";
 import LeaderCard from "../components/LeaderCard";
-import Select from "../../../components/Select";
-import DropDownSimple from "../../../components/DropdownSimple";
-import SelectableText from "../../../components/SelectableText";
-import SelectInput from "../components/SelectInput";
+import Selector from "../../../components/Selector";
+import SelectorInput from "../../../components/SelectorInput";
 
 const Leaderboard: React.FC<Props> = () => {
   const [activeTab, setActiveTab] = useState(true);
@@ -22,29 +20,6 @@ const Leaderboard: React.FC<Props> = () => {
 
   useEffect(() => {}, [selects]);
 
-  const [exit, setExit] = useState(false);
-  const [date, setDate] = useState(false);
-  const [team, setTeam] = useState(false);
-  const [school, setSchool] = useState(false);
-  const [position, setPosition] = useState(false);
-  const [age, setAge] = useState(false);
-  const [all, setAll] = useState(false);
-  const menuEl = useRef<HTMLDivElement>(null);
-
-  const handleClickOutside = (event: Event) => {
-    if (menuEl.current && !menuEl.current.contains(event.target as Node)) {
-      setExit(false);
-      setDate(false);
-      setPosition(false);
-      setAll(false);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  });
   // const selectOption = ({type, text}) => {
   //   const newSelctedData = {...selects, type: text}
 
@@ -57,52 +32,24 @@ const Leaderboard: React.FC<Props> = () => {
         <HeaderRow>
           <PageHeader title="Leaderboard" />
           <Selectables>
-            <HeaderDropdown onClick={() => setDate(!date)}>
-              <Select>Date</Select>
-              <DropDownSimple height="auto" width="178px" refer={menuEl}>
-                <select>
-                  <options></options>
-                </select>
-                <SelectableText text="All" />
-                <SelectableText text="Last Week" />
-                <SelectableText text="Month" />
-              </DropDownSimple>
+            <HeaderDropdown>
+              <Selector
+                title="Date"
+                options={["All", "Last Week", "Last Month"]}
+              />
             </HeaderDropdown>
 
-            <HeaderInput onClick={() => setSchool(!school)}>
-              <Select isActive={school}>School</Select>
-            </HeaderInput>
-            <HeaderInput onClick={() => setTeam(!team)}>
-              <Select isActive={team}>Team</Select>
+            <HeaderInput>
+              <SelectorInput title="School" />
             </HeaderInput>
 
-            <HeaderDropdown onClick={() => setPosition(!position)}>
-              <Select isActive={position}>Position</Select>
-              {position && (
-                <DropDownSimple height="188px" width="106%" refer={menuEl}>
-                  <SelectableText text="All" />
-                  <SelectableText text="Catcher" />
-                  <SelectableText text="First Base" />
-                  <SelectableText text="Second Base" />
-                  <SelectableText text="Shortstop " />
-                  <SelectableText text="Third Base" />
-                </DropDownSimple>
-              )}
-            </HeaderDropdown>
+            <HeaderInput></HeaderInput>
 
-            <HeaderInput onClick={() => setAge(!age)}>
-              <Select isActive={age}>Age</Select>
-            </HeaderInput>
+            <HeaderDropdown></HeaderDropdown>
 
-            <HeaderDropdown onClick={() => setAll(!all)}>
-              <Select isActive={all}>All</Select>
-              {all && (
-                <DropDownSimple height="auto" width="180%" refer={menuEl}>
-                  <SelectableText text="All" />
-                  <SelectableText text="Favourite" />
-                </DropDownSimple>
-              )}
-            </HeaderDropdown>
+            <HeaderInput></HeaderInput>
+
+            <HeaderDropdown></HeaderDropdown>
           </Selectables>
         </HeaderRow>
 
@@ -111,14 +58,14 @@ const Leaderboard: React.FC<Props> = () => {
             <TabBtn isActive={activeTab} text="Batting"></TabBtn>
             <TabBtn isActive={!activeTab} text="Pitching"></TabBtn>
           </TabBtnsWrapper>
-          <TableDropdown onClick={() => setExit(!exit)}>
-            <Select isActive={exit}>Exit Velocity</Select>
+          <TableDropdown>
+            {/* <Select isActive={exit}>Exit Velocity</Select>
             {exit && (
               <DropDownSimple height="auto" width="178px" refer={menuEl}>
                 <SelectableText text="Exit Velocity" />
                 <SelectableText text="Carry Distance" />
               </DropDownSimple>
-            )}
+            )} */}
           </TableDropdown>
         </Container>
         <PageBody>
@@ -134,7 +81,8 @@ const Leaderboard: React.FC<Props> = () => {
             <TABLE_TITLE_9>Favourite</TABLE_TITLE_9>
           </TableHeaders>
           <TableBody>
-            <LeaderCard></LeaderCard>
+            <LeaderCard />
+            <LeaderCard />
           </TableBody>
         </PageBody>
       </Main>
@@ -167,7 +115,6 @@ const TableHeaders = styled.div`
   width: 100%;
   min-height: 44px;
   margin-bottom: 6px;
-
   background-color: #fff;
   align-items: center;
   font-size: 14px;
@@ -178,6 +125,7 @@ const TableHeaders = styled.div`
 const HeaderRow = styled(Container)``;
 const Selectables = styled.div`
   display: flex;
+  align-items: center;
   margin-right: 24px;
 `;
 const TableDropdown = styled.div`
@@ -186,8 +134,11 @@ const TableDropdown = styled.div`
   position: relative;
 `;
 const HeaderDropdown = styled.div`
-  padding-right: 22px;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding-right: 22px; */
+  /* position: relative; */
 `;
 const HeaderInput = styled(HeaderDropdown)``;
 const TableBody = styled.div`
