@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 
 const Dropdown: React.FC<Props> = ({
   children,
@@ -15,7 +16,11 @@ const Dropdown: React.FC<Props> = ({
     <DropdownMenu width={width} options={options} ref={refer}>
       {children}
       {options.map((o) => {
-        return <Option onClick={() => onSelect(o)}>{o}</Option>;
+        return (
+          <Option onClick={() => onSelect(o)} key={uuidv4()}>
+            {o}
+          </Option>
+        );
       })}
       {/* onClick={() => onSelect({type: type,  text: '123213'})} */}
     </DropdownMenu>
@@ -93,7 +98,6 @@ const Option = styled.option`
 export default Dropdown;
 
 type Props = {
-  handleClick?: (val: boolean) => void | undefined;
   options: Array<string>;
   onSelect: (text: string) => void;
   refer?: React.RefObject<HTMLDivElement>;

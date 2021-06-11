@@ -2,31 +2,46 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { BLUE_ARROW } from "../../assets/svg/paths";
 import Dropdown from "../Dropdown";
+import { FieldRenderProps } from "react-final-form";
 
-const Selector: React.FC<Props> = ({ title, options }) => {
+const Selector: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
+  title,
+  options,
+  defaultTitle,
+}) => {
   // const [type, setType] = useState({ type });
   const [text, setText] = useState(title);
   const [isActive, setIsActive] = useState<boolean>(false);
+  // if (title === "") {
+  //   setText(options[0]);
+  // }
   const setActiveSelect = (text: string) => {
     // onSelect({ type: text });
     // setIsActive(text);
   };
-  const onSelect = (text: string) => {
-    setText(text);
-    if (title === "Date" && text === "All") {
-      setText("Date");
+
+  const onSelect = (value: string) => {
+    let newValue = "";
+    switch (value) {
+      case "All":
+        newValue = defaultTitle!;
+        break;
+      case "Last Week":
+        newValue = "Date (Last Week)";
+        break;
+      case "Last Month":
+        newValue = "Date (Last Month)";
+        break;
+      default:
+        newValue = value;
+        break;
     }
-    if (text === "Last Week") {
-      setText("Date (Last Week)");
-    }
-    if (text === "Last Month") {
-      setText("Date (Last Month)");
-    }
+    setText(newValue);
   };
 
   return (
     <Container
-      onBlur={() => setIsActive(!isActive)}
+      onBlur={() => setIsActive(false)}
       onClick={() => setIsActive(!isActive)}
     >
       {text}
@@ -51,12 +66,14 @@ const Container = styled.button`
   display: flex;
   justify-content: flex-start;
   position: relative;
-  padding: 0;
   font-size: 16px;
   line-height: 1.19;
   background-color: transparent;
+
   padding-right: 22px;
-  width: 100%;
+
+  max-width: 100%;
+
   border: none;
   color: #48bbff;
   white-space: nowrap;
@@ -98,4 +115,5 @@ export default Selector;
 type Props = {
   title: string;
   options: Array<string>;
+  defaultTitle?: string;
 };

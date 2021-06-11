@@ -6,79 +6,171 @@ import PageHeader from "../components/PageHeader";
 import LeaderCard from "../components/LeaderCard";
 import Selector from "../../../components/Selector";
 import SelectorInput from "../../../components/SelectorInput";
+import { Form, Field } from "react-final-form";
+
+enum Titles {
+  date = "Date",
+  school = "School",
+  team = "Team",
+  position = "Position",
+  age = "Age",
+  favorite = "All",
+  pitching = "Pitch Velocity",
+  batting = "Exit Velocity",
+}
+
+const OPTIONS = {
+  date: ["All", "Last Week", "Last Month"],
+  position: [
+    "All",
+    "Catcher",
+    "First Base",
+    "Second Base",
+    "Shortstop",
+    "Third Base",
+    "Outfield",
+    "Pitcher",
+  ],
+  favorite: ["All", "Favorite"],
+  batting: ["Exit Velocity", "Carry Distance"],
+  pitching: ["Pitch Velocity", "Spin Rate"],
+};
 
 const Leaderboard: React.FC<Props> = () => {
   const [activeTab, setActiveTab] = useState(true);
+  const selectTab = (val: boolean) => {
+    setActiveTab(val);
+  };
 
   const [selects, setSelects] = useState<Selects>({
+    date: "last_week",
+    school: "",
     team: "123",
     position: "catcher",
+    age: "",
     favorite: 1,
     type: "exit_velocity",
-    date: "last_week",
   });
 
   useEffect(() => {}, [selects]);
 
   // const selectOption = ({type, text}) => {
-  //   const newSelctedData = {...selects, type: text}
+  //   const newSelectedData = {...selects, type: text}
 
   // setSelects(newSelctedData)
   // }
+  const onSubmit = () => {};
 
   return (
     <AppLayout>
       <Main>
-        <HeaderRow>
-          <PageHeader title="Leaderboard" />
-          <Selectables>
-            <HeaderDropdown>
-              <Selector
-                title="Date"
-                options={["All", "Last Week", "Last Month"]}
-              />
-            </HeaderDropdown>
+        <Form
+          onSubmit={onSubmit}
+          render={({ handleSubmit }) => (
+            <div>
+              <HeaderRow>
+                <PageHeader title="Leaderboard" />
+                <Selectables>
+                  <Field
+                    name="date"
+                    component={Selector}
+                    title={Titles.date}
+                    options={OPTIONS.date}
+                    defaultTitle={Titles.date}
+                  />
 
-            <HeaderInput>
-              <SelectorInput title="School" />
-            </HeaderInput>
+                  <Field
+                    name="school"
+                    component={SelectorInput}
+                    title={Titles.school}
+                  />
 
-            <HeaderInput></HeaderInput>
+                  <Field name="team" component={SelectorInput} title="Team" />
 
-            <HeaderDropdown></HeaderDropdown>
+                  <SelBoxBig>
+                    <Field
+                      name="position"
+                      component={Selector}
+                      title={Titles.position}
+                      options={OPTIONS.position}
+                      defaultTitle={Titles.position}
+                    />
+                  </SelBoxBig>
 
-            <HeaderInput></HeaderInput>
+                  <Field
+                    name="age"
+                    component={SelectorInput}
+                    title={Titles.age}
+                  />
 
-            <HeaderDropdown></HeaderDropdown>
-          </Selectables>
-        </HeaderRow>
+                  <SelBox>
+                    <Field
+                      name="favorite"
+                      component={Selector}
+                      title={Titles.favorite}
+                      options={OPTIONS.favorite}
+                      defaultTitle={Titles.favorite}
+                    />
+                  </SelBox>
+                </Selectables>
+              </HeaderRow>
 
-        <Container>
-          <TabBtnsWrapper>
-            <TabBtn isActive={activeTab} text="Batting"></TabBtn>
-            <TabBtn isActive={!activeTab} text="Pitching"></TabBtn>
-          </TabBtnsWrapper>
-          <TableDropdown>
-            {/* <Select isActive={exit}>Exit Velocity</Select>
-            {exit && (
-              <DropDownSimple height="auto" width="178px" refer={menuEl}>
-                <SelectableText text="Exit Velocity" />
-                <SelectableText text="Carry Distance" />
-              </DropDownSimple>
-            )} */}
-          </TableDropdown>
-        </Container>
+              <Container>
+                <TabBtnsWrapper>
+                  <TabBtn
+                    onClick={() => selectTab(true)}
+                    isActive={activeTab}
+                    text="Batting"
+                  ></TabBtn>
+                  <TabBtn
+                    onClick={() => selectTab(false)}
+                    isActive={!activeTab}
+                    text="Pitching"
+                  ></TabBtn>
+                </TabBtnsWrapper>
+                <TableDropdown>
+                  {activeTab === true ? (
+                    <Field
+                      name="type"
+                      component={Selector}
+                      title={Titles.batting}
+                      options={OPTIONS.batting}
+                      defaultTitle={Titles.batting}
+                    />
+                  ) : (
+                    <Field
+                      name="type"
+                      component={Selector}
+                      title={Titles.pitching}
+                      options={OPTIONS.pitching}
+                      defaultTitle={Titles.pitching}
+                    />
+                  )}
+                </TableDropdown>
+              </Container>
+            </div>
+          )}
+        />
+
         <PageBody>
           <TableHeaders>
             <TABLE_TITLE_1>Rank</TABLE_TITLE_1>
-            <TABLE_TITLE_2>Batter Name</TABLE_TITLE_2>
+            <TABLE_TITLE_2>
+              {activeTab === true ? "Batter Name" : "Pitcher Name"}
+            </TABLE_TITLE_2>
             <TABLE_TITLE_3>Age</TABLE_TITLE_3>
             <TABLE_TITLE_4>School</TABLE_TITLE_4>
             <TABLE_TITLE_5>Teams</TABLE_TITLE_5>
-            <TABLE_TITLE_6>Exit Velocity</TABLE_TITLE_6>
-            <TABLE_TITLE_7>Launch Angle</TABLE_TITLE_7>
-            <TABLE_TITLE_8>Distance</TABLE_TITLE_8>
-            <TABLE_TITLE_9>Favourite</TABLE_TITLE_9>
+            <TABLE_TITLE_6>
+              {activeTab === true ? "Exit Velocity" : "Pitch Type"}
+            </TABLE_TITLE_6>
+            <TABLE_TITLE_7>
+              {activeTab === true ? "Launch Angle" : "Velocity"}
+            </TABLE_TITLE_7>
+            <TABLE_TITLE_8>
+              {activeTab === true ? "Distance" : "Spin Rate"}
+            </TABLE_TITLE_8>
+            <TABLE_TITLE_9>Favorite</TABLE_TITLE_9>
           </TableHeaders>
           <TableBody>
             <LeaderCard />
@@ -90,6 +182,15 @@ const Leaderboard: React.FC<Props> = () => {
   );
 };
 
+const SelBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+`;
+const SelBoxBig = styled(SelBox)`
+  width: 130px;
+`;
 const Main = styled.main`
   display: flex;
   flex-direction: column;
@@ -131,16 +232,7 @@ const Selectables = styled.div`
 const TableDropdown = styled.div`
   padding-right: 23px;
   margin-right: 23px;
-  position: relative;
 `;
-const HeaderDropdown = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* padding-right: 22px; */
-  /* position: relative; */
-`;
-const HeaderInput = styled(HeaderDropdown)``;
 const TableBody = styled.div`
   display: flex;
   flex-direction: column;
@@ -188,7 +280,9 @@ type Props = {};
 
 type Selects = {
   team?: string | undefined;
+  school?: string | undefined;
   position?: string | undefined;
+  age?: string | undefined;
   favorite?: number | undefined;
   type?: string | undefined;
   date?: string | undefined;
