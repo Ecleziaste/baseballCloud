@@ -44,7 +44,7 @@ const SelectorInput: React.FC<FieldRenderProps<string, HTMLElement> & Props> =
 
 const Input = styled.input<{ $isActive: boolean }>`
   display: block;
-  width: 66px;
+  width: 48px;
   font-size: 16px;
   line-height: 19px;
   min-height: 38px;
@@ -92,7 +92,7 @@ const Container = styled.div`
 const Span = styled.span<{ $isActive: boolean }>`
   display: flex;
   margin-left: 6px;
-  margin-top: 6px;
+  margin-top: 2px;
   width: 16px;
   transform: ${(props) => (props.$isActive ? "rotate(180deg)" : "none")};
   height: 9px;

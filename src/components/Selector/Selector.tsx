@@ -23,6 +23,11 @@ const Selector: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
   const onSelect = (value: string) => {
     let newValue = "";
     switch (value) {
+      case "10":
+      case "15":
+      case "25":
+        newValue = `Show: ${value}`;
+        break;
       case "All":
         newValue = defaultTitle!;
         break;

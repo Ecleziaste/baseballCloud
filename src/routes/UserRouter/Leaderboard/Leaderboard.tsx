@@ -45,9 +45,9 @@ const Leaderboard: React.FC<Props> = () => {
   const [selects, setSelects] = useState<Selects>({
     date: "last_week",
     school: "",
-    team: "123",
+    team: "",
     position: "catcher",
-    age: "",
+    age: 3,
     favorite: 1,
     type: "exit_velocity",
   });
@@ -195,11 +195,13 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
 `;
-const Container = styled.div`
+const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 8px;
+`;
+const Container = styled(HeaderRow)`
+  margin-top: 8px;
 `;
 const TabBtnsWrapper = styled.div`
   display: flex;
@@ -223,7 +225,7 @@ const TableHeaders = styled.div`
   font-weight: 300;
   color: #667784;
 `;
-const HeaderRow = styled(Container)``;
+
 const Selectables = styled.div`
   display: flex;
   align-items: center;
@@ -282,7 +284,7 @@ type Selects = {
   team?: string | undefined;
   school?: string | undefined;
   position?: string | undefined;
-  age?: string | undefined;
+  age?: number | undefined;
   favorite?: number | undefined;
   type?: string | undefined;
   date?: string | undefined;
