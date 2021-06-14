@@ -53,8 +53,8 @@ const Network: React.FC<Props> = () => {
   });
 
   const handleSelect = async (fieldName: any, value: any) => {
-    const newSelects = { ...selects, [fieldName]: value };
-    await setSelects(newSelects);
+    const newData = { ...selects, [fieldName]: value };
+    await setSelects(newData);
   };
 
   useEffect(() => {

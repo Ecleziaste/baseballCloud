@@ -4,7 +4,7 @@ import { setCurrentProfile } from "./actions";
 const initialState = null as null | CurrentProfile;
 
 const currentProfileSlice = createSlice({
-  name: "profile",
+  name: "current_profile",
   initialState,
   reducers: {},
   extraReducers: {

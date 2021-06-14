@@ -1,6 +1,6 @@
 import { http } from "../../services/http";
 
-export const currentProfileApi = (payload: {}) =>
+export const profileApi = (payload: {}) =>
   http.post(`/graphql`, { query });
 
 const query = `{ current_profile ()

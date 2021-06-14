@@ -1,1 +1,1 @@
-export { reducer as currentProfileReducer, actions } from "./slice";
+export { reducer as profileReducer, actions } from "./slice";

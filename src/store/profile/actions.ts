@@ -1,18 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { currentProfileApi } from "../current_profile/api";
-import { CurrentProfile } from "./slice";
+import { profileApi } from "../profile/api";
+import { Profile } from "./slice";
 
-export const setCurrentProfile = createAsyncThunk<
-  CurrentProfile,
-  CurrentProfileParams
->("currentProfile/set", async (params) => {
-  const {
-    data: {
-      data: { current_profile },
-    },
-  } = await currentProfileApi(params);
+export const setProfile = createAsyncThunk<Profile, CurrentProfileParams>(
+  "currentProfile/set",
+  async (params) => {
+    const {
+      data: {
+        data: { current_profile },
+      },
+    } = await profileApi(params);
 
-  return current_profile;
-});
+    return current_profile;
+  }
+);
 
 export type CurrentProfileParams = {};
