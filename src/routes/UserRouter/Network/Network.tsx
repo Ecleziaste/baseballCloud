@@ -20,42 +20,47 @@ enum Titles {
 
 const OPTIONS = {
   position: [
-    { text: "All" },
-    { text: "Catcher", payloadText: "catcher" },
-    { text: "First Base", payloadText: "first_base" },
-    { text: "Second Base", payloadText: "second_base" },
-    { text: "Shortstop", payloadText: "shortstop" },
-    { text: "Third Base", payloadText: "third_base" },
-    { text: "Outfield", payloadText: "outfield" },
-    { text: "Pitcher", payloadText: "pitcher" },
+    { fieldName: "position", text: "All" },
+    { fieldName: "position", text: "Catcher", payloadText: "catcher" },
+    { fieldName: "position", text: "First Base", payloadText: "first_base" },
+    { fieldName: "position", text: "Second Base", payloadText: "second_base" },
+    { fieldName: "position", text: "Shortstop", payloadText: "shortstop" },
+    { fieldName: "position", text: "Third Base", payloadText: "third_base" },
+    { fieldName: "position", text: "Outfield", payloadText: "outfield" },
+    { fieldName: "position", text: "Pitcher", payloadText: "pitcher" },
   ],
-  favorite: [{ text: "All" }, { text: "Favorite", payloadText: 1 }],
+  favorite: [
+    { fieldName: "favorite", text: "All" },
+    { fieldName: "favorite", text: "Favorite", payloadText: 1 },
+  ],
   profiles_count: [
-    { text: "10", payloadText: 10 },
-    { text: "15", payloadText: 15 },
-    { text: "25", payloadText: 25 },
+    { fieldName: "profiles_count", text: "10", payloadText: 10 },
+    { fieldName: "profiles_count", text: "15", payloadText: 15 },
+    { fieldName: "profiles_count", text: "25", payloadText: 25 },
   ],
 };
 
 const Network: React.FC<Props> = () => {
   const [selects, setSelects] = useState<Selects>({
-    player_name: "",
-    school: "",
-    team: "",
-    position: "",
-    age: 1,
-    favorite: 1,
+    player_name: undefined,
+    school: undefined,
+    team: undefined,
+    position: undefined,
+    age: undefined,
+    favorite: undefined,
     profiles_count: 10,
-    offset: 0,
+    offset: 10,
   });
 
-  useEffect(() => {}, [selects]);
+  const handleSelect = async (fieldName: any, value: any) => {
+    const newSelects = { ...selects, [fieldName]: value };
+    await setSelects(newSelects);
+  };
 
-  // const selectOption = ({type, text}) => {
-  //   const newSelectedData = {...selects, type: text}
+  useEffect(() => {
+    console.log(selects);
+  }, [selects]);
 
-  // setSelects(newSelctedData)
-  // }
   const onSubmit = () => {};
 
   return (
@@ -70,11 +75,19 @@ const Network: React.FC<Props> = () => {
                 <Selectables>
                   <Field
                     name="school"
+                    fieldName="school"
                     component={SelectorInput}
                     title={Titles.school}
+                    handleSelect={handleSelect}
                   />
 
-                  <Field name="team" component={SelectorInput} title="Team" />
+                  <Field
+                    name="team"
+                    fieldName="team"
+                    component={SelectorInput}
+                    title="Team"
+                    handleSelect={handleSelect}
+                  />
 
                   <Field
                     name="position"
@@ -82,12 +95,15 @@ const Network: React.FC<Props> = () => {
                     title={Titles.position}
                     options={OPTIONS.position}
                     defaultTitle={Titles.position}
+                    handleSelect={handleSelect}
                   />
 
                   <Field
                     name="age"
+                    fieldName="age"
                     component={SelectorInput}
                     title={Titles.age}
+                    handleSelect={handleSelect}
                   />
 
                   <Field
@@ -96,6 +112,7 @@ const Network: React.FC<Props> = () => {
                     title={Titles.favorite}
                     options={OPTIONS.favorite}
                     defaultTitle={Titles.favorite}
+                    handleSelect={handleSelect}
                   />
 
                   <Field
@@ -104,6 +121,7 @@ const Network: React.FC<Props> = () => {
                     title={Titles.profiles_count}
                     options={OPTIONS.profiles_count}
                     defaultTitle={Titles.profiles_count}
+                    handleSelect={handleSelect}
                   />
                 </Selectables>
               </HeaderRow>
@@ -113,8 +131,10 @@ const Network: React.FC<Props> = () => {
                 <SearchPlayer>
                   <Field
                     name="player_name"
+                    fieldName="player_name"
                     component={SearchInput}
                     placeholder="Player Name"
+                    handleSelect={handleSelect}
                   ></Field>
                 </SearchPlayer>
               </Container>

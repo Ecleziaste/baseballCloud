@@ -5,16 +5,12 @@ import { FieldRenderProps } from "react-final-form";
 import { v4 as uuidv4 } from "uuid";
 
 const SelectorInput: React.FC<FieldRenderProps<string, HTMLElement> & Props> =
-  ({ title, input }) => {
-    // const [type, setType] = useState({ type });
+  ({ title, input, fieldName, handleSelect }) => {
     const inputId = uuidv4();
     const [isActive, setIsActive] = useState<boolean>(false);
-    const setActiveSelect = (text: string) => {
-      // onSelect({ type: text });
-      // setIsActive(text);
-    };
-    const onSelect = (text: string) => {
-      // setText(text);
+
+    const handleInput = (text: string) => {
+      handleSelect(fieldName, text);
     };
 
     const focusInput = () => {
@@ -30,6 +26,7 @@ const SelectorInput: React.FC<FieldRenderProps<string, HTMLElement> & Props> =
           {...input}
           onBlur={() => setIsActive(false)}
           onFocus={() => setIsActive(true)}
+          onInput={(e) => handleInput(e.currentTarget.value)}
           placeholder={title}
         ></Input>
 
@@ -116,4 +113,6 @@ export default SelectorInput;
 
 type Props = {
   title: string;
+  fieldName: string;
+  handleSelect: (fieldName: any, value: any) => void;
 };

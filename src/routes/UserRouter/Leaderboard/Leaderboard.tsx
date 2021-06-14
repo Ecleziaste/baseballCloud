@@ -110,12 +110,19 @@ const Leaderboard: React.FC<Props> = () => {
 
                   <Field
                     name="school"
+                    fieldName="school"
                     component={SelectorInput}
                     title={Titles.school}
                     handleSelect={handleSelect}
                   />
 
-                  <Field name="team" component={SelectorInput} title="Team" />
+                  <Field
+                    name="team"
+                    fieldName="team"
+                    component={SelectorInput}
+                    title="Team"
+                    handleSelect={handleSelect}
+                  />
 
                   <SelBoxBig>
                     <Field
@@ -130,6 +137,7 @@ const Leaderboard: React.FC<Props> = () => {
 
                   <Field
                     name="age"
+                    fieldName="age"
                     component={SelectorInput}
                     title={Titles.age}
                     handleSelect={handleSelect}

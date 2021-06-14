@@ -6,7 +6,13 @@ import { FieldRenderProps } from "react-final-form";
 const SearchInput: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
   placeholder,
   input,
+  fieldName,
+  handleSelect,
 }) => {
+  const handleInput = (text: string) => {
+    handleSelect(fieldName, text);
+  };
+
   return (
     <Container>
       <Btn>
@@ -17,7 +23,11 @@ const SearchInput: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
         </Span>
       </Btn>
 
-      <Input {...input} placeholder={placeholder}></Input>
+      <Input
+        {...input}
+        placeholder={placeholder}
+        onInput={(e) => handleInput(e.currentTarget.value)}
+      ></Input>
     </Container>
   );
 };
@@ -74,4 +84,6 @@ export default SearchInput;
 
 type Props = {
   placeholder: string;
+  fieldName: string;
+  handleSelect: (fieldName: any, value: any) => void;
 };
