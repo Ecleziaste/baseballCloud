@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import { Options } from "../../Types";
 
 const Dropdown: React.FC<Props> = ({
   children,
   options,
   onSelect,
   refer,
-  // type,
+  handleSelect,
 }) => {
   const width = "none";
   // const onSelect = (text) => void
@@ -17,8 +18,14 @@ const Dropdown: React.FC<Props> = ({
       {children}
       {options.map((o) => {
         return (
-          <Option onClick={() => onSelect(o)} key={uuidv4()}>
-            {o}
+          <Option
+            onClick={() => {
+              onSelect(o.text);
+              handleSelect(o.fieldName, o.payloadText);
+            }}
+            key={uuidv4()}
+          >
+            {o.text}
           </Option>
         );
       })}
@@ -27,7 +34,7 @@ const Dropdown: React.FC<Props> = ({
   );
 };
 
-const DropdownMenu = styled.div<{ width: string; options: Array<string> }>`
+const DropdownMenu = styled.div<{ width: string; options: Array<Options> }>`
   display: flex;
   flex-flow: column nowrap;
   text-align: left;
@@ -98,7 +105,8 @@ const Option = styled.option`
 export default Dropdown;
 
 type Props = {
-  options: Array<string>;
-  onSelect: (text: string) => void;
+  options: Array<Options>;
+  onSelect: (value: string) => void;
   refer?: React.RefObject<HTMLDivElement>;
+  handleSelect: (fieldName: any, value: any) => void;
 };

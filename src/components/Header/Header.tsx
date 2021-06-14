@@ -81,7 +81,12 @@ const Header: React.FC<Props> = () => {
                 />
               </ProfileButton>
               {menu && (
-                <Dropdown onSelect={() => {}} options={[]} refer={menuEl}>
+                <Dropdown
+                  onSelect={() => {}}
+                  options={[]}
+                  refer={menuEl}
+                  handleSelect={() => {}}
+                >
                   <ProfileScreenLink to="profile">
                     <SelectableText>My Profile</SelectableText>
                   </ProfileScreenLink>

@@ -20,20 +20,45 @@ enum Titles {
 }
 
 const OPTIONS = {
-  date: ["All", "Last Week", "Last Month"],
-  position: [
-    "All",
-    "Catcher",
-    "First Base",
-    "Second Base",
-    "Shortstop",
-    "Third Base",
-    "Outfield",
-    "Pitcher",
+  date: [
+    { fieldName: "date", text: "All" },
+    { fieldName: "date", text: "Last Week", payloadText: "last_week" },
+    { fieldName: "date", text: "Last Month", payloadText: "last_month" },
   ],
-  favorite: ["All", "Favorite"],
-  batting: ["Exit Velocity", "Carry Distance"],
-  pitching: ["Pitch Velocity", "Spin Rate"],
+  position: [
+    { fieldName: "position", text: "All" },
+    { fieldName: "position", text: "Catcher", payloadText: "catcher" },
+    { fieldName: "position", text: "First Base", payloadText: "first_base" },
+    { fieldName: "position", text: "Second Base", payloadText: "second_base" },
+    { fieldName: "position", text: "Shortstop", payloadText: "shortstop" },
+    { fieldName: "position", text: "Third Base", payloadText: "third_base" },
+    { fieldName: "position", text: "Outfield", payloadText: "outfield" },
+    { fieldName: "position", text: "Pitcher", payloadText: "pitcher" },
+  ],
+  favorite: [
+    { fieldName: "favorite", text: "All" },
+    { fieldName: "favorite", text: "Favorite", payloadText: 1 },
+  ],
+  batting: [
+    {
+      fieldName: "type",
+      text: "Exit Velocity",
+      payloadText: "exit_velocity",
+    },
+    {
+      fieldName: "type",
+      text: "Carry Distance",
+      payloadText: "carry_distance",
+    },
+  ],
+  pitching: [
+    {
+      fieldName: "type",
+      text: "Pitch Velocity",
+      payloadText: "pitch_velocity",
+    },
+    { fieldName: "type", text: "Spin Rate", payloadText: "spin_rate" },
+  ],
 };
 
 const Leaderboard: React.FC<Props> = () => {
@@ -43,22 +68,25 @@ const Leaderboard: React.FC<Props> = () => {
   };
 
   const [selects, setSelects] = useState<Selects>({
-    date: "last_week",
-    school: "",
-    team: "",
-    position: "catcher",
-    age: 3,
-    favorite: 1,
+    date: undefined,
+    school: undefined,
+    team: undefined,
+    position: undefined,
     type: "exit_velocity",
+    age: undefined,
+    favorite: undefined,
+    offset: 10,
   });
 
-  useEffect(() => {}, [selects]);
+  const handleSelect = async (fieldName: any, value: any) => {
+    const newData = { ...selects, [fieldName]: value };
+    await setSelects(newData);
+  };
 
-  // const selectOption = ({type, text}) => {
-  //   const newSelectedData = {...selects, type: text}
+  useEffect(() => {
+    console.log(selects);
+  }, [selects]);
 
-  // setSelects(newSelctedData)
-  // }
   const onSubmit = () => {};
 
   return (
@@ -77,12 +105,14 @@ const Leaderboard: React.FC<Props> = () => {
                     title={Titles.date}
                     options={OPTIONS.date}
                     defaultTitle={Titles.date}
+                    handleSelect={handleSelect}
                   />
 
                   <Field
                     name="school"
                     component={SelectorInput}
                     title={Titles.school}
+                    handleSelect={handleSelect}
                   />
 
                   <Field name="team" component={SelectorInput} title="Team" />
@@ -94,6 +124,7 @@ const Leaderboard: React.FC<Props> = () => {
                       title={Titles.position}
                       options={OPTIONS.position}
                       defaultTitle={Titles.position}
+                      handleSelect={handleSelect}
                     />
                   </SelBoxBig>
 
@@ -101,6 +132,7 @@ const Leaderboard: React.FC<Props> = () => {
                     name="age"
                     component={SelectorInput}
                     title={Titles.age}
+                    handleSelect={handleSelect}
                   />
 
                   <SelBox>
@@ -110,6 +142,7 @@ const Leaderboard: React.FC<Props> = () => {
                       title={Titles.favorite}
                       options={OPTIONS.favorite}
                       defaultTitle={Titles.favorite}
+                      handleSelect={handleSelect}
                     />
                   </SelBox>
                 </Selectables>
@@ -136,6 +169,7 @@ const Leaderboard: React.FC<Props> = () => {
                       title={Titles.batting}
                       options={OPTIONS.batting}
                       defaultTitle={Titles.batting}
+                      handleSelect={handleSelect}
                     />
                   ) : (
                     <Field
@@ -144,6 +178,7 @@ const Leaderboard: React.FC<Props> = () => {
                       title={Titles.pitching}
                       options={OPTIONS.pitching}
                       defaultTitle={Titles.pitching}
+                      handleSelect={handleSelect}
                     />
                   )}
                 </TableDropdown>
@@ -288,4 +323,5 @@ type Selects = {
   favorite?: number | undefined;
   type?: string | undefined;
   date?: string | undefined;
+  offset?: number | undefined;
 };

@@ -7,6 +7,7 @@ import Selector from "../../../components/Selector";
 import SelectorInput from "../../../components/SelectorInput";
 import SearchInput from "../components/SearchInput";
 import { Form, Field } from "react-final-form";
+import Pagination from "../components/Pagination";
 
 enum Titles {
   school = "School",
@@ -19,17 +20,21 @@ enum Titles {
 
 const OPTIONS = {
   position: [
-    "All",
-    "Catcher",
-    "First Base",
-    "Second Base",
-    "Shortstop",
-    "Third Base",
-    "Outfield",
-    "Pitcher",
+    { text: "All" },
+    { text: "Catcher", payloadText: "catcher" },
+    { text: "First Base", payloadText: "first_base" },
+    { text: "Second Base", payloadText: "second_base" },
+    { text: "Shortstop", payloadText: "shortstop" },
+    { text: "Third Base", payloadText: "third_base" },
+    { text: "Outfield", payloadText: "outfield" },
+    { text: "Pitcher", payloadText: "pitcher" },
   ],
-  favorite: ["All", "Favorite"],
-  profiles_count: ["10", "15", "25"],
+  favorite: [{ text: "All" }, { text: "Favorite", payloadText: 1 }],
+  profiles_count: [
+    { text: "10", payloadText: 10 },
+    { text: "15", payloadText: 15 },
+    { text: "25", payloadText: 25 },
+  ],
 };
 
 const Network: React.FC<Props> = () => {
@@ -132,6 +137,8 @@ const Network: React.FC<Props> = () => {
             <NetworkCard />
           </TableBody>
         </PageBody>
+
+        <Pagination />
       </Main>
     </AppLayout>
   );
@@ -140,6 +147,7 @@ const Network: React.FC<Props> = () => {
 const Main = styled.main`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 const HeaderRow = styled.div`
   display: flex;

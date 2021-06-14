@@ -3,22 +3,16 @@ import styled from "styled-components";
 import { BLUE_ARROW } from "../../assets/svg/paths";
 import Dropdown from "../Dropdown";
 import { FieldRenderProps } from "react-final-form";
+import { Options } from "../../Types";
 
 const Selector: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
   title,
   options,
   defaultTitle,
+  handleSelect,
 }) => {
-  // const [type, setType] = useState({ type });
   const [text, setText] = useState(title);
   const [isActive, setIsActive] = useState<boolean>(false);
-  // if (title === "") {
-  //   setText(options[0]);
-  // }
-  const setActiveSelect = (text: string) => {
-    // onSelect({ type: text });
-    // setIsActive(text);
-  };
 
   const onSelect = (value: string) => {
     let newValue = "";
@@ -55,6 +49,7 @@ const Selector: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
           // handleClick={setIsActive(!isActive)}
           onSelect={onSelect}
           options={options}
+          handleSelect={handleSelect}
         ></Dropdown>
       )}
 
@@ -119,6 +114,7 @@ export default Selector;
 
 type Props = {
   title: string;
-  options: Array<string>;
+  options: Array<Options>;
   defaultTitle?: string;
+  handleSelect: (fieldName: any, value: any) => void;
 };
