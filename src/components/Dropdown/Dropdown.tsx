@@ -10,8 +10,7 @@ const Dropdown: React.FC<Props> = ({
   refer,
   handleSelect,
 }) => {
-  const width = "none";
-  // const onSelect = (text) => void
+  const width = "100%";
 
   return (
     <DropdownMenu width={width} options={options} ref={refer}>
@@ -21,7 +20,7 @@ const Dropdown: React.FC<Props> = ({
           <Option
             onClick={() => {
               onSelect(o.text);
-              handleSelect(o.fieldName, o.payloadText);
+              handleSelect(o.fieldName, o.payload);
             }}
             key={uuidv4()}
           >
@@ -29,7 +28,6 @@ const Dropdown: React.FC<Props> = ({
           </Option>
         );
       })}
-      {/* onClick={() => onSelect({type: type,  text: '123213'})} */}
     </DropdownMenu>
   );
 };
@@ -38,7 +36,7 @@ const DropdownMenu = styled.div<{ width: string; options: Array<Options> }>`
   display: flex;
   flex-flow: column nowrap;
   text-align: left;
-  width: ${(props) => props.width};
+  min-width: ${(props) => props.width};
   position: absolute;
   top: 100%;
   right: -5px;

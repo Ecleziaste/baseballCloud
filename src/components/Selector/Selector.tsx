@@ -69,11 +69,8 @@ const Container = styled.button`
   font-size: 16px;
   line-height: 1.19;
   background-color: transparent;
-
   padding-right: 22px;
-
   max-width: 100%;
-
   border: none;
   color: #48bbff;
   white-space: nowrap;

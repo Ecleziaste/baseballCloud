@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { FieldRenderProps } from "react-final-form";
-
 import styled from "styled-components";
+import { FieldRenderProps } from "react-final-form";
+import { v4 as uuidv4 } from "uuid";
 
-const InputProfile: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
+const EditInput: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
   title,
   input,
   fieldName,
   handleSelect,
 }) => {
+  const inputId = uuidv4();
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const handleInput = (text: string) => {
@@ -17,23 +18,20 @@ const InputProfile: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
 
   return (
     <Container>
-      <TextArea
+      <Label $isActive={isActive} htmlFor={inputId}>
+        {title}
+      </Label>
+      <Input
+        id={inputId}
         {...input}
         onBlur={() => setIsActive(false)}
         onFocus={() => setIsActive(true)}
         onInput={(e) => handleInput(e.currentTarget.value)}
         placeholder={title}
-      />
-      <Label $isActive={isActive}>{title}</Label>
+      ></Input>
     </Container>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  position: relative;
-  width: 100%;
-`;
 const Label = styled.label<{ $isActive: boolean }>`
   display: ${(props) => (props.$isActive ? "block" : "none")};
   position: absolute;
@@ -50,10 +48,10 @@ const Label = styled.label<{ $isActive: boolean }>`
     text-decoration: underline;
   }
 `;
-const TextArea = styled.textarea`
+const Input = styled.input`
   width: 100%;
-  height: 110px;
-  padding: 11px 16px;
+  position: relative;
+  padding: 0 16px;
   border-radius: 4px;
   background-color: #eff1f3;
   font-size: 16px;
@@ -61,15 +59,21 @@ const TextArea = styled.textarea`
   font-weight: 400;
   color: #667784;
   border: none;
-  resize: none;
+  text-align: left;
   &:focus {
     outline: none;
     background-color: white;
     border: 1px solid #48bbff;
   }
 `;
+const Container = styled.div`
+  display: flex;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+`;
 
-export default InputProfile;
+export default EditInput;
 
 type Props = {
   title: string;

@@ -1,21 +1,90 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Form, Field } from "react-final-form";
-import InputProfile from "../components/InputProfile";
-import InputDropdown from "../components/InputDropdown";
 import TitleLine from "../components/TitleLine";
-import TextAreaProfile from "../components/TextAreaProfile";
 import { useSelector } from "react-redux";
 import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
+import EditSelector from "./EditSelector";
+import EditInput from "./EditInput";
+import TextAreaProfile from "../components/TextAreaProfile";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
+
+const OPTIONS = {
+  position: [
+    { fieldName: "position", text: "All" },
+    { fieldName: "position", text: "Catcher", payload: "catcher" },
+    { fieldName: "position", text: "First Base", payload: "first_base" },
+    { fieldName: "position", text: "Second Base", payload: "second_base" },
+    { fieldName: "position", text: "Shortstop", payload: "shortstop" },
+    { fieldName: "position", text: "Third Base", payload: "third_base" },
+    { fieldName: "position", text: "Outfield", payload: "outfield" },
+    { fieldName: "position", text: "Pitcher", payload: "pitcher" },
+  ],
+  throws: [
+    { fieldName: "throws", text: "L", payload: "l" },
+    { fieldName: "throws", text: "R", payload: "r" },
+  ],
+  bats: [
+    { fieldName: "bats", text: "L", payload: "l" },
+    { fieldName: "bats", text: "R", payload: "r" },
+  ],
+
+  school: [
+    { fieldName: "school", text: "FSU", payload: { id: "2", name: "FSU" } },
+  ],
+  school_year: [
+    { fieldName: "school_year", text: "Freshman", payload: "freshman" },
+  ],
+  team: [
+    {
+      fieldName: "team",
+      text: "scorps",
+      payload: { id: "6", name: "scorps" },
+    },
+  ],
+  facility: [
+    {
+      fieldName: "facility",
+      text: "Example",
+      payload: { id: "32", u_name: "Example" },
+    },
+  ],
+};
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const current_profile = useSelector(selectCurrentProfile)!;
   const avatar = current_profile?.avatar;
 
-  const onSubmit = (value: Values) => {
-    console.log("value", value);
+  const [selects, setSelects] = useState<Selects>({
+    age: current_profile.age || undefined,
+    avatar: current_profile.avatar || undefined,
+    bats_hand: current_profile.bats_hand || undefined,
+    biography: current_profile.biography || undefined,
+    facilities: current_profile.facilities || [],
+    feet: current_profile.feet || undefined,
+    first_name: current_profile.first_name || undefined,
+    id: current_profile.id || undefined,
+    inches: current_profile.inches || undefined,
+    last_name: current_profile.last_name || undefined,
+    position: current_profile.position || undefined,
+    position2: current_profile.position2 || undefined,
+    school: current_profile.school || {},
+    school_year: current_profile.school_year || undefined,
+    teams: current_profile.teams || [],
+    throws_hand: current_profile.throws_hand || undefined,
+    weight: current_profile.weight || undefined,
+  });
+
+  const onSubmit = ({ ...selects }) => {
+    console.log("values", { ...selects });
   };
+
+  const handleSelect = async (fieldName: any, value: any) => {
+    const newData = { ...selects, [fieldName]: value };
+    await setSelects(newData);
+  };
+
+  // useEffect(() => {}, [selects]);
 
   return (
     <Container>
@@ -36,69 +105,75 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <FormBox>
                 <SmallInputBox>
                   <Field
-                    name="firstName"
+                    name="first_name"
+                    fieldName="first_name"
                     defaultValue={`${current_profile?.first_name || ""}`}
-                    placeholder="First Name *"
-                    label="First Name *"
-                    component={InputProfile}
+                    title="First Name *"
+                    component={EditInput}
+                    handleSelect={handleSelect}
                   />
                 </SmallInputBox>
                 <SmallInputBox>
                   <Field
-                    name="lastName"
+                    name="last_name"
+                    fieldName="last_name"
                     defaultValue={current_profile?.last_name || ""}
-                    placeholder="Last Name *"
-                    label="Last Name *"
-                    component={InputProfile}
+                    title="Last Name *"
+                    component={EditInput}
+                    handleSelect={handleSelect}
                   />
                 </SmallInputBox>
               </FormBox>
               <BigInputBox>
                 <Field
-                  // onFocus={() => console.log("hey")}
                   name="position"
                   defaultValue={current_profile?.position || ""}
-                  label="Position in Game *"
-                  placeholder="Position in Game *"
-                  component={InputDropdown}
+                  title="Position in Game *"
+                  component={EditSelector}
+                  options={OPTIONS.position}
+                  handleSelect={handleSelect}
                 />
               </BigInputBox>
               <BigInputBox>
                 <Field
                   name="position2"
                   defaultValue={current_profile?.position2 || ""}
-                  label="Secondary Position in Game"
-                  placeholder="Secondary Position in Game"
-                  component={InputDropdown}
+                  title="Secondary Position in Game"
+                  component={EditSelector}
+                  options={OPTIONS.position}
+                  handleSelect={handleSelect}
                 />
               </BigInputBox>
               <TitleLine title="Personal Info" />
               <BigInputBox>
                 <Field
                   name="age"
+                  fieldName="age"
                   defaultValue={current_profile?.age || ""}
-                  placeholder="Age"
-                  label="Age *"
-                  component={InputProfile}
+                  title="Age *"
+                  component={EditInput}
+                  handleSelect={handleSelect}
                 />
               </BigInputBox>
               <FormBox>
                 <SmallInputBox>
                   <Field
                     name="feet"
+                    fieldName="feet"
                     defaultValue={current_profile?.feet || ""}
-                    placeholder="Feet"
-                    label="Feet *"
-                    component={InputProfile}
+                    title="Feet *"
+                    component={EditInput}
+                    handleSelect={handleSelect}
                   />
                 </SmallInputBox>
                 <SmallInputBox>
                   <Field
                     name="inches"
+                    fieldName="inches"
                     defaultValue={current_profile?.inches || ""}
-                    placeholder="Inches"
-                    label="Inches"
-                    component={InputProfile}
+                    title="Inches"
+                    component={EditInput}
+                    handleSelect={handleSelect}
                   />
                 </SmallInputBox>
               </FormBox>
@@ -106,29 +181,32 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
               <BigInputBox>
                 <Field
                   name="weight"
+                  fieldName="weight"
                   defaultValue={current_profile?.weight || ""}
-                  label="Weight *"
-                  placeholder="Weight *"
-                  component={InputProfile}
+                  title="Weight *"
+                  component={EditInput}
+                  handleSelect={handleSelect}
                 />
               </BigInputBox>
               <FormBox>
                 <SmallInputBox>
                   <Field
-                    name="throws"
+                    name="throws_hand"
                     defaultValue={current_profile?.throws_hand || ""}
-                    placeholder="Throws *"
-                    label="Throws *"
-                    component={InputDropdown}
+                    title="Throws *"
+                    component={EditSelector}
+                    options={OPTIONS.throws}
+                    handleSelect={handleSelect}
                   />
                 </SmallInputBox>
                 <SmallInputBox>
                   <Field
-                    name="bats"
+                    name="bats_hand"
                     defaultValue={current_profile?.bats_hand || ""}
-                    placeholder="Bats *"
-                    label="Bats *"
-                    component={InputDropdown}
+                    title="Bats *"
+                    component={EditSelector}
+                    options={OPTIONS.bats}
+                    handleSelect={handleSelect}
                   />
                 </SmallInputBox>
               </FormBox>
@@ -138,27 +216,30 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <Field
                   name="school"
                   defaultValue={current_profile?.school?.name || ""}
-                  placeholder="School"
-                  label="School *"
-                  component={InputDropdown}
+                  title="School *"
+                  component={EditSelector}
+                  options={OPTIONS.school}
+                  handleSelect={handleSelect}
                 />
               </BigInputBox>
               <BigInputBox>
                 <Field
-                  name="schoolYear"
+                  name="school_year "
                   defaultValue={current_profile?.school_year || ""}
-                  placeholder="School Year"
-                  label="School Year "
-                  component={InputDropdown}
+                  title="School Year "
+                  component={EditSelector}
+                  options={OPTIONS.school_year}
+                  handleSelect={handleSelect}
                 />
               </BigInputBox>
               <BigInputBox>
                 <Field
                   name="team"
                   defaultValue={String(current_profile?.teams) || ""}
-                  placeholder="Team"
-                  label="Team"
-                  component={InputDropdown}
+                  title="Team"
+                  component={EditSelector}
+                  options={OPTIONS.team}
+                  handleSelect={handleSelect}
                 />
               </BigInputBox>
               <TitleLine title="Facility" />
@@ -166,19 +247,21 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <Field
                   name="facility"
                   defaultValue={String(current_profile?.facilities) || ""}
-                  placeholder="Facility"
-                  label="Facility"
-                  component={InputDropdown}
+                  title="Facility"
+                  component={EditSelector}
+                  options={OPTIONS.facility}
+                  handleSelect={handleSelect}
                 />
               </BigInputBox>
               <TitleLine title="About" />
               <TextAreaBox>
                 <Field
-                  name="bio"
+                  name="biography"
+                  fieldName="biography"
                   defaultValue={current_profile?.biography || ""}
-                  placeholder="Describe yourself in a few words"
-                  label="Describe yourself in a few..."
+                  title="Describe yourself in a few words"
                   component={TextAreaProfile}
+                  handleSelect={handleSelect}
                 />
               </TextAreaBox>
 
@@ -318,4 +401,22 @@ const SaveBtn = styled(CancelBtn)`
 export default EditProfile;
 
 type Props = { toggleEditBtn: (value: boolean) => void };
-type Values = {};
+type Selects = {
+  age: number | undefined;
+  avatar: string | undefined;
+  bats_hand: string | undefined;
+  biography: string | undefined;
+  facilities: [{ id: string | number; email: string; u_name: string }] | [];
+  feet: number | undefined;
+  first_name: string | undefined;
+  id: string | number | undefined;
+  inches: number | undefined;
+  last_name: string | undefined;
+  position: string | undefined;
+  position2: string | undefined;
+  school: { id: string; name: string } | {};
+  school_year: string | undefined;
+  teams: [{ id: string | number; name: string }] | [];
+  throws_hand: string | undefined;
+  weight: number | undefined;
+};

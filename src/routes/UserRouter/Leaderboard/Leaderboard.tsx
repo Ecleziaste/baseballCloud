@@ -22,42 +22,42 @@ enum Titles {
 const OPTIONS = {
   date: [
     { fieldName: "date", text: "All" },
-    { fieldName: "date", text: "Last Week", payloadText: "last_week" },
-    { fieldName: "date", text: "Last Month", payloadText: "last_month" },
+    { fieldName: "date", text: "Last Week", payload: "last_week" },
+    { fieldName: "date", text: "Last Month", payload: "last_month" },
   ],
   position: [
     { fieldName: "position", text: "All" },
-    { fieldName: "position", text: "Catcher", payloadText: "catcher" },
-    { fieldName: "position", text: "First Base", payloadText: "first_base" },
-    { fieldName: "position", text: "Second Base", payloadText: "second_base" },
-    { fieldName: "position", text: "Shortstop", payloadText: "shortstop" },
-    { fieldName: "position", text: "Third Base", payloadText: "third_base" },
-    { fieldName: "position", text: "Outfield", payloadText: "outfield" },
-    { fieldName: "position", text: "Pitcher", payloadText: "pitcher" },
+    { fieldName: "position", text: "Catcher", payload: "catcher" },
+    { fieldName: "position", text: "First Base", payload: "first_base" },
+    { fieldName: "position", text: "Second Base", payload: "second_base" },
+    { fieldName: "position", text: "Shortstop", payload: "shortstop" },
+    { fieldName: "position", text: "Third Base", payload: "third_base" },
+    { fieldName: "position", text: "Outfield", payload: "outfield" },
+    { fieldName: "position", text: "Pitcher", payload: "pitcher" },
   ],
   favorite: [
     { fieldName: "favorite", text: "All" },
-    { fieldName: "favorite", text: "Favorite", payloadText: 1 },
+    { fieldName: "favorite", text: "Favorite", payload: 1 },
   ],
   batting: [
     {
       fieldName: "type",
       text: "Exit Velocity",
-      payloadText: "exit_velocity",
+      payload: "exit_velocity",
     },
     {
       fieldName: "type",
       text: "Carry Distance",
-      payloadText: "carry_distance",
+      payload: "carry_distance",
     },
   ],
   pitching: [
     {
       fieldName: "type",
       text: "Pitch Velocity",
-      payloadText: "pitch_velocity",
+      payload: "pitch_velocity",
     },
-    { fieldName: "type", text: "Spin Rate", payloadText: "spin_rate" },
+    { fieldName: "type", text: "Spin Rate", payload: "spin_rate" },
   ],
 };
 

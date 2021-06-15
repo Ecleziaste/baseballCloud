@@ -21,22 +21,22 @@ enum Titles {
 const OPTIONS = {
   position: [
     { fieldName: "position", text: "All" },
-    { fieldName: "position", text: "Catcher", payloadText: "catcher" },
-    { fieldName: "position", text: "First Base", payloadText: "first_base" },
-    { fieldName: "position", text: "Second Base", payloadText: "second_base" },
-    { fieldName: "position", text: "Shortstop", payloadText: "shortstop" },
-    { fieldName: "position", text: "Third Base", payloadText: "third_base" },
-    { fieldName: "position", text: "Outfield", payloadText: "outfield" },
-    { fieldName: "position", text: "Pitcher", payloadText: "pitcher" },
+    { fieldName: "position", text: "Catcher", payload: "catcher" },
+    { fieldName: "position", text: "First Base", payload: "first_base" },
+    { fieldName: "position", text: "Second Base", payload: "second_base" },
+    { fieldName: "position", text: "Shortstop", payload: "shortstop" },
+    { fieldName: "position", text: "Third Base", payload: "third_base" },
+    { fieldName: "position", text: "Outfield", payload: "outfield" },
+    { fieldName: "position", text: "Pitcher", payload: "pitcher" },
   ],
   favorite: [
     { fieldName: "favorite", text: "All" },
-    { fieldName: "favorite", text: "Favorite", payloadText: 1 },
+    { fieldName: "favorite", text: "Favorite", payload: 1 },
   ],
   profiles_count: [
-    { fieldName: "profiles_count", text: "10", payloadText: 10 },
-    { fieldName: "profiles_count", text: "15", payloadText: 15 },
-    { fieldName: "profiles_count", text: "25", payloadText: 25 },
+    { fieldName: "profiles_count", text: "10", payload: 10 },
+    { fieldName: "profiles_count", text: "15", payload: 15 },
+    { fieldName: "profiles_count", text: "25", payload: 25 },
   ],
 };
 
