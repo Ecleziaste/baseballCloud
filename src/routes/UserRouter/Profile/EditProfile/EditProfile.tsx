@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Form, Field } from "react-final-form";
 import InputProfile from "../components/InputProfile";
@@ -7,9 +7,11 @@ import TitleLine from "../components/TitleLine";
 import TextAreaProfile from "../components/TextAreaProfile";
 import { useSelector } from "react-redux";
 import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
+import DUMMY from "../../../../assets/images/avatar_dummy.png";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const current_profile = useSelector(selectCurrentProfile)!;
+  const avatar = current_profile?.avatar;
 
   const onSubmit = (value: Values) => {
     console.log("value", value);
@@ -19,9 +21,12 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
     <Container>
       <PhotoForm>
         <ImageBox>
-          <Image />
+          <Image $avatar={avatar || DUMMY} />
         </ImageBox>
-        <ChooseLink>Choose Photo</ChooseLink>
+        <ChooseLink>
+          <Label htmlFor="avatar"> Choose Photo</Label>
+          <AvatarInput id="avatar" type="file" accept="image/*" />
+        </ChooseLink>
       </PhotoForm>
       <InfoForm>
         <Form
@@ -209,10 +214,9 @@ const ImageBox = styled.div`
   margin-bottom: 8px;
   overflow: hidden;
   border-radius: 50%;
-  border: 1px solid tomato;
 `;
-const Image = styled.div`
-  background-image: url("https://baseballcloud-staging-assets.s3.amazonaws.com/profile/469/size_100_100_159a71f5-9233-415a-8ab7-63811fecb9b4.png");
+const Image = styled.div<{ $avatar: string | null | undefined }>`
+  background-image: url(${(props) => props.$avatar});
   width: 100px;
   height: 100px;
   background-size: cover;
@@ -221,8 +225,19 @@ const Image = styled.div`
 `;
 const ChooseLink = styled.div`
   display: flex;
+  position: relative;
   width: 100%;
   margin-top: 8px;
+  justify-content: center;
+  align-items: center;
+`;
+const AvatarInput = styled.input`
+  display: none;
+  background-color: transparent;
+  border: none;
+`;
+const Label = styled.label`
+  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 14px;
@@ -236,6 +251,7 @@ const ChooseLink = styled.div`
     text-decoration: underline;
   }
 `;
+
 const InfoForm = styled.div`
   display: flex;
   width: 100%;

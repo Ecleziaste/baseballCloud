@@ -14,6 +14,7 @@ import { signOut } from "../../store/user/actions";
 import { selectCurrentProfile } from "../../store/current_profile/selectors";
 import Dropdown from "../Dropdown";
 import DefaultIcon from "../DefaultIcon";
+import DUMMY from "../../assets/images/avatar_dummy.png";
 
 const Header: React.FC<Props> = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ const Header: React.FC<Props> = () => {
   const toggleMenu = (value: boolean) => {
     setMenu(value);
   };
+  const avatar = current_profile?.avatar;
+  const avatar2 = "http://avatars.mitosa.net/warcraft/039.jpg";
 
   const menuEl = useRef<HTMLDivElement>(null);
 
@@ -64,7 +67,7 @@ const Header: React.FC<Props> = () => {
             <User>
               <AvatarWrapper>
                 <ProfileLink to="profile">
-                  <Avatar></Avatar>
+                  <Avatar $avatar={avatar || DUMMY}></Avatar>
                 </ProfileLink>
               </AvatarWrapper>
               <ProfileButton onClick={() => toggleMenu(!menu)}>
@@ -182,15 +185,13 @@ const AvatarWrapper = styled.div`
 const ProfileLink = styled(Link)`
   cursor: pointer;
 `;
-const Avatar = styled.div`
-  background-image: url("https://baseballcloud-staging-assets.s3.amazonaws.com/profile/469/size_100_100_be233dcd-3b5c-4e8c-affe-6cfdf10dec37.png");
+const Avatar = styled.div<{ $avatar: string | null | undefined }>`
+  background-image: url(${(props) => props.$avatar});
   width: 32px;
   height: 32px;
   background-size: cover;
   background-position: 50% 50%;
   border-radius: 50%;
-
-  border: 1px solid tomato;
 `;
 const ProfileButton = styled.button`
   display: flex;

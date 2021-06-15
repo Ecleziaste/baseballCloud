@@ -18,16 +18,6 @@ export const signUp = createAsyncThunk<any, SignUpParams>(
 
     return { data, headers, status };
   }
-  // const {
-  //   // FIXME: почему number??
-  //   status,
-  //   data: { data },
-  //   headers,
-  // } = await signUpApi(params);
-
-  // console.log(data);
-
-  // return { status, data, headers };
 );
 
 export const signIn = createAsyncThunk<any, SignInParams>(

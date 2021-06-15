@@ -3,7 +3,7 @@ import { profileApi } from "../profile/api";
 import { Profile } from "./slice";
 
 export const setProfile = createAsyncThunk<Profile, ProfileParams>(
-  "currentProfile/set",
+  "profile/set",
   async (params) => {
     const {
       data: {

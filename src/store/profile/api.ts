@@ -2,7 +2,7 @@ import { http } from "../../services/http";
 
 export const profileApi = (payload: {}) => http.post(`/graphql`, { query });
 
-const variables = { id: "469" };
+// const variables = { id: "469" };
 
 const query = `query Profile($id:String!)
 { profile(id: $id)
