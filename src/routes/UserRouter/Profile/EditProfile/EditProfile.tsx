@@ -8,48 +8,7 @@ import EditSelector from "./EditSelector";
 import EditInput from "./EditInput";
 import TextAreaProfile from "../components/TextAreaProfile";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
-
-const OPTIONS = {
-  position: [
-    { fieldName: "position", text: "All" },
-    { fieldName: "position", text: "Catcher", payload: "catcher" },
-    { fieldName: "position", text: "First Base", payload: "first_base" },
-    { fieldName: "position", text: "Second Base", payload: "second_base" },
-    { fieldName: "position", text: "Shortstop", payload: "shortstop" },
-    { fieldName: "position", text: "Third Base", payload: "third_base" },
-    { fieldName: "position", text: "Outfield", payload: "outfield" },
-    { fieldName: "position", text: "Pitcher", payload: "pitcher" },
-  ],
-  throws: [
-    { fieldName: "throws", text: "L", payload: "l" },
-    { fieldName: "throws", text: "R", payload: "r" },
-  ],
-  bats: [
-    { fieldName: "bats", text: "L", payload: "l" },
-    { fieldName: "bats", text: "R", payload: "r" },
-  ],
-
-  school: [
-    { fieldName: "school", text: "FSU", payload: { id: "2", name: "FSU" } },
-  ],
-  school_year: [
-    { fieldName: "school_year", text: "Freshman", payload: "freshman" },
-  ],
-  team: [
-    {
-      fieldName: "team",
-      text: "scorps",
-      payload: { id: "6", name: "scorps" },
-    },
-  ],
-  facility: [
-    {
-      fieldName: "facility",
-      text: "Example",
-      payload: { id: "32", u_name: "Example" },
-    },
-  ],
-};
+import { OPTIONS } from "../../../../constants";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const current_profile = useSelector(selectCurrentProfile)!;

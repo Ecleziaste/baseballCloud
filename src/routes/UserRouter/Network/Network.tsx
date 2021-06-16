@@ -8,6 +8,7 @@ import SelectorInput from "../../../components/SelectorInput";
 import SearchInput from "../components/SearchInput";
 import { Form, Field } from "react-final-form";
 import Pagination from "../components/Pagination";
+import { OPTIONS } from "../../../constants";
 
 enum Titles {
   school = "School",
@@ -17,28 +18,6 @@ enum Titles {
   favorite = "All",
   profiles_count = "Show: 10",
 }
-
-const OPTIONS = {
-  position: [
-    { fieldName: "position", text: "All" },
-    { fieldName: "position", text: "Catcher", payload: "catcher" },
-    { fieldName: "position", text: "First Base", payload: "first_base" },
-    { fieldName: "position", text: "Second Base", payload: "second_base" },
-    { fieldName: "position", text: "Shortstop", payload: "shortstop" },
-    { fieldName: "position", text: "Third Base", payload: "third_base" },
-    { fieldName: "position", text: "Outfield", payload: "outfield" },
-    { fieldName: "position", text: "Pitcher", payload: "pitcher" },
-  ],
-  favorite: [
-    { fieldName: "favorite", text: "All" },
-    { fieldName: "favorite", text: "Favorite", payload: 1 },
-  ],
-  profiles_count: [
-    { fieldName: "profiles_count", text: "10", payload: 10 },
-    { fieldName: "profiles_count", text: "15", payload: 15 },
-    { fieldName: "profiles_count", text: "25", payload: 25 },
-  ],
-};
 
 const Network: React.FC<Props> = () => {
   const [selects, setSelects] = useState<Selects>({
