@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { profileApi } from "../profile/api";
 import { Profile } from "./slice";
 
-export const setProfile = createAsyncThunk<Profile, ProfileParams>(
+export const setProfile = createAsyncThunk<Profile, string>(
   "profile/set",
   async (params) => {
     const {
@@ -15,4 +15,4 @@ export const setProfile = createAsyncThunk<Profile, ProfileParams>(
   }
 );
 
-export type ProfileParams = {};
+export type ProfileParams = { id: string };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TabBtn from "../components/TabBtn";
 import ProgressBar from "../components/ProgressBar";
@@ -8,9 +8,13 @@ import AppLayout from "../../../layouts";
 import { useSelector } from "react-redux";
 import { selectCurrentProfile } from "../../../store/current_profile/selectors";
 import Appeal from "./components/Appeal";
+import { setProfile } from "../../../store/profile/actions";
+import { useDispatch } from "react-redux";
+import { setLeaderboardBatting } from "../../../store/leaderboard_batting/actions";
 
 const Profile: React.FC<Props> = () => {
-  const profile = useSelector(selectCurrentProfile);
+  const dispatch = useDispatch();
+  const profile = useSelector(selectCurrentProfile)!;
   const [editBtn, setEditBtn] = useState(true);
   const [activeTab, setActiveTab] = useState(true);
 
@@ -18,6 +22,13 @@ const Profile: React.FC<Props> = () => {
     // if (profile?.first_name === null)
     setEditBtn(value);
   };
+
+  //FIXME: надо дождаться profile
+  useEffect(() => {
+    // const currentId = String(profile.id)!;
+    // dispatch(setProfile(currentId));
+  }, [profile]);
+  // await dispatch(setLeaderboardBatting({}));
 
   return (
     <AppLayout>
@@ -133,7 +144,6 @@ const LeftPanel = styled.aside`
   flex-direction: column;
   align-items: center;
   width: 328px;
-  /* width: 265px; */
   max-width: 100%;
   background: #fff;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -148,4 +158,3 @@ const LeftPanel = styled.aside`
 export default Profile;
 
 type Props = {};
-type Values = {};

@@ -3,6 +3,7 @@ import { http } from "../../services/http";
 export const currentProfileApi = (payload: {}) =>
   http.post(`/graphql`, { query });
 
+// что если я наапишу query Внутри
 const query = `{ current_profile ()
   {
     id

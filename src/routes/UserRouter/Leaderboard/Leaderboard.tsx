@@ -8,6 +8,9 @@ import Selector from "../../../components/Selector";
 import SelectorInput from "../../../components/SelectorInput";
 import { Form, Field } from "react-final-form";
 import { OPTIONS } from "../../../constants";
+import { LeaderboardSelects } from "../../../Types";
+import { useDispatch } from "react-redux";
+import { setLeaderboardBatting } from "../../../store/leaderboard_batting/actions";
 
 enum Titles {
   date = "Date",
@@ -21,12 +24,13 @@ enum Titles {
 }
 
 const Leaderboard: React.FC<Props> = () => {
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(true);
   const selectTab = (val: boolean) => {
     setActiveTab(val);
   };
 
-  const [selects, setSelects] = useState<Selects>({
+  const [selects, setSelects] = useState<LeaderboardSelects>({
     date: undefined,
     school: undefined,
     team: undefined,
@@ -43,7 +47,7 @@ const Leaderboard: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    console.log(selects);
+    dispatch(setLeaderboardBatting(selects));
   }, [selects]);
 
   const onSubmit = () => {};
@@ -281,14 +285,3 @@ const TABLE_TITLE_9 = styled(TABLE_TITLE)`
 export default Leaderboard;
 
 type Props = {};
-
-type Selects = {
-  team?: string | undefined;
-  school?: string | undefined;
-  position?: string | undefined;
-  age?: number | undefined;
-  favorite?: number | undefined;
-  type?: string | undefined;
-  date?: string | undefined;
-  offset?: number | undefined;
-};

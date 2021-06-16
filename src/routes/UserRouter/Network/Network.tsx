@@ -181,16 +181,12 @@ const TableHeaders = styled.div`
   font-weight: 300;
   color: #667784;
 `;
-
 const Selectables = styled.div`
   display: flex;
   align-items: center;
   margin-right: 24px;
 `;
-const SearchPlayer = styled.div`
-  /* padding-right: 23px;
-  margin-right: 23px; */
-`;
+const SearchPlayer = styled.div``;
 const TableBody = styled.div`
   display: flex;
   flex-direction: column;

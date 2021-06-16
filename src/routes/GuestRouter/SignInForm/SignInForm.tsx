@@ -35,10 +35,12 @@ const SignInForm: React.FC<Props> = () => {
             </FormHeader>
 
             <Form
-              // initialValues={{
-              //   email: "test@example.com",
-              //   password: "12345678",
-              // }}
+              // *****
+              initialValues={{
+                email: "test@example.com",
+                password: "12345678",
+              }}
+              // *****
               onSubmit={onSubmit}
               render={({ handleSubmit }) => (
                 <FormContainer>
