@@ -36,7 +36,7 @@ export type ProfilesSelects = {
   offset?: number | undefined;
 };
 
-export type LeaderCardType = {
+export type BatterCardType = {
   batter_name: string;
   exit_velocity: number;
   launch_angle: number;
@@ -62,5 +62,19 @@ export type PlayerCard = {
   events: [];
   school: School | null;
   teams: Array<Team> | [];
+  favorite: boolean;
+};
+
+export type PitchingType = {
+  pitcher_name: string;
+  pitch_type: string;
+  velocity: number;
+  spin_rate: number;
+  vertical_break: number | null;
+  horizontal_break: number | null;
+  pitcher_datraks_id: number;
+  age: number;
+  school: School;
+  teams: Array<Team>;
   favorite: boolean;
 };

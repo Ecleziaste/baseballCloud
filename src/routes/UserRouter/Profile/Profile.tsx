@@ -10,6 +10,7 @@ import { selectCurrentProfile } from "../../../store/current_profile/selectors";
 import Appeal from "./components/Appeal";
 import { setProfile } from "../../../store/profile/actions";
 import { setLeaderboardBatting } from "../../../store/leaderboard_batting/actions";
+import { setLeaderboardPitching } from "../../../store/leaderboard_pitching/actions";
 import { setProfiles } from "../../../store/profiles/actions";
 import { useParams } from "react-router-dom";
 
@@ -17,7 +18,7 @@ const Profile: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const profile = useSelector(selectCurrentProfile)!;
   const { id } = useParams<{ id: string }>();
-
+  // эту айдишку хватает useEffect и отображает нужные данные
   const [editBtn, setEditBtn] = useState(true);
   const [activeTab, setActiveTab] = useState(true);
 
@@ -34,6 +35,7 @@ const Profile: React.FC<Props> = () => {
   useEffect(() => {
     getProfileData();
     dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
+    dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
     dispatch(setProfiles({}));
   }, [profile]);
 

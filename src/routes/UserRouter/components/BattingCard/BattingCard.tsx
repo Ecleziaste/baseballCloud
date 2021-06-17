@@ -3,9 +3,9 @@ import styled from "styled-components";
 import Favourite from "../Favourite";
 import UnFavourite from "../UnFavourite";
 import { Link } from "react-router-dom";
-import { LeaderCardType } from "../../../../Types";
+import { BatterCardType } from "../../../../Types";
 
-const LeaderCard: React.FC<Props> = ({ leader }) => {
+const BattingCard: React.FC<Props> = ({ batter }) => {
   const [heartBtn, setHeartBtn] = useState<boolean>(false);
 
   // надо будет искать лидера по имени, т.к. нет айдишки?
@@ -16,14 +16,14 @@ const LeaderCard: React.FC<Props> = ({ leader }) => {
         <Title $width="none">1</Title>
       </TitleWrapper>
       <Title $width="14%">
-        <Name to="#">{leader.batter_name}</Name>
+        <Name to="#">{batter.batter_name}</Name>
       </Title>
-      <Title $width="5%">{leader.age}</Title>
-      <Title $width="14%">{leader.school.name}</Title>
-      <Title $width="14.5%">{leader.teams[0].name}</Title>
-      <Title $width="14.5%">{String(leader.exit_velocity)}</Title>
-      <Title $width="14.5%">{String(leader.launch_angle)}</Title>
-      <Title $width="10%">{String(leader.distance)}</Title>
+      <Title $width="5%">{batter.age}</Title>
+      <Title $width="14%">{batter.school.name}</Title>
+      <Title $width="14.5%">{batter.teams[0].name}</Title>
+      <Title $width="14.5%">{String(batter.exit_velocity)}</Title>
+      <Title $width="14.5%">{String(batter.launch_angle)}</Title>
+      <Title $width="10%">{String(batter.distance)}</Title>
       <TitleFav $width="none">
         <HeartBtn onClick={() => setHeartBtn(!heartBtn)}>
           {heartBtn ? <Favourite /> : <UnFavourite />}
@@ -81,8 +81,8 @@ const HeartBtn = styled.div`
   display: flex;
 `;
 
-export default LeaderCard;
+export default BattingCard;
 
 type Props = {
-  leader: LeaderCardType;
+  batter: BatterCardType;
 };

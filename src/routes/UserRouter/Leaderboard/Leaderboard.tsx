@@ -3,7 +3,8 @@ import styled from "styled-components";
 import AppLayout from "../../../layouts";
 import TabBtn from "../components/TabBtn";
 import PageHeader from "../components/PageHeader";
-import LeaderCard from "../components/LeaderCard";
+import BattingCard from "../components/BattingCard";
+import PitchingCard from "../components/PitchingCard";
 import Selector from "../../../components/Selector";
 import SelectorInput from "../../../components/SelectorInput";
 import { Form, Field } from "react-final-form";
@@ -12,6 +13,8 @@ import { LeaderboardSelects } from "../../../Types";
 import { useDispatch, useSelector } from "react-redux";
 import { setLeaderboardBatting } from "../../../store/leaderboard_batting/actions";
 import { selectLeaderboardBatting } from "../../../store/leaderboard_batting/selectors";
+import { setLeaderboardPitching } from "../../../store/leaderboard_pitching/actions";
+import { selectLeaderboardPitching } from "../../../store/leaderboard_pitching/selectors";
 
 enum Titles {
   date = "Date",
@@ -30,10 +33,12 @@ const Leaderboard: React.FC<Props> = () => {
   const selectTab = (val: boolean) => {
     setActiveTab(val);
   };
-  const { leaderboard_batting: leaders } = useSelector(
+  const { leaderboard_batting: batters } = useSelector(
     selectLeaderboardBatting
   )!;
-  console.log(leaders);
+  const { leaderboard_pitching: pitchers } = useSelector(
+    selectLeaderboardPitching
+  )!;
 
   const [selects, setSelects] = useState<LeaderboardSelects>({
     date: undefined,
@@ -52,6 +57,7 @@ const Leaderboard: React.FC<Props> = () => {
 
   useEffect(() => {
     dispatch(setLeaderboardBatting(selects));
+    dispatch(setLeaderboardPitching(selects));
   }, [selects]);
 
   const onSubmit = () => {};
@@ -131,7 +137,10 @@ const Leaderboard: React.FC<Props> = () => {
                     text="Batting"
                   ></TabBtn>
                   <TabBtn
-                    onClick={() => selectTab(false)}
+                    onClick={() => {
+                      selectTab(false);
+                      setSelects({ ...selects, type: "pitch_velocity" });
+                    }}
                     isActive={!activeTab}
                     text="Pitching"
                   ></TabBtn>
@@ -183,9 +192,20 @@ const Leaderboard: React.FC<Props> = () => {
             <TitleFav $width="none">Favorite</TitleFav>
           </TableHeaders>
           <TableBody>
-            {leaders.map((leader) => {
-              return <LeaderCard leader={leader} key={leader.batter_name} />;
-            })}
+            {activeTab === true
+              ? batters.map((batter) => {
+                  return (
+                    <BattingCard batter={batter} key={batter.batter_name} />
+                  );
+                })
+              : pitchers.map((pitcher) => {
+                  return (
+                    <PitchingCard
+                      pitcher={pitcher}
+                      key={pitcher.pitcher_name}
+                    />
+                  );
+                })}
           </TableBody>
         </PageBody>
       </Main>
