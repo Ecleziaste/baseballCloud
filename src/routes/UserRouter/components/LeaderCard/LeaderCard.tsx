@@ -3,29 +3,32 @@ import styled from "styled-components";
 import Favourite from "../Favourite";
 import UnFavourite from "../UnFavourite";
 import { Link } from "react-router-dom";
+import { LeaderCardType } from "../../../../Types";
 
-const LeaderCard: React.FC<Props> = () => {
+const LeaderCard: React.FC<Props> = ({ leader }) => {
   const [heartBtn, setHeartBtn] = useState<boolean>(false);
+
+  // надо будет искать лидера по имени, т.к. нет айдишки?
 
   return (
     <CardContent>
-      <TitleWrapper>
-        <TITLE_1>1</TITLE_1>
+      <TitleWrapper $width="6%">
+        <Title $width="none">1</Title>
       </TitleWrapper>
-      <TITLE_2>
-        <Name>Batter Name</Name>
-      </TITLE_2>
-      <TITLE_3>Age</TITLE_3>
-      <TITLE_4>School</TITLE_4>
-      <TITLE_5>Teams</TITLE_5>
-      <TITLE_6>Exit Velocity</TITLE_6>
-      <TITLE_7>Launch Angle</TITLE_7>
-      <TITLE_8>Distance</TITLE_8>
-      <TITLE_9>
+      <Title $width="14%">
+        <Name to="#">{leader.batter_name}</Name>
+      </Title>
+      <Title $width="5%">{leader.age}</Title>
+      <Title $width="14%">{leader.school.name}</Title>
+      <Title $width="14.5%">{leader.teams[0].name}</Title>
+      <Title $width="14.5%">{String(leader.exit_velocity)}</Title>
+      <Title $width="14.5%">{String(leader.launch_angle)}</Title>
+      <Title $width="10%">{String(leader.distance)}</Title>
+      <TitleFav $width="none">
         <HeartBtn onClick={() => setHeartBtn(!heartBtn)}>
           {heartBtn ? <Favourite /> : <UnFavourite />}
         </HeartBtn>
-      </TITLE_9>
+      </TitleFav>
     </CardContent>
   );
 };
@@ -46,51 +49,31 @@ const CardContent = styled.div`
     background-color: #ecf8ff;
   }
 `;
-const TITLE = styled.div`
+const Title = styled.div<{ $width: string }>`
   display: flex;
   max-width: 100%;
+  width: ${(props) => props.$width};
   justify-content: flex-start;
   text-overflow: ellipsis;
 `;
-const TitleWrapper = styled(TITLE)`
+const TitleWrapper = styled(Title)`
   padding-left: 6px;
-  width: 6%;
 `;
-const TITLE_1 = styled(TITLE)``;
-const TITLE_2 = styled(TITLE)`
-  width: 14%;
-`;
-const Name = styled.div`
+
+const Name = styled(Link)`
   display: flex;
   max-width: 100%;
   justify-content: flex-start;
   text-overflow: ellipsis;
   cursor: pointer;
   text-decoration: none;
+  color: #414f5a;
   &:hover {
     color: #48bbff;
     text-decoration: underline;
   }
 `;
-const TITLE_3 = styled(TITLE)`
-  width: 5%;
-`;
-const TITLE_4 = styled(TITLE)`
-  width: 14%;
-`;
-const TITLE_5 = styled(TITLE)`
-  width: 14.5%;
-`;
-const TITLE_6 = styled(TITLE)`
-  width: 14.5%;
-`;
-const TITLE_7 = styled(TITLE)`
-  width: 14.5%;
-`;
-const TITLE_8 = styled(TITLE)`
-  width: 10%;
-`;
-const TITLE_9 = styled(TITLE)`
+const TitleFav = styled(Title)`
   cursor: pointer;
   justify-content: flex-end;
 `;
@@ -100,4 +83,6 @@ const HeartBtn = styled.div`
 
 export default LeaderCard;
 
-type Props = {};
+type Props = {
+  leader: LeaderCardType;
+};

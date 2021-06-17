@@ -9,6 +9,10 @@ import SearchInput from "../components/SearchInput";
 import { Form, Field } from "react-final-form";
 import Pagination from "../components/Pagination";
 import { OPTIONS } from "../../../constants";
+import { ProfilesSelects } from "../../../Types";
+import { useDispatch, useSelector } from "react-redux";
+import { setProfiles } from "../../../store/profiles/actions";
+import { selectProfiles } from "../../../store/profiles/selectors";
 
 enum Titles {
   school = "School",
@@ -20,7 +24,9 @@ enum Titles {
 }
 
 const Network: React.FC<Props> = () => {
-  const [selects, setSelects] = useState<Selects>({
+  const dispatch = useDispatch();
+  const profiles = useSelector(selectProfiles)!;
+  const [selects, setSelects] = useState<ProfilesSelects>({
     player_name: undefined,
     school: undefined,
     team: undefined,
@@ -37,7 +43,7 @@ const Network: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    console.log(selects);
+    dispatch(setProfiles(selects));
   }, [selects]);
 
   const onSubmit = () => {};
@@ -106,7 +112,9 @@ const Network: React.FC<Props> = () => {
               </HeaderRow>
 
               <Container>
-                <Players>Available Players {"(...)"}</Players>
+                <Players>
+                  Available Players {`(${String(profiles.total_count)})`}
+                </Players>
                 <SearchPlayer>
                   <Field
                     name="player_name"
@@ -123,17 +131,17 @@ const Network: React.FC<Props> = () => {
 
         <PageBody>
           <TableHeaders>
-            <TABLE_TITLE_1>Player Name</TABLE_TITLE_1>
-            <TABLE_TITLE_2>Sessions</TABLE_TITLE_2>
-            <TABLE_TITLE_3>School</TABLE_TITLE_3>
-            <TABLE_TITLE_4>Teams</TABLE_TITLE_4>
-            <TABLE_TITLE_5>Age</TABLE_TITLE_5>
-            <TABLE_TITLE_6>Favorite</TABLE_TITLE_6>
+            <Title $width="19.5%">Player Name</Title>
+            <Title $width="10%">Sessions</Title>
+            <Title $width="23%">School</Title>
+            <Title $width="23%">Teams</Title>
+            <Title $width="15%">Age</Title>
+            <Title $width="8%">Favorite</Title>
           </TableHeaders>
           <TableBody>
-            <NetworkCard />
-            <NetworkCard />
-            <NetworkCard />
+            {profiles.profiles.map((profile) => {
+              return <NetworkCard player={profile} key={profile.id} />;
+            })}
           </TableBody>
         </PageBody>
 
@@ -147,6 +155,7 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: auto;
 `;
 const HeaderRow = styled.div`
   display: flex;
@@ -191,42 +200,14 @@ const TableBody = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const TABLE_TITLE = styled.div`
+const Title = styled.div<{ $width: string }>`
   display: flex;
   max-width: 100%;
+  width: ${(props) => props.$width};
   justify-content: flex-start;
   text-overflow: ellipsis;
-`;
-const TABLE_TITLE_1 = styled(TABLE_TITLE)`
-  width: 19.5%; ;
-`;
-const TABLE_TITLE_2 = styled(TABLE_TITLE)`
-  width: 10%;
-`;
-const TABLE_TITLE_3 = styled(TABLE_TITLE)`
-  width: 23%;
-`;
-const TABLE_TITLE_4 = styled(TABLE_TITLE)`
-  width: 23%;
-`;
-const TABLE_TITLE_5 = styled(TABLE_TITLE)`
-  width: 15%;
-`;
-const TABLE_TITLE_6 = styled(TABLE_TITLE)`
-  width: 8%;
 `;
 
 export default Network;
 
 type Props = {};
-
-type Selects = {
-  player_name?: string | undefined;
-  team?: string | undefined;
-  school?: string | undefined;
-  position?: string | undefined;
-  age?: number | undefined;
-  favorite?: number | undefined;
-  profiles_count?: number | undefined;
-  offset?: number | undefined;
-};

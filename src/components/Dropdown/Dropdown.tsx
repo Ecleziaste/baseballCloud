@@ -9,12 +9,13 @@ const Dropdown: React.FC<Props> = ({
   onSelect,
   refer,
   handleSelect,
+  renderHeader,
 }) => {
   const width = "100%";
 
   return (
     <DropdownMenu width={width} options={options} ref={refer}>
-      {children}
+      {renderHeader && renderHeader()}
       {options.map((o) => {
         return (
           <Option
@@ -107,4 +108,5 @@ type Props = {
   onSelect: (value: string) => void;
   refer?: React.RefObject<HTMLDivElement>;
   handleSelect: (fieldName: any, value: any) => void;
+  renderHeader?: () => JSX.Element;
 };

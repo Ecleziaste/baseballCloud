@@ -5,30 +5,37 @@ import ProgressBar from "../components/ProgressBar";
 import FeaturesProfile from "./FeaturesProfile";
 import EditProfile from "./EditProfile";
 import AppLayout from "../../../layouts";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentProfile } from "../../../store/current_profile/selectors";
 import Appeal from "./components/Appeal";
 import { setProfile } from "../../../store/profile/actions";
-import { useDispatch } from "react-redux";
 import { setLeaderboardBatting } from "../../../store/leaderboard_batting/actions";
+import { setProfiles } from "../../../store/profiles/actions";
+import { useParams } from "react-router-dom";
 
 const Profile: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const profile = useSelector(selectCurrentProfile)!;
+  const { id } = useParams<{ id: string }>();
+
   const [editBtn, setEditBtn] = useState(true);
   const [activeTab, setActiveTab] = useState(true);
 
   const toggleEditBtn = (value: boolean): void => {
-    // if (profile?.first_name === null)
     setEditBtn(value);
   };
 
-  //FIXME: надо дождаться profile
+  //FIXME: надо дождаться пока profile запишется в store
+  const getProfileData = async () => {
+    const currentId = String(profile?.id)!;
+    await dispatch(setProfile(currentId));
+  };
+
   useEffect(() => {
-    // const currentId = String(profile.id)!;
-    // dispatch(setProfile(currentId));
+    getProfileData();
+    dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
+    dispatch(setProfiles({}));
   }, [profile]);
-  // await dispatch(setLeaderboardBatting({}));
 
   return (
     <AppLayout>

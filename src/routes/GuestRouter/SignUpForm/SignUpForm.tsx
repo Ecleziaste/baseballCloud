@@ -51,7 +51,7 @@ const SignUpForm: React.FC<Props> = () => {
     if (value.password && value.password !== value.password_confirmation) {
       confErrorSet(true);
     } else confErrorSet(null);
-    if (value.password.length < 8) {
+    if (value.password && value.password.length < 8) {
       lengthErrorSet(true);
     } else lengthErrorSet(null);
     if (

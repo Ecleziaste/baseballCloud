@@ -89,14 +89,17 @@ const Header: React.FC<Props> = () => {
                   options={[]}
                   refer={menuEl}
                   handleSelect={() => {}}
-                >
-                  <ProfileScreenLink to="profile">
-                    <SelectableText>My Profile</SelectableText>
-                  </ProfileScreenLink>
-                  <ExitLink onClick={() => dispatch(signOut())} to="/login">
-                    <SelectableText>Log Out</SelectableText>
-                  </ExitLink>
-                </Dropdown>
+                  renderHeader={() => (
+                    <>
+                      <ProfileScreenLink to="profile">
+                        <SelectableText>My Profile</SelectableText>
+                      </ProfileScreenLink>
+                      <ExitLink onClick={() => dispatch(signOut())} to="/login">
+                        <SelectableText>Log Out</SelectableText>
+                      </ExitLink>
+                    </>
+                  )}
+                ></Dropdown>
               )}
             </User>
           </UserWrapper>

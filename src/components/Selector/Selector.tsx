@@ -50,7 +50,7 @@ const Selector: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
           onSelect={onSelect}
           options={options}
           handleSelect={handleSelect}
-        ></Dropdown>
+        />
       )}
 
       <Span $isActive={isActive}>

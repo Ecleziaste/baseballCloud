@@ -15,9 +15,11 @@ import {
 } from "../../../../assets/svg/paths";
 import { useSelector } from "react-redux";
 import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
+import DUMMY from "../../../../assets/images/avatar_dummy.png";
 
 const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const current_profile = useSelector(selectCurrentProfile);
+  const avatar = current_profile?.avatar;
 
   if (current_profile === null) {
     return null;
@@ -27,7 +29,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn }) => {
     <Container>
       <Photo>
         <ImageBox>
-          <Image />
+          <Image $avatar={avatar || DUMMY} />
         </ImageBox>
         <Name>
           {` ${current_profile.first_name || ""} ${
@@ -156,10 +158,9 @@ const ImageBox = styled.div`
   margin-bottom: 6px;
   overflow: hidden;
   border-radius: 50%;
-  border: 1px solid tomato;
 `;
-const Image = styled.div`
-  background-image: url("https://baseballcloud-staging-assets.s3.amazonaws.com/profile/469/size_100_100_159a71f5-9233-415a-8ab7-63811fecb9b4.png");
+const Image = styled.div<{ $avatar: string | null | undefined }>`
+  background-image: url(${(props) => props.$avatar});
   width: 100px;
   height: 100px;
   background-size: cover;

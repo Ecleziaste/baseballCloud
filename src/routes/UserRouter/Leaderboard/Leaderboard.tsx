@@ -9,8 +9,9 @@ import SelectorInput from "../../../components/SelectorInput";
 import { Form, Field } from "react-final-form";
 import { OPTIONS } from "../../../constants";
 import { LeaderboardSelects } from "../../../Types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLeaderboardBatting } from "../../../store/leaderboard_batting/actions";
+import { selectLeaderboardBatting } from "../../../store/leaderboard_batting/selectors";
 
 enum Titles {
   date = "Date",
@@ -29,6 +30,10 @@ const Leaderboard: React.FC<Props> = () => {
   const selectTab = (val: boolean) => {
     setActiveTab(val);
   };
+  const { leaderboard_batting: leaders } = useSelector(
+    selectLeaderboardBatting
+  )!;
+  console.log(leaders);
 
   const [selects, setSelects] = useState<LeaderboardSelects>({
     date: undefined,
@@ -38,7 +43,6 @@ const Leaderboard: React.FC<Props> = () => {
     type: "exit_velocity",
     age: undefined,
     favorite: undefined,
-    offset: 10,
   });
 
   const handleSelect = async (fieldName: any, value: any) => {
@@ -160,27 +164,28 @@ const Leaderboard: React.FC<Props> = () => {
 
         <PageBody>
           <TableHeaders>
-            <TABLE_TITLE_1>Rank</TABLE_TITLE_1>
-            <TABLE_TITLE_2>
+            <Title $width="6.5%">Rank</Title>
+            <Title $width="14%">
               {activeTab === true ? "Batter Name" : "Pitcher Name"}
-            </TABLE_TITLE_2>
-            <TABLE_TITLE_3>Age</TABLE_TITLE_3>
-            <TABLE_TITLE_4>School</TABLE_TITLE_4>
-            <TABLE_TITLE_5>Teams</TABLE_TITLE_5>
-            <TABLE_TITLE_6>
+            </Title>
+            <Title $width="5%">Age</Title>
+            <Title $width="14%">School</Title>
+            <Title $width="14.5%">Teams</Title>
+            <Title $width="14.5%">
               {activeTab === true ? "Exit Velocity" : "Pitch Type"}
-            </TABLE_TITLE_6>
-            <TABLE_TITLE_7>
+            </Title>
+            <Title $width="14.5%">
               {activeTab === true ? "Launch Angle" : "Velocity"}
-            </TABLE_TITLE_7>
-            <TABLE_TITLE_8>
+            </Title>
+            <Title $width="10%">
               {activeTab === true ? "Distance" : "Spin Rate"}
-            </TABLE_TITLE_8>
-            <TABLE_TITLE_9>Favorite</TABLE_TITLE_9>
+            </Title>
+            <TitleFav $width="none">Favorite</TitleFav>
           </TableHeaders>
           <TableBody>
-            <LeaderCard />
-            <LeaderCard />
+            {leaders.map((leader) => {
+              return <LeaderCard leader={leader} key={leader.batter_name} />;
+            })}
           </TableBody>
         </PageBody>
       </Main>
@@ -245,37 +250,14 @@ const TableBody = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const TABLE_TITLE = styled.div`
+const Title = styled.div<{ $width: string }>`
   display: flex;
   max-width: 100%;
+  width: ${(props) => props.$width};
   justify-content: flex-start;
   text-overflow: ellipsis;
 `;
-const TABLE_TITLE_1 = styled(TABLE_TITLE)`
-  width: 6.5%;
-`;
-const TABLE_TITLE_2 = styled(TABLE_TITLE)`
-  width: 14%;
-`;
-const TABLE_TITLE_3 = styled(TABLE_TITLE)`
-  width: 5%;
-`;
-const TABLE_TITLE_4 = styled(TABLE_TITLE)`
-  width: 14%;
-`;
-const TABLE_TITLE_5 = styled(TABLE_TITLE)`
-  width: 14.5%;
-`;
-const TABLE_TITLE_6 = styled(TABLE_TITLE)`
-  width: 14.5%;
-`;
-const TABLE_TITLE_7 = styled(TABLE_TITLE)`
-  width: 14.5%;
-`;
-const TABLE_TITLE_8 = styled(TABLE_TITLE)`
-  width: 10%;
-`;
-const TABLE_TITLE_9 = styled(TABLE_TITLE)`
+const TitleFav = styled(Title)`
   display: flex;
   max-width: 100%;
   justify-content: flex-end;
