@@ -13,6 +13,9 @@ import { setLeaderboardBatting } from "../../../store/leaderboard_batting/action
 import { setLeaderboardPitching } from "../../../store/leaderboard_pitching/actions";
 import { setProfiles } from "../../../store/profiles/actions";
 import { useParams } from "react-router-dom";
+import { getSchools } from "../../../store/schools/actions";
+import { getTeams } from "../../../store/teams/actions";
+import { getFacilities } from "../../../store/facilities/actions";
 
 const Profile: React.FC<Props> = () => {
   const dispatch = useDispatch();
@@ -36,7 +39,11 @@ const Profile: React.FC<Props> = () => {
     getProfileData();
     dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
     dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
+    // profiles не успевает записаться, если быстро пойти в нетворкс - приложние упадет
     dispatch(setProfiles({}));
+    dispatch(getSchools(""));
+    dispatch(getTeams(""));
+    dispatch(getFacilities(""));
   }, [profile]);
 
   return (

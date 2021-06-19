@@ -20,7 +20,11 @@ const BattingCard: React.FC<Props> = ({ batter }) => {
       </Title>
       <Title $width="5%">{batter.age}</Title>
       <Title $width="14%">{batter.school.name}</Title>
-      <Title $width="14.5%">{batter.teams[0].name}</Title>
+      <Title $width="14.5%">
+        {batter.teams?.map((team, index) => (
+          <span>{(index ? ", " : "") + team.name}</span>
+        )) || "-"}
+      </Title>
       <Title $width="14.5%">{String(batter.exit_velocity)}</Title>
       <Title $width="14.5%">{String(batter.launch_angle)}</Title>
       <Title $width="10%">{String(batter.distance)}</Title>

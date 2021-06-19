@@ -43,6 +43,8 @@ const Network: React.FC<Props> = () => {
   };
 
   useEffect(() => {
+    console.log(selects);
+
     dispatch(setProfiles(selects));
   }, [selects]);
 
@@ -155,7 +157,8 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: auto;
+  /* overflow: auto; */
+  width: 100%;
 `;
 const HeaderRow = styled.div`
   display: flex;

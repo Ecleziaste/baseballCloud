@@ -2,15 +2,19 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Form, Field } from "react-final-form";
 import TitleLine from "../components/TitleLine";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
 import EditSelector from "./EditSelector";
 import EditInput from "./EditInput";
 import TextAreaProfile from "../components/TextAreaProfile";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
 import { OPTIONS } from "../../../../constants";
+import { getSchools } from "../../../../store/schools/actions";
+import { getTeams } from "../../../../store/teams/actions";
+import { getFacilities } from "../../../../store/facilities/actions";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
+  const dispatch = useDispatch();
   const current_profile = useSelector(selectCurrentProfile)!;
   const avatar = current_profile?.avatar;
 
@@ -43,7 +47,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
     await setSelects(newData);
   };
 
-  // useEffect(() => {}, [selects]);
+  useEffect(() => {}, [selects]);
 
   return (
     <Container>

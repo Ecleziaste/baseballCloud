@@ -58,7 +58,7 @@ const Leaderboard: React.FC<Props> = () => {
   useEffect(() => {
     dispatch(setLeaderboardBatting(selects));
     dispatch(setLeaderboardPitching(selects));
-  }, [selects]);
+  }, [selects, activeTab]);
 
   const onSubmit = () => {};
 

@@ -14,6 +14,12 @@ export type Team = {
   name: string;
 };
 
+export type Facility = {
+  id: string;
+  email: string;
+  u_name: string;
+};
+
 export type LeaderboardSelects = {
   team?: string | undefined;
   school?: string | undefined;
@@ -61,7 +67,7 @@ export type PlayerCard = {
   age: number;
   events: [];
   school: School | null;
-  teams: Array<Team> | [];
+  teams: Array<Team> | null;
   favorite: boolean;
 };
 

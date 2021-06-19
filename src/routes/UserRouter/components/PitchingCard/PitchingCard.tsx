@@ -20,7 +20,11 @@ const PitchingCard: React.FC<Props> = ({ pitcher }) => {
       </Title>
       <Title $width="5%">{pitcher.age}</Title>
       <Title $width="14%">{pitcher.school.name}</Title>
-      <Title $width="14.5%">{pitcher.teams[0].name}</Title>
+      <Title $width="14.5%">
+        {pitcher.teams?.map((team, index) => (
+          <span>{(index ? ", " : "") + team.name}</span>
+        )) || "-"}
+      </Title>
       <Title $width="14.5%">{String(pitcher.pitch_type)}</Title>
       <Title $width="14.5%">{String(pitcher.velocity)}</Title>
       <Title $width="10%">{String(pitcher.spin_rate)}</Title>

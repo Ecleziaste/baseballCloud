@@ -43,9 +43,7 @@ const Container = styled.ul`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   margin: 16px 0;
-  /* position: absolute; */
   position: sticky;
   bottom: 0;
 

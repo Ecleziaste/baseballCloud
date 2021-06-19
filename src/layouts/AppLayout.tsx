@@ -34,7 +34,8 @@ const Content = styled.div`
   display: flex;
   flex-flow: column wrap;
   height: 100%;
-  overflow: hidden;
+  min-width: 100%;
+  overflow: auto;
 `;
 
 export default AppLayout;

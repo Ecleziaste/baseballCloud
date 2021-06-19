@@ -21,7 +21,11 @@ const LeaderCard: React.FC<Props> = ({ player }) => {
       </TitleWrapper>
       <Title $width="10%">Sessions</Title>
       <Title $width="23%">{player.school?.name || "-"}</Title>
-      <Title $width="23%">{player.teams[0]?.name || "-"}</Title>
+      <Title $width="23%">
+        {player.teams?.map((team, index) => (
+          <span>{(index ? ", " : "") + team.name}</span>
+        )) || "-"}
+      </Title>
       <Title $width="15%">{player.age || "-"}</Title>
       <TitleFav $width="8%">
         <HeartBtn onClick={() => setHeartBtn(!heartBtn)}>
