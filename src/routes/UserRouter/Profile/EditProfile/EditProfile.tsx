@@ -12,14 +12,19 @@ import { OPTIONS } from "../../../../constants";
 import { getSchools } from "../../../../store/schools/actions";
 import { getTeams } from "../../../../store/teams/actions";
 import { getFacilities } from "../../../../store/facilities/actions";
-import { Team, Facility, School } from "../../../../Types";
+import {
+  Team,
+  Facility,
+  School,
+  UpdateProfileSelects,
+} from "../../../../Types";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const dispatch = useDispatch();
   const current_profile = useSelector(selectCurrentProfile)!;
   const avatar = current_profile?.avatar;
 
-  const [selects, setSelects] = useState<Selects>({
+  const [selects, setSelects] = useState<UpdateProfileSelects>({
     age: current_profile?.age || undefined,
     avatar: current_profile?.avatar || undefined,
     bats_hand: current_profile?.bats_hand || undefined,
@@ -365,22 +370,3 @@ const SaveBtn = styled(CancelBtn)`
 export default EditProfile;
 
 type Props = { toggleEditBtn: (value: boolean) => void };
-type Selects = {
-  age: number | undefined;
-  avatar: string | undefined;
-  bats_hand: string | undefined;
-  biography: string | undefined;
-  facilities: Array<Facility> | [];
-  feet: number | undefined;
-  first_name: string | undefined;
-  id: string | number | undefined;
-  inches: number | undefined;
-  last_name: string | undefined;
-  position: string | undefined;
-  position2: string | undefined;
-  school: School | {};
-  school_year: string | undefined;
-  teams: Array<Team> | [];
-  throws_hand: string | undefined;
-  weight: number | undefined;
-};

@@ -1,4 +1,5 @@
 import { http } from "../../services/http";
+import { UpdateProfileSelects } from "../../Types";
 
 export const currentProfileApi = (payload: {}) =>
   http.post(`/graphql`, { getCurrent });
@@ -35,10 +36,10 @@ const getCurrent = `{ current_profile ()
     }
   }`;
 
-export const updateCurrentProfileApi = (payload: any) =>
+export const updateCurrentProfileApi = (payload: UpdateProfileSelects) =>
   http.post(`/graphql`, createQuery(payload));
 
-const createQuery = (data: any) => {
+const createQuery = (data: UpdateProfileSelects) => {
   const update = {
     // headers: { access-token: null, client: null, uid: null },
     variables: { form: { data } },

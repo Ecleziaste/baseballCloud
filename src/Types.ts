@@ -103,8 +103,29 @@ export type CurrentProfile = {
   school: School;
   teams: Array<Team>;
   facilities: Array<Facility>;
+  recent_events?: [] | null;
 };
 
-export interface UpdateProfileType extends CurrentProfile {
+export interface UpdateProfile extends CurrentProfile {
   recent_events: [];
 }
+
+export type UpdateProfileSelects = {
+  age: number | undefined;
+  avatar: string | undefined;
+  bats_hand: string | undefined;
+  biography: string | undefined;
+  facilities: Array<Facility> | [];
+  feet: number | undefined;
+  first_name: string | undefined;
+  id: string | number | undefined;
+  inches: number | undefined;
+  last_name: string | undefined;
+  position: string | undefined;
+  position2: string | undefined;
+  school: School | {};
+  school_year: string | undefined;
+  teams: Array<Team> | [];
+  throws_hand: string | undefined;
+  weight: number | undefined;
+};
