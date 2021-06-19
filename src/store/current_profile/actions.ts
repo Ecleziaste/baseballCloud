@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { currentProfileApi } from "../current_profile/api";
-import { CurrentProfile } from "./slice";
+import { CurrentProfile } from "../../Types";
 
 export const setCurrentProfile = createAsyncThunk<
   CurrentProfile,

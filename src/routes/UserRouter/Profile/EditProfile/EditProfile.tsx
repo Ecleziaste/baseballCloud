@@ -12,6 +12,7 @@ import { OPTIONS } from "../../../../constants";
 import { getSchools } from "../../../../store/schools/actions";
 import { getTeams } from "../../../../store/teams/actions";
 import { getFacilities } from "../../../../store/facilities/actions";
+import { Team, Facility, School } from "../../../../Types";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const dispatch = useDispatch();
@@ -369,7 +370,7 @@ type Selects = {
   avatar: string | undefined;
   bats_hand: string | undefined;
   biography: string | undefined;
-  facilities: [{ id: string | number; email: string; u_name: string }] | [];
+  facilities: Array<Facility> | [];
   feet: number | undefined;
   first_name: string | undefined;
   id: string | number | undefined;
@@ -377,9 +378,9 @@ type Selects = {
   last_name: string | undefined;
   position: string | undefined;
   position2: string | undefined;
-  school: { id: string; name: string } | {};
+  school: School | {};
   school_year: string | undefined;
-  teams: [{ id: string | number; name: string }] | [];
+  teams: Array<Team> | [];
   throws_hand: string | undefined;
   weight: number | undefined;
 };

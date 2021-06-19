@@ -1,10 +1,9 @@
 import { http } from "../../services/http";
 
 export const currentProfileApi = (payload: {}) =>
-  http.post(`/graphql`, { query });
+  http.post(`/graphql`, { getCurrent });
 
-// что если я наапишу query Внутри
-const query = `{ current_profile ()
+const getCurrent = `{ current_profile ()
   {
     id
     first_name
@@ -35,3 +34,61 @@ const query = `{ current_profile ()
       }
     }
   }`;
+
+export const updateCurrentProfileApi = (payload: any) =>
+  http.post(`/graphql`, createQuery(payload));
+
+const createQuery = (data: any) => {
+  const update = {
+    // headers: { access-token: null, client: null, uid: null },
+    variables: { form: { data } },
+    query: `mutation UpdateProfile($form:UpdateProfileInput!)
+  { update_profile (input:$form)
+    { profile
+      {
+        id
+        first_name
+        last_name
+        position
+        position2
+        avatar
+        throws_hand
+        bats_hand
+        biography
+        school_year
+        feet
+        inches
+        weight
+        age
+        recent_events {
+          id
+          event_type
+          event_name
+          date
+          recent_avatars {
+            id
+            first_name
+            last_name
+            avatar
+          }
+        }
+        school {
+          id
+          name
+        }
+        teams {
+          id
+          name
+        }
+        facilities {
+          id
+          email
+          u_name
+        }
+      }
+    }
+  }`,
+  };
+
+  return update;
+};

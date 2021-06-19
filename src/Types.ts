@@ -84,3 +84,27 @@ export type PitchingType = {
   teams: Array<Team>;
   favorite: boolean;
 };
+
+export type CurrentProfile = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  position: string;
+  position2: string;
+  avatar: string;
+  throws_hand: string;
+  bats_hand: string;
+  biography: string;
+  school_year: string;
+  feet: number;
+  inches: number;
+  weight: number;
+  age: number;
+  school: School;
+  teams: Array<Team>;
+  facilities: Array<Facility>;
+};
+
+export interface UpdateProfileType extends CurrentProfile {
+  recent_events: [];
+}
