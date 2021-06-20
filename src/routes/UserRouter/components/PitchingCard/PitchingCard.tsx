@@ -4,9 +4,12 @@ import Favourite from "../Favourite";
 import UnFavourite from "../UnFavourite";
 import { Link } from "react-router-dom";
 import { PitchingType } from "../../../../Types";
+import { useDispatch } from "react-redux";
+import { updateFavoriteProfie } from "../../../../store/profiles/actions";
 
 const PitchingCard: React.FC<Props> = ({ pitcher }) => {
-  const [heartBtn, setHeartBtn] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const [heartBtn, setHeartBtn] = useState<boolean>(pitcher.favorite);
 
   // надо будет искать лидера по имени, т.к. нет айдишки?
 
@@ -29,7 +32,18 @@ const PitchingCard: React.FC<Props> = ({ pitcher }) => {
       <Title $width="14.5%">{String(pitcher.velocity)}</Title>
       <Title $width="10%">{String(pitcher.spin_rate)}</Title>
       <TitleFav $width="none">
-        <HeartBtn onClick={() => setHeartBtn(!heartBtn)}>
+        <HeartBtn
+          onClick={() => {
+            // dispatch(
+            //   updateFavoriteProfie({
+            //     profile_id: pitcher.id,
+            //     // опять же, нет айдики, нужен селектор по имени чтоб достать айди видимо
+            //     favorite: !heartBtn,
+            //   })
+            // );
+            setHeartBtn(!heartBtn);
+          }}
+        >
           {heartBtn ? <Favourite /> : <UnFavourite />}
         </HeartBtn>
       </TitleFav>

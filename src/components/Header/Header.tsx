@@ -89,7 +89,7 @@ const Header: React.FC<Props> = () => {
                   options={[]}
                   refer={menuEl}
                   handleSelect={() => {}}
-                  renderHeader={() => (
+                  renderElement={() => (
                     <>
                       <ProfileScreenLink to="profile">
                         <SelectableText>My Profile</SelectableText>

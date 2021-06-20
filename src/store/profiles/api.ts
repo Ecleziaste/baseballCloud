@@ -1,13 +1,12 @@
 import { http } from "../../services/http";
-import { ProfilesSelects } from "../../Types";
+import { ProfilesSelects, Favorite } from "../../Types";
 
 export const profilesApi = (payload: ProfilesSelects) =>
-  http.post(`/graphql`, createQuery(payload));
+  http.post(`/graphql`, getProfiles(payload));
 
-const createQuery = (data: ProfilesSelects) => {
+const getProfiles = (data: ProfilesSelects) => {
   const query = {
     variables: { input: data },
-
     query: `query Profiles($input:FilterProfilesInput!){ profiles(input: $input)
       { profiles
         {
@@ -35,6 +34,21 @@ const createQuery = (data: ProfilesSelects) => {
           favorite
         }
         total_count
+      }
+    }`,
+  };
+  return query;
+};
+
+export const favoriteProfileApi = (payload: Favorite) =>
+  http.post(`/graphql`, updateFavoriteProfie(payload));
+
+const updateFavoriteProfie = (data: Favorite) => {
+  const query = {
+    variables: { form: data },
+    query: `mutation UpdateFavoriteProfile($form:UpdateFavoriteProfileInput!) {
+      update_favorite_profile(input: $form) {
+        favorite
       }
     }`,
   };

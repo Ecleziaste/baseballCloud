@@ -4,9 +4,12 @@ import Favourite from "../Favourite";
 import UnFavourite from "../UnFavourite";
 import { Link } from "react-router-dom";
 import { BatterCardType } from "../../../../Types";
+import { useDispatch } from "react-redux";
+import { updateFavoriteProfie } from "../../../../store/profiles/actions";
 
 const BattingCard: React.FC<Props> = ({ batter }) => {
-  const [heartBtn, setHeartBtn] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const [heartBtn, setHeartBtn] = useState<boolean>(batter.favorite);
 
   // надо будет искать лидера по имени, т.к. нет айдишки?
 
@@ -29,7 +32,17 @@ const BattingCard: React.FC<Props> = ({ batter }) => {
       <Title $width="14.5%">{String(batter.launch_angle)}</Title>
       <Title $width="10%">{String(batter.distance)}</Title>
       <TitleFav $width="none">
-        <HeartBtn onClick={() => setHeartBtn(!heartBtn)}>
+        <HeartBtn
+          onClick={() => {
+            // dispatch(
+            //   updateFavoriteProfie({
+            //     profile_id: batter.id,
+            //     favorite: !heartBtn,
+            //   })
+            // );
+            setHeartBtn(!heartBtn);
+          }}
+        >
           {heartBtn ? <Favourite /> : <UnFavourite />}
         </HeartBtn>
       </TitleFav>

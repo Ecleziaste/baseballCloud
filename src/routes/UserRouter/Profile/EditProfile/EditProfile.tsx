@@ -4,6 +4,9 @@ import { Form, Field } from "react-final-form";
 import TitleLine from "../components/TitleLine";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
+import { selectTeams } from "../../../../store/teams/selectors";
+import { selectSchools } from "../../../../store/schools/selectors";
+import { selectFacilities } from "../../../../store/facilities/selectors";
 import EditSelector from "./EditSelector";
 import EditInput from "./EditInput";
 import TextAreaProfile from "../components/TextAreaProfile";
@@ -12,17 +15,16 @@ import { OPTIONS } from "../../../../constants";
 import { getSchools } from "../../../../store/schools/actions";
 import { getTeams } from "../../../../store/teams/actions";
 import { getFacilities } from "../../../../store/facilities/actions";
-import {
-  Team,
-  Facility,
-  School,
-  UpdateProfileSelects,
-} from "../../../../Types";
+import { Team, Facility, UpdateProfileSelects } from "../../../../Types";
+import SelectValue from "./SelectValue";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const dispatch = useDispatch();
   const current_profile = useSelector(selectCurrentProfile)!;
   const avatar = current_profile?.avatar;
+  const teams = useSelector(selectTeams);
+  const schools = useSelector(selectSchools);
+  const facilities = useSelector(selectFacilities);
 
   const [selects, setSelects] = useState<UpdateProfileSelects>({
     age: current_profile?.age || undefined,
@@ -209,6 +211,13 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                   component={EditSelector}
                   options={OPTIONS.team}
                   handleSelect={handleSelect}
+                  // renderElement={() => (
+                  //   <>
+                  //     {current_profile?.teams.map((team) => (
+                  //       <SelectValue text={team.name} />
+                  //     ))}
+                  //   </>
+                  // )}
                 />
               </BigInputBox>
               <TitleLine title="Facility" />

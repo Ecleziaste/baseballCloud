@@ -2,9 +2,9 @@ import { http } from "../../services/http";
 import { UpdateProfileSelects } from "../../Types";
 
 export const currentProfileApi = (payload: {}) =>
-  http.post(`/graphql`, { getCurrent });
+  http.post(`/graphql`, { query });
 
-const getCurrent = `{ current_profile ()
+const query = `{ current_profile ()
   {
     id
     first_name

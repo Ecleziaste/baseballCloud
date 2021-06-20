@@ -21,7 +21,7 @@ const Profile: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const profile = useSelector(selectCurrentProfile)!;
   const { id } = useParams<{ id: string }>();
-  // эту айдишку хватает useEffect и отображает нужные данные
+  //TODO: эту айдишку хватает useEffect и отображает нужные данные
   const [editBtn, setEditBtn] = useState(true);
   const [activeTab, setActiveTab] = useState(true);
 
@@ -32,19 +32,20 @@ const Profile: React.FC<Props> = () => {
   //FIXME: надо дождаться пока profile запишется в store
   const getProfileData = async () => {
     const currentId = String(profile?.id)!;
-    await dispatch(setProfile(currentId));
+    await setTimeout(dispatch(setProfile(currentId)), 400);
   };
 
   useEffect(() => {
     getProfileData();
     dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
     dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
-    // profiles не успевает записаться, если быстро пойти в нетворкс - приложние упадет
     dispatch(setProfiles({}));
+    // profiles не успевает записаться, если быстро пойти в нетворкс - приложение упадет
     dispatch(getSchools(""));
     dispatch(getTeams(""));
     dispatch(getFacilities(""));
-  }, [profile]);
+  }, []);
+  // [profile]
 
   return (
     <AppLayout>

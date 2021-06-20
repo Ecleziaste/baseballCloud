@@ -4,18 +4,17 @@ import { v4 as uuidv4 } from "uuid";
 import { Options } from "../../Types";
 
 const Dropdown: React.FC<Props> = ({
-  children,
   options,
   onSelect,
   refer,
   handleSelect,
-  renderHeader,
+  renderElement,
 }) => {
   const width = "100%";
 
   return (
     <DropdownMenu width={width} options={options} ref={refer}>
-      {renderHeader && renderHeader()}
+      {renderElement && renderElement()}
       {options.map((o) => {
         return (
           <Option
@@ -108,5 +107,5 @@ type Props = {
   onSelect: (value: string) => void;
   refer?: React.RefObject<HTMLDivElement>;
   handleSelect: (fieldName: any, value: any) => void;
-  renderHeader?: () => JSX.Element;
+  renderElement?: () => JSX.Element;
 };

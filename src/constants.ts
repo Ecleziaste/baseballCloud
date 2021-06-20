@@ -55,9 +55,23 @@ export const OPTIONS = {
   ],
   school: [
     { fieldName: "school", text: "FSU", payload: { id: "2", name: "FSU" } },
+    {
+      fieldName: "school",
+      text: "Hogwarts",
+      payload: { id: "22", name: "Hogwarts" },
+    },
+    {
+      fieldName: "school",
+      text: "SpacemarineCorp",
+      payload: { id: "22", name: "SpacemarineCorp" },
+    },
   ],
   school_year: [
     { fieldName: "school_year", text: "Freshman", payload: "freshman" },
+    { fieldName: "school_year", text: "Sophomore", payload: "sophomore" },
+    { fieldName: "school_year", text: "Junior", payload: "junior" },
+    { fieldName: "school_year", text: "Senior", payload: "senior" },
+    { fieldName: "school_year", text: "None", payload: "none" },
   ],
   team: [
     {

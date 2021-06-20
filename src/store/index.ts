@@ -11,7 +11,7 @@ const persistConfig = {
   key: "root",
   storage,
   whitelist: ["auth.headers"],
-  // надо ли?
+  // сохраянет sign in при обновлении страницы
 };
 
 export const rootReducer = (state: any, action: any) => {

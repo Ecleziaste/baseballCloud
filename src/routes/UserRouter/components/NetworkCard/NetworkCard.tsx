@@ -4,9 +4,12 @@ import Favourite from "../Favourite";
 import UnFavourite from "../UnFavourite";
 import { Link } from "react-router-dom";
 import { PlayerCard } from "../../../../Types";
+import { useDispatch } from "react-redux";
+import { updateFavoriteProfie } from "../../../../store/profiles/actions";
 
 const LeaderCard: React.FC<Props> = ({ player }) => {
-  const [heartBtn, setHeartBtn] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const [heartBtn, setHeartBtn] = useState<boolean>(player.favorite);
 
   // тут будет селектор профиля по айдишке
 
@@ -28,7 +31,17 @@ const LeaderCard: React.FC<Props> = ({ player }) => {
       </Title>
       <Title $width="15%">{player.age || "-"}</Title>
       <TitleFav $width="8%">
-        <HeartBtn onClick={() => setHeartBtn(!heartBtn)}>
+        <HeartBtn
+          onClick={() => {
+            dispatch(
+              updateFavoriteProfie({
+                profile_id: player.id,
+                favorite: !heartBtn,
+              })
+            );
+            setHeartBtn(!heartBtn);
+          }}
+        >
           {heartBtn ? <Favourite /> : <UnFavourite />}
         </HeartBtn>
       </TitleFav>

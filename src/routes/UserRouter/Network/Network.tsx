@@ -25,7 +25,13 @@ enum Titles {
 
 const Network: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const profiles = useSelector(selectProfiles)!;
+  const totalCount = useSelector(selectProfiles)!.total_count.toString();
+  const profiles = useSelector(selectProfiles)!
+    .profiles.slice()
+    .sort(
+      (a, b): any => a.first_name.toLowerCase() > b.first_name.toLowerCase()
+    );
+
   const [selects, setSelects] = useState<ProfilesSelects>({
     player_name: undefined,
     school: undefined,
@@ -114,9 +120,7 @@ const Network: React.FC<Props> = () => {
               </HeaderRow>
 
               <Container>
-                <Players>
-                  Available Players {`(${String(profiles.total_count)})`}
-                </Players>
+                <Players>Available Players {`(${totalCount})`}</Players>
                 <SearchPlayer>
                   <Field
                     name="player_name"
@@ -141,7 +145,7 @@ const Network: React.FC<Props> = () => {
             <Title $width="8%">Favorite</Title>
           </TableHeaders>
           <TableBody>
-            {profiles.profiles.map((profile) => {
+            {profiles.map((profile) => {
               return <NetworkCard player={profile} key={profile.id} />;
             })}
           </TableBody>
