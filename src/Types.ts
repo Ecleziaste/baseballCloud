@@ -168,3 +168,9 @@ export type Favorite = { profile_id: string; favorite: boolean };
 export type IsUpdated = {
   update_favorite_profile: { favorite: boolean };
 };
+
+export type UploadedPhoto = {
+  signedUrl: string;
+  fileName: string;
+  fileKey: string;
+}

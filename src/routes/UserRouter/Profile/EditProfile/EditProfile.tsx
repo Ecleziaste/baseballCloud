@@ -4,20 +4,18 @@ import { Form, Field } from "react-final-form";
 import TitleLine from "../components/TitleLine";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
-import { selectTeams } from "../../../../store/teams/selectors";
-import { selectSchools } from "../../../../store/schools/selectors";
-import { selectFacilities } from "../../../../store/facilities/selectors";
+import { uploadPhoto } from "../../../../store/current_profile/actions";
 import EditSelector from "./EditSelector";
 import EditInput from "./EditInput";
 import TextAreaProfile from "../components/TextAreaProfile";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
 import { OPTIONS } from "../../../../constants";
 import { UpdateProfileSelects } from "../../../../Types";
+import { createFalse } from "typescript";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const dispatch = useDispatch();
   const current_profile = useSelector(selectCurrentProfile)!;
-  const avatar = current_profile?.avatar;
 
   const [selects, setSelects] = useState<UpdateProfileSelects>({
     age: current_profile?.age || undefined,
@@ -39,6 +37,8 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
     weight: current_profile?.weight || undefined,
   });
 
+  const [photoBtn, setPhotoBtn] = useState(false);
+
   const onSubmit = ({ ...selects }) => {
     console.log("values", { ...selects });
   };
@@ -52,22 +52,62 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
 
   return (
     <Container>
-      <PhotoForm>
-        <ImageBox>
-          <Image $avatar={avatar || DUMMY} />
-        </ImageBox>
-        <ChooseLink>
-          <Label htmlFor="avatar"> Choose Photo</Label>
-          <AvatarInput id="avatar" type="file" accept="image/*" />
-        </ChooseLink>
-      </PhotoForm>
       <InfoForm>
         <Form
           onSubmit={onSubmit}
           render={({ handleSubmit }) => (
             <div>
+              <PhotoForm>
+                <ImageBox>
+                  <Image $avatar={selects?.avatar || DUMMY} />
+                </ImageBox>
+                <ChooseLink>
+                  <Field name="avatar">
+                    {(props) => (
+                      <>
+                        {photoBtn === true ? (
+                          <div>
+                            <Label
+                              htmlFor="avatar"
+                              onClick={() => setPhotoBtn(true)}
+                            >
+                              {String(selects?.avatar)}
+                            </Label>
+                            <AvatarInput
+                              {...props.input}
+                              id="avatar"
+                              type="file"
+                              accept="image/*"
+                            />
+                            <BigInputBox>
+                              <Label>Upload Photo</Label>
+                              <Label>Cancel</Label>
+                            </BigInputBox>
+                          </div>
+                        ) : (
+                          <div>
+                            <Label
+                              htmlFor="avatar"
+                              onClick={() => setPhotoBtn(true)}
+                            >
+                              Choose Photo
+                            </Label>
+                            <AvatarInput
+                              {...props.input}
+                              id="avatar"
+                              type="file"
+                              accept="image/*"
+                            />
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </Field>
+                </ChooseLink>
+              </PhotoForm>
               <FormBox>
                 <SmallInputBox>
+                  {/* <Field name="avatar" /> */}
                   <Field
                     name="first_name"
                     fieldName="first_name"

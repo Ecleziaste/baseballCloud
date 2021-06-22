@@ -141,7 +141,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
               </Svg>
             }
             text="Throws"
-            value={`${current_profile?.throws_hand.toUpperCase() || ""}`}
+            value={`${current_profile?.throws_hand?.toUpperCase() || ""}`}
           />
           <Item
             svg={
@@ -152,7 +152,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
               </Svg>
             }
             text="Bats"
-            value={`${current_profile?.bats_hand.toUpperCase() || ""}`}
+            value={`${current_profile?.bats_hand?.toUpperCase() || ""}`}
           />
         </PersonalInfo>
         <InnerInfo

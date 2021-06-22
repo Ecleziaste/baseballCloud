@@ -91,3 +91,6 @@ const createQuery = (data: UpdateProfileSelects) => {
 
   return update;
 };
+
+export const uploadPhotoApi = (payload: {name: string}) =>
+  http.post(`/s3/signed_url`, payload);                                                         
