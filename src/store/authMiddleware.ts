@@ -10,6 +10,7 @@ export const authMiddleware =
     if (action.type === signUp.fulfilled.type) {
       action.payload?.token &&
         http.setAuthorizationHeader(action.payload.token);
+      // payload.headers
     }
     if (action.type === signIn.fulfilled.type) {
       action.payload?.headers &&

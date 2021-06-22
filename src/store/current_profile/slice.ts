@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setCurrentProfile, updateCurrentProfile } from "./actions";
-import { CurrentProfile, UpdateProfile } from "../../Types";
+import { CurrentProfile} from "../../Types";
 
 const initialState = null as null | CurrentProfile;
 
@@ -17,7 +17,7 @@ const currentProfileSlice = createSlice({
     },
     [updateCurrentProfile.fulfilled.type]: (
       state,
-      action: PayloadAction<UpdateProfile>
+      action: PayloadAction<CurrentProfile>
     ) => {
       return action.payload;
     },

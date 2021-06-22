@@ -11,7 +11,8 @@ const UserRouter: React.FC<Props> = () => {
       <Route component={Profile} path="/profile" />
       <Route component={Leaderboard} path="/leaderboard" />
       <Route component={Network} path="/network" />
-      <Route component={Player} path={`/profile/`} />
+      {/* <Route component={Profile} path="profile/:id" /> */}
+
       <Route
         exact
         path="/login"
@@ -22,7 +23,8 @@ const UserRouter: React.FC<Props> = () => {
         path="/registration"
         render={() => <Redirect from="/registration" to="/profile" />}
       />
-      <Route exact path="/" render={() => <Redirect to="/profile" />} />
+      {/* <Route exact path="/" render={() => <Redirect from="/" to="/profile" />} /> */}
+
     </>
   );
 };

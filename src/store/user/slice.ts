@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { setUser, signIn, signUp } from "./actions";
+import { setUser, signIn, signUp, signOut } from "./actions";
 
 const initialState = { headers: null, user: null } as {
   headers: null | Headers;
@@ -22,7 +22,7 @@ const userSlice = createSlice({
       if (payload.status === "success") {
         state.headers = payload.headers;
         state.user = payload.data;
-        console.log("sign up succesful");
+        console.log("sign UP succesful");
         return state;
       }
 
@@ -39,6 +39,17 @@ const userSlice = createSlice({
     [setUser.type]: (state, action: PayloadAction<any>) => {
       return action.payload;
     },
+    // [signOut.fulfilled.type]: (
+    //   state,
+    //   { payload }: PayloadAction<{ status: string }>
+    // ) => {
+    //   if (payload.status === "success") {
+    //     state.headers = null;
+    //     state.user = null;
+    //     console.log("sign OUT succesful");
+    //     return state;
+    //   }
+    // },
   },
 });
 

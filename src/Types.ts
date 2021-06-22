@@ -38,8 +38,8 @@ export type ProfilesSelects = {
   position?: string | undefined;
   age?: number | undefined;
   favorite?: number | undefined;
-  profiles_count?: number | undefined;
-  offset?: number | undefined;
+  profiles_count: number ;
+  offset: number;
 };
 
 export type BatterCardType = {
@@ -86,11 +86,12 @@ export type PitchingType = {
 };
 
 export type CurrentProfile = {
-  id: number;
+  id: string;
+  // раньше по факту приходил намбер в пейлоаде экшена
   first_name: string;
   last_name: string;
   position: string;
-  position2: string;
+  position2: string | null;
   avatar: string;
   throws_hand: string;
   bats_hand: string;
@@ -103,12 +104,8 @@ export type CurrentProfile = {
   school: School;
   teams: Array<Team>;
   facilities: Array<Facility>;
-  recent_events?: [] | null;
+  // recent_events: [] | null;
 };
-
-export interface UpdateProfile extends CurrentProfile {
-  recent_events: [];
-}
 
 export type UpdateProfileSelects = {
   age: number | undefined;

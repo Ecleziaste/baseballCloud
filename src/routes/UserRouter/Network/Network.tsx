@@ -7,12 +7,12 @@ import Selector from "../../../components/Selector";
 import SelectorInput from "../../../components/SelectorInput";
 import SearchInput from "../components/SearchInput";
 import { Form, Field } from "react-final-form";
-import Pagination from "../components/Pagination";
 import { OPTIONS } from "../../../constants";
 import { ProfilesSelects } from "../../../Types";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfiles } from "../../../store/profiles/actions";
 import { selectProfiles } from "../../../store/profiles/selectors";
+import ReactPaginate from "react-paginate";
 
 enum Titles {
   school = "School",
@@ -25,13 +25,12 @@ enum Titles {
 
 const Network: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const totalCount = useSelector(selectProfiles)!.total_count.toString();
   const profiles = useSelector(selectProfiles)!
     .profiles.slice()
     .sort(
       (a, b): any => a.first_name.toLowerCase() > b.first_name.toLowerCase()
     );
-
+  const totalCount = useSelector(selectProfiles)!.total_count!;
   const [selects, setSelects] = useState<ProfilesSelects>({
     player_name: undefined,
     school: undefined,
@@ -40,19 +39,32 @@ const Network: React.FC<Props> = () => {
     age: undefined,
     favorite: undefined,
     profiles_count: 10,
-    offset: 10,
+    offset: 0,
   });
 
+  const pagesCount = Math.ceil(totalCount / selects.profiles_count);
+  const displayUsers = profiles.map((profile) => {
+    return <NetworkCard player={profile} key={profile.id} />;
+  });
   const handleSelect = async (fieldName: any, value: any) => {
     const newData = { ...selects, [fieldName]: value };
     await setSelects(newData);
   };
+  const changePage = ({ selected }: { selected: number }) => {
+    const showPages = selects.profiles_count * selected;
+    setSelects({ ...selects, ["offset"]: showPages });
+    console.log(selects.offset);
+ 
+    // setPageNumber(selected + 1);
+  };
 
   useEffect(() => {
-    console.log(selects);
-
     dispatch(setProfiles(selects));
   }, [selects]);
+
+  // useEffect(() => {
+  //   dispatch(setProfiles({ profiles_count: 10, offset: 0 }));
+  // }, [profiles]);
 
   const onSubmit = () => {};
 
@@ -73,7 +85,6 @@ const Network: React.FC<Props> = () => {
                     title={Titles.school}
                     handleSelect={handleSelect}
                   />
-
                   <Field
                     name="team"
                     fieldName="team"
@@ -81,7 +92,6 @@ const Network: React.FC<Props> = () => {
                     title="Team"
                     handleSelect={handleSelect}
                   />
-
                   <Field
                     name="position"
                     component={Selector}
@@ -90,7 +100,6 @@ const Network: React.FC<Props> = () => {
                     defaultTitle={Titles.position}
                     handleSelect={handleSelect}
                   />
-
                   <Field
                     name="age"
                     fieldName="age"
@@ -98,7 +107,6 @@ const Network: React.FC<Props> = () => {
                     title={Titles.age}
                     handleSelect={handleSelect}
                   />
-
                   <Field
                     name="favorite"
                     component={Selector}
@@ -107,7 +115,6 @@ const Network: React.FC<Props> = () => {
                     defaultTitle={Titles.favorite}
                     handleSelect={handleSelect}
                   />
-
                   <Field
                     name="profiles_count"
                     component={Selector}
@@ -120,7 +127,7 @@ const Network: React.FC<Props> = () => {
               </HeaderRow>
 
               <Container>
-                <Players>Available Players {`(${totalCount})`}</Players>
+                <Players>Available Players {`(${String(totalCount)})`}</Players>
                 <SearchPlayer>
                   <Field
                     name="player_name"
@@ -145,18 +152,94 @@ const Network: React.FC<Props> = () => {
             <Title $width="8%">Favorite</Title>
           </TableHeaders>
           <TableBody>
-            {profiles.map((profile) => {
+            {/* {profiles.map((profile) => {
               return <NetworkCard player={profile} key={profile.id} />;
-            })}
+            })} */}
+            {displayUsers}
+          
+          
           </TableBody>
         </PageBody>
-
-        <Pagination />
+        <PaginationContainer> 
+          <ReactPaginate
+          previousLabel={"«"}
+          nextLabel={"»"}
+          breakLabel="..."
+          pageCount={pagesCount}
+          pageRangeDisplayed={2}
+          marginPagesDisplayed={2}
+          
+          onPageChange={changePage}
+          // onPageChange={(pageNum) => {
+          //   console.log(pageNum);
+          // }}
+          containerClassName="pagination"
+          activeClassName="active"
+          pageLinkClassName="link"
+          pageClassName="list"
+        />
+        </PaginationContainer>
       </Main>
+    
     </AppLayout>
   );
 };
 
+const PaginationContainer = styled.div `
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+margin: 0;
+position: sticky;
+bottom: 0;
+text-decoration: none;
+font-size: 1.2rem;
+
+.pagination {
+  display: flex;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  position: sticky;
+  bottom: 0;
+  text-decoration: none;
+  font-size: 1.2rem;
+  list-style-type: none;
+}
+.active {
+  /* padding: 6px 12px; */
+  /* margin: 0 2px; */
+  z-index: 3;
+  color: #fff;
+  cursor: default;
+  background-color: #48bbff;
+  border: none;
+  border-radius: 4px;
+}
+.list {
+  margin: 0 2px;
+}
+.link {
+  display: flex;
+  z-index: 2;
+  padding: 6px 12px;
+  /* margin: 0 1px; */
+  color: #000;
+  cursor: pointer;
+  background-color: rgba(238, 238, 238, 0.4);
+  border: none;
+  border-radius: 4px;
+  &:hover {
+    background-color: #CBCCCD;
+  }
+  &:active {
+    background-color: #48bbff;
+  }
+}
+
+`;
 const Main = styled.main`
   display: flex;
   flex-direction: column;

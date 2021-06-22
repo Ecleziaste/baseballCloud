@@ -2,7 +2,7 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { rootReducer as reducer } from "./ducks";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { authMiddleware } from "./authMidleware";
+import { authMiddleware } from "./authMiddleware";
 import { signOut } from "./user/actions";
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -10,8 +10,8 @@ export type RootState = ReturnType<typeof rootReducer>;
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth.headers"],
-  // сохраянет sign in при обновлении страницы
+  whitelist: ["auth"],
+  // оригинальное приложение сохраняет 3 поля в local storage
 };
 
 export const rootReducer = (state: any, action: any) => {

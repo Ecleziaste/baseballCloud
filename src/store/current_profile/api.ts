@@ -1,8 +1,7 @@
 import { http } from "../../services/http";
 import { UpdateProfileSelects } from "../../Types";
 
-export const currentProfileApi = (payload: {}) =>
-  http.post(`/graphql`, { query });
+export const currentProfileApi = (payload: {}) => http.post(`/graphql`, { query });
 
 const query = `{ current_profile ()
   {
@@ -41,7 +40,6 @@ export const updateCurrentProfileApi = (payload: UpdateProfileSelects) =>
 
 const createQuery = (data: UpdateProfileSelects) => {
   const update = {
-    // headers: { access-token: null, client: null, uid: null },
     variables: { form: { data } },
     query: `mutation UpdateProfile($form:UpdateProfileInput!)
   { update_profile (input:$form)

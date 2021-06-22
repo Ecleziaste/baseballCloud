@@ -7,6 +7,7 @@ import EditProfile from "./EditProfile";
 import AppLayout from "../../../layouts";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentProfile } from "../../../store/current_profile/selectors";
+import { selectProfile } from "../../../store/profile/selectors";
 import Appeal from "./components/Appeal";
 import { setProfile } from "../../../store/profile/actions";
 import { setLeaderboardBatting } from "../../../store/leaderboard_batting/actions";
@@ -19,44 +20,51 @@ import { getFacilities } from "../../../store/facilities/actions";
 
 const Profile: React.FC<Props> = () => {
   const dispatch = useDispatch();
+  // const [profile, profileSet] = useState(useSelector(selectCurrentProfile)!);
   const profile = useSelector(selectCurrentProfile)!;
+  const player = useSelector(selectProfile)!;
   const { id } = useParams<{ id: string }>();
-  //TODO: эту айдишку хватает useEffect и отображает нужные данные
-  const [editBtn, setEditBtn] = useState(true);
+  // const Id = id || profile.id!;
+  console.log(id);
+
+  const [editBtn, setEditBtn] = useState(false);
   const [activeTab, setActiveTab] = useState(true);
 
   const toggleEditBtn = (value: boolean): void => {
     setEditBtn(value);
   };
-
-  //FIXME: надо дождаться пока profile запишется в store
-  const getProfileData = async () => {
-    const currentId = String(profile?.id)!;
-    await setTimeout(dispatch(setProfile(currentId)), 400);
+  
+  const currentId = String(profile?.id)!;
+  const getAllData = async () => {
+    await dispatch(setProfile(currentId));
+    await dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
+    await dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
+    await dispatch(setProfiles({ profiles_count: 10, offset: 0 }));
+    // profiles не успевает записаться, если быстро пойти в нетворкс - приложение упадет
+    await dispatch(getSchools(""));
+    await dispatch(getTeams(""));
+    await dispatch(getFacilities(""));
   };
 
   useEffect(() => {
-    getProfileData();
-    dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
-    dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
-    dispatch(setProfiles({}));
-    // profiles не успевает записаться, если быстро пойти в нетворкс - приложение упадет
-    dispatch(getSchools(""));
-    dispatch(getTeams(""));
-    dispatch(getFacilities(""));
-  }, []);
-  // [profile]
+    getAllData();
+  }, [profile]);
+  // запоздалый setProfile срабатывает второй раз благодаря этому и записывает profile в state
 
   return (
     <AppLayout>
       <Container>
-        {editBtn ? (
+      {/* currentId === player?.id! &&  */}
+        {editBtn === true ? (
           <LeftPanel>
             <EditProfile toggleEditBtn={toggleEditBtn}></EditProfile>
           </LeftPanel>
         ) : (
           <LeftPanel>
-            <FeaturesProfile toggleEditBtn={toggleEditBtn}></FeaturesProfile>
+            <FeaturesProfile
+              toggleEditBtn={toggleEditBtn}
+              id={id}
+            ></FeaturesProfile>
           </LeftPanel>
         )}
 

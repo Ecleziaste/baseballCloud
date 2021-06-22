@@ -14,7 +14,7 @@ const SignInForm: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const [emailError, emailErrorSet] = useState<null | boolean>(null);
 
-  const onSubmit = async (value: any) => {
+  const onSubmit = async (value: Values) => {
     if (!value.email || !value.password) {
       emailErrorSet(true);
     } else {
@@ -209,3 +209,7 @@ const SignUpLink = styled(Link)`
 export default SignInForm;
 
 type Props = {};
+type Values = {
+  email: string;
+  password: string;
+}

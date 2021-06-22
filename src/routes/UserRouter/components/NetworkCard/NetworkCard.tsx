@@ -17,7 +17,13 @@ const LeaderCard: React.FC<Props> = ({ player }) => {
     <CardContent>
       <TitleWrapper $width="19%">
         <Title $width="none">
-          <Name to="#" onClick={() => {}}>
+          <Name
+            to={{
+              pathname: `/${player.id}`,
+              // state: { fromDashboard: true },
+            }}
+            onClick={() => {}}
+          >
             {`${player.first_name} ${player.last_name}`}
           </Name>
         </Title>

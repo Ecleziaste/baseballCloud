@@ -12,19 +12,12 @@ import EditInput from "./EditInput";
 import TextAreaProfile from "../components/TextAreaProfile";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
 import { OPTIONS } from "../../../../constants";
-import { getSchools } from "../../../../store/schools/actions";
-import { getTeams } from "../../../../store/teams/actions";
-import { getFacilities } from "../../../../store/facilities/actions";
-import { Team, Facility, UpdateProfileSelects } from "../../../../Types";
-import SelectValue from "./SelectValue";
+import { UpdateProfileSelects } from "../../../../Types";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const dispatch = useDispatch();
   const current_profile = useSelector(selectCurrentProfile)!;
   const avatar = current_profile?.avatar;
-  const teams = useSelector(selectTeams);
-  const schools = useSelector(selectSchools);
-  const facilities = useSelector(selectFacilities);
 
   const [selects, setSelects] = useState<UpdateProfileSelects>({
     age: current_profile?.age || undefined,

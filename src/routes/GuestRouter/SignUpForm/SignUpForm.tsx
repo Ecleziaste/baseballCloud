@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
 import { useDispatch } from "react-redux";
-import { signUp, signIn } from "../../../store/user/actions";
+import { signUp } from "../../../store/user/actions";
 
 const SignUpForm: React.FC<Props> = () => {
   const dispatch = useDispatch();

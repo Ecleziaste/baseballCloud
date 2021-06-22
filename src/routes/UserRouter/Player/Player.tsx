@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Player: React.FC<Props> = () => {
-  return <Container></Container>;
+  return <Container>WTF</Container>;
 };
 
 const Container = styled.div``;

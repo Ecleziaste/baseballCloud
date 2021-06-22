@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { setProfiles } from "./actions";
+import { setProfiles, updateFavoriteProfie } from "./actions";
 import { PlayerCard } from "../../Types";
 
 const initialState = null as null | Profiles;
@@ -11,6 +11,13 @@ const profilesSlice = createSlice({
   extraReducers: {
     [setProfiles.fulfilled.type]: (state, action: PayloadAction<Profiles>) => {
       return action.payload;
+    },
+    [updateFavoriteProfie.fulfilled.type]: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      setProfiles({ profiles_count: 10, offset: 0 });
+      return state;
     },
   },
 });
