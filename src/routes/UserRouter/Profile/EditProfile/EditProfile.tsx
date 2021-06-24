@@ -9,15 +9,15 @@ import EditInput from "./EditInput";
 import TextAreaProfile from "../components/TextAreaProfile";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
 import { OPTIONS } from "../../../../constants";
-import { UpdateProfileSelects } from "../../../../Types";
+import { CurrentProfile, UpdateProfileSelects } from "../../../../Types";
 import {
   uploadPhoto,
   updateCurrentProfile,
 } from "../../../../store/current_profile/actions";
 
-const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
+const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
   const dispatch = useDispatch();
-  const profile = useSelector(selectCurrentProfile)!;
+  // const profile = useSelector(selectCurrentProfile)!;
 
   const [selects, setSelects] = useState<UpdateProfileSelects>({
     age: profile?.age || undefined,
@@ -430,4 +430,7 @@ const SaveBtn = styled(CancelBtn)`
 
 export default EditProfile;
 
-type Props = { toggleEditBtn: (value: boolean) => void };
+type Props = {
+  toggleEditBtn: (value: boolean) => void;
+  profile: CurrentProfile;
+};

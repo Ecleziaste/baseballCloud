@@ -42,16 +42,11 @@ const Profile: React.FC<Props> = () => {
   // const getProfileData = async () => {
   //   await dispatch(setProfile(currentId));
   // };
-  const getAllData = async () => {
+  const getAllData = () => {
     dispatch(setProfile(currentId));
     dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
     dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
-    await dispatch(
-      setProfiles({
-        selects: { profiles_count: 10, offset: 0 },
-        headers,
-      })
-    );
+    dispatch(setProfiles({ profiles_count: 10, offset: 0 }));
     dispatch(getSchools(""));
     dispatch(getTeams(""));
     dispatch(getFacilities(""));
@@ -63,22 +58,29 @@ const Profile: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    // getProfileData();
     getAllData();
     checkCurrent();
   }, [profile]);
+  useEffect(() => {
+    getAllData();
+  }, []);
 
   return (
     <AppLayout>
       <Container>
         {editBtn === true ? (
           <LeftPanel>
-            <EditProfile toggleEditBtn={toggleEditBtn}></EditProfile>
+            <EditProfile
+              toggleEditBtn={toggleEditBtn}
+              profile={profile}
+            ></EditProfile>
           </LeftPanel>
         ) : (
           <LeftPanel>
             <FeaturesProfile
               toggleEditBtn={toggleEditBtn}
+              profile={profile}
+              player={player}
               id={id}
             ></FeaturesProfile>
           </LeftPanel>

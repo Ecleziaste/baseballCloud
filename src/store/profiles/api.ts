@@ -2,18 +2,12 @@ import { http } from "../../services/http";
 import { ProfilesSelects, Favorite } from "../../Types";
 import { Headers } from "../user/slice";
 
-export const profilesApi = (payload: ProfilesPayload) =>
+export const profilesApi = (payload: ProfilesSelects) =>
   http.post(
     `/graphql`,
-    getProfiles(payload.selects),
-    { headers: { ...payload.headers } }
-
-    // {
-    //   headers: {
-    //     "access-token": "7HvkWIID6KJW3mfo75VUVA",
-    //     client: "oz__tUs1zqK4NagfZi_PqA",
-    //     uid: "testa@example.com",
-    //   },
+    getProfiles(payload)
+    //  {
+    //   headers: { ...payload.headers },
     // }
   );
 
@@ -68,7 +62,7 @@ const updateFavoriteProfile = (data: Favorite) => {
   return query;
 };
 
-type ProfilesPayload = {
-  selects: ProfilesSelects;
-  headers: Headers | undefined;
-};
+// type ProfilesPayload = {
+//   selects: ProfilesSelects;
+//   headers: Headers | undefined;
+// };

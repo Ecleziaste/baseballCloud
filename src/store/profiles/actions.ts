@@ -6,8 +6,8 @@ import { Headers } from "../user/slice";
 
 export const setProfiles = createAsyncThunk<
   Profiles,
-  // ProfilesSelects
-  { selects: ProfilesSelects; headers: Headers }
+  ProfilesSelects
+  // { selects: ProfilesSelects; headers: Headers }
 >("profiles/set", async (params) => {
   const {
     data: {

@@ -17,6 +17,7 @@ import { setLeaderboardPitching } from "../../../store/leaderboard_pitching/acti
 import { selectLeaderboardPitching } from "../../../store/leaderboard_pitching/selectors";
 import { selectHeaders } from "../../../store/user/selectors";
 import { http } from "../../../services/http";
+import { v4 as uuidv4 } from "uuid";
 
 enum Titles {
   date = "Date",
@@ -59,15 +60,9 @@ const Leaderboard: React.FC<Props> = () => {
     await setSelects(newData);
   };
 
-  const getData = async () => {
-    await dispatch(setLeaderboardBatting(selects));
-    await dispatch(setLeaderboardPitching(selects));
-  };
-
   useEffect(() => {
-    getData();
-    // dispatch(setLeaderboardBatting(selects));
-    // dispatch(setLeaderboardPitching(selects));
+    dispatch(setLeaderboardBatting(selects));
+    dispatch(setLeaderboardPitching({ ...selects, type: "pitch_velocity" }));
   }, [selects]);
 
   const onSubmit = () => {};
@@ -144,7 +139,7 @@ const Leaderboard: React.FC<Props> = () => {
                   <TabBtn
                     onClick={() => {
                       selectTab(false);
-                      setSelects({ ...selects, type: "pitch_velocity" });
+                      setSelects(selects);
                     }}
                     isActive={!activeTab}
                     text="Pitching"
@@ -157,7 +152,9 @@ const Leaderboard: React.FC<Props> = () => {
                       component={Selector}
                       title={Titles.batting}
                       options={OPTIONS.batting}
-                      defaultTitle={Titles.batting}
+                      defaultTitle={
+                        activeTab ? Titles.batting : Titles.pitching
+                      }
                       handleSelect={handleSelect}
                     />
                   ) : (
@@ -199,17 +196,10 @@ const Leaderboard: React.FC<Props> = () => {
           <TableBody>
             {activeTab === true
               ? batters.map((batter) => {
-                  return (
-                    <BattingCard batter={batter} key={batter.batter_name + 1} />
-                  );
+                  return <BattingCard batter={batter} key={uuidv4()} />;
                 })
               : pitchers.map((pitcher) => {
-                  return (
-                    <PitchingCard
-                      pitcher={pitcher}
-                      key={pitcher.pitcher_name + 2}
-                    />
-                  );
+                  return <PitchingCard pitcher={pitcher} key={uuidv4()} />;
                 })}
           </TableBody>
         </PageBody>

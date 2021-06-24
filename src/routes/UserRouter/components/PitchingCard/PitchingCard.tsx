@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { PitchingType } from "../../../../Types";
 import { useDispatch } from "react-redux";
 import { updateFavoriteProfile } from "../../../../store/profiles/actions";
+import { setLeaderboardPitching } from "../../../../store/leaderboard_pitching/actions";
 
 const PitchingCard: React.FC<Props> = ({ pitcher }) => {
   const dispatch = useDispatch();
@@ -17,7 +18,13 @@ const PitchingCard: React.FC<Props> = ({ pitcher }) => {
         <Title $width="none">1</Title>
       </TitleWrapper>
       <Title $width="14%">
-        <Name to="#">{pitcher.pitcher_name}</Name>
+        <Name
+          to={{
+            pathname: `/profile/${pitcher.pitcher_datraks_id.toString()}`,
+          }}
+        >
+          {pitcher.pitcher_name}
+        </Name>
       </Title>
       <Title $width="5%">{pitcher.age}</Title>
       <Title $width="14%">{pitcher.school.name}</Title>
@@ -31,14 +38,15 @@ const PitchingCard: React.FC<Props> = ({ pitcher }) => {
       <Title $width="10%">{String(pitcher.spin_rate)}</Title>
       <TitleFav $width="none">
         <HeartBtn
-          onClick={() => {
-            dispatch(
+          onClick={async () => {
+            await dispatch(
               updateFavoriteProfile({
                 profile_id: pitcher.pitcher_datraks_id.toString(),
                 favorite: !heartBtn,
               })
             );
-            setHeartBtn(!heartBtn);
+            await setHeartBtn(!heartBtn);
+            await dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
           }}
         >
           {heartBtn ? <Favourite /> : <UnFavourite />}

@@ -5,7 +5,10 @@ import UnFavourite from "../UnFavourite";
 import { Link } from "react-router-dom";
 import { PlayerCard } from "../../../../Types";
 import { useDispatch } from "react-redux";
-import { updateFavoriteProfile } from "../../../../store/profiles/actions";
+import {
+  setProfiles,
+  updateFavoriteProfile,
+} from "../../../../store/profiles/actions";
 
 const NetworkCard: React.FC<Props> = ({ player }) => {
   const dispatch = useDispatch();
@@ -22,7 +25,6 @@ const NetworkCard: React.FC<Props> = ({ player }) => {
               pathname: `/profile/${player.id}`,
               // state: { fromDashboard: true },
             }}
-            onClick={() => {}}
           >
             {`${player.first_name} ${player.last_name}`}
           </Name>
@@ -38,14 +40,20 @@ const NetworkCard: React.FC<Props> = ({ player }) => {
       <Title $width="15%">{player.age || "-"}</Title>
       <TitleFav $width="8%">
         <HeartBtn
-          onClick={() => {
-            dispatch(
+          onClick={async () => {
+            await dispatch(
               updateFavoriteProfile({
                 profile_id: player.id,
                 favorite: !heartBtn,
               })
             );
-            setHeartBtn(!heartBtn);
+            await setHeartBtn(!heartBtn);
+            await dispatch(
+              setProfiles({
+                profiles_count: 10,
+                offset: 0,
+              })
+            );
           }}
         >
           {heartBtn === true ? <Favourite /> : <UnFavourite />}

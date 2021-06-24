@@ -60,11 +60,11 @@ const Network: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    dispatch(setProfiles({ selects, headers }));
+    dispatch(setProfiles(selects));
   }, [selects]);
-  useEffect(() => {
-    dispatch(setProfiles({ selects, headers }));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(setProfiles(selects));
+  // }, [profiles]);
 
   const onSubmit = () => {};
   return (

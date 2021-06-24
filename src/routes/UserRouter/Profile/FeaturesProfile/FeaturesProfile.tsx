@@ -16,15 +16,22 @@ import {
   HEART_PLUS,
 } from "../../../../assets/svg/paths";
 import { useSelector, useDispatch } from "react-redux";
-import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
-import { selectProfile } from "../../../../store/profile/selectors";
+// import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
+// import { selectProfile } from "../../../../store/profile/selectors";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
 import { updateFavoriteProfile } from "../../../../store/profiles/actions";
+import { CurrentProfile, Profile } from "../../../../Types";
 
-const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
+const FeaturesProfile: React.FC<Props> = ({
+  toggleEditBtn,
+  id,
+  profile,
+  player,
+}) => {
   const dispatch = useDispatch();
-  const profile = useSelector(selectCurrentProfile)!;
-  const player = useSelector(selectProfile)!;
+  // искать профайл тут по айдишке, которая приходит сверху мб
+  // const profile = useSelector(selectCurrentProfile)!;
+  // const player = useSelector(selectProfile)!;
   const avatar = player?.avatar;
   const [isFavorite, setIsFavorite] = useState(player?.favorite);
 
@@ -268,4 +275,6 @@ export default FeaturesProfile;
 type Props = {
   toggleEditBtn: (value: boolean) => void;
   id: string;
+  profile: CurrentProfile;
+  player: Profile;
 };
