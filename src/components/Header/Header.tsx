@@ -15,10 +15,11 @@ import { selectCurrentProfile } from "../../store/current_profile/selectors";
 import Dropdown from "../Dropdown";
 import DefaultIcon from "../DefaultIcon";
 import DUMMY from "../../assets/images/avatar_dummy.png";
+import { setProfile } from "../../store/profile/actions";
 
 const Header: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const current_profile = useSelector(selectCurrentProfile);
+  const current_profile = useSelector(selectCurrentProfile)!;
   const user = useSelector(selectUser);
   const [menu, setMenu] = useState(false);
   const toggleMenu = (value: boolean) => {
@@ -43,7 +44,10 @@ const Header: React.FC<Props> = () => {
 
   return (
     <Container>
-      <LogoContainer to="profile">
+      <LogoContainer
+        to="/profile"
+        onClick={() => dispatch(setProfile(current_profile.id))}
+      >
         <Span>
           <Svg width="198" height="28" viewBox="0 0 198 28">
             <G>
@@ -66,7 +70,10 @@ const Header: React.FC<Props> = () => {
           <UserWrapper>
             <User>
               <AvatarWrapper>
-                <ProfileLink to="profile">
+                <ProfileLink
+                  to="/profile"
+                  onClick={() => dispatch(setProfile(current_profile.id))}
+                >
                   <Avatar $avatar={avatar || DUMMY}></Avatar>
                 </ProfileLink>
               </AvatarWrapper>
@@ -91,7 +98,10 @@ const Header: React.FC<Props> = () => {
                   handleSelect={() => {}}
                   renderElement={() => (
                     <>
-                      <ProfileScreenLink to="profile">
+                      <ProfileScreenLink
+                        to="/profile"
+                        onClick={() => dispatch(setProfile(current_profile.id))}
+                      >
                         <SelectableText>My Profile</SelectableText>
                       </ProfileScreenLink>
                       <ExitLink onClick={() => dispatch(signOut())} to="/login">

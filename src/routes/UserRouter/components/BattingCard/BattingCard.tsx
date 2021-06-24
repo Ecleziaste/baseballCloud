@@ -34,7 +34,7 @@ const BattingCard: React.FC<Props> = ({ batter }) => {
         )) || "-"}
       </Title>
       <Title $width="14.5%">{String(batter.exit_velocity)}</Title>
-      <Title $width="14.5%">{String(batter.launch_angle)}</Title>
+      <Title $width="14.5%">{String(batter.launch_angle || "-")}</Title>
       <Title $width="10%">{String(batter.distance)}</Title>
       <TitleFav $width="none">
         <HeartBtn

@@ -9,6 +9,7 @@ import {
   setProfiles,
   updateFavoriteProfile,
 } from "../../../../store/profiles/actions";
+import { setProfile } from "../../../../store/profile/actions";
 
 const NetworkCard: React.FC<Props> = ({ player }) => {
   const dispatch = useDispatch();
@@ -23,8 +24,8 @@ const NetworkCard: React.FC<Props> = ({ player }) => {
           <Name
             to={{
               pathname: `/profile/${player.id}`,
-              // state: { fromDashboard: true },
             }}
+            onClick={() => dispatch(setProfile(player.id))}
           >
             {`${player.first_name} ${player.last_name}`}
           </Name>

@@ -21,10 +21,3 @@ export const signInApi = (
 }> => {
   return http.post("/auth/sign_in", payload);
 };
-
-// export const signOutApi = (
-// ): AxiosPromise<{
-//   status: string;
-// }> => {
-//   return http.post("/auth/sign_out");
-// };

@@ -62,9 +62,6 @@ const Network: React.FC<Props> = () => {
   useEffect(() => {
     dispatch(setProfiles(selects));
   }, [selects]);
-  // useEffect(() => {
-  //   dispatch(setProfiles(selects));
-  // }, [profiles]);
 
   const onSubmit = () => {};
   return (
@@ -126,7 +123,9 @@ const Network: React.FC<Props> = () => {
               </HeaderRow>
 
               <Container>
-                <Players>Available Players {`(${String(totalCount)})`}</Players>
+                <Players>
+                  Available Players {`(${totalCount.toString()})`}
+                </Players>
                 <SearchPlayer>
                   <Field
                     name="player_name"
@@ -159,12 +158,16 @@ const Network: React.FC<Props> = () => {
             breakLabel="..."
             pageCount={pagesCount}
             pageRangeDisplayed={2}
-            marginPagesDisplayed={2}
+            marginPagesDisplayed={1}
             onPageChange={changePage}
             containerClassName="pagination"
-            activeClassName="active"
             pageLinkClassName="link"
             pageClassName="list"
+            previousLinkClassName="prev"
+            nextLinkClassName="last"
+            breakClassName="break"
+            activeClassName="active"
+            activeLinkClassName="activeLink"
           />
         </PaginationContainer>
       </Main>
@@ -181,8 +184,8 @@ const PaginationContainer = styled.div`
   position: sticky;
   bottom: 0;
   text-decoration: none;
-  font-size: 1.2rem;
-
+  font-size: 16px;
+  margin: 16px 0;
   .pagination {
     display: flex;
     margin: 0;
@@ -192,8 +195,58 @@ const PaginationContainer = styled.div`
     position: sticky;
     bottom: 0;
     text-decoration: none;
-    font-size: 1.2rem;
     list-style-type: none;
+  }
+  .list {
+    margin: 0 2px;
+  }
+  .prev {
+    display: flex;
+    z-index: 2;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: rgba(238, 238, 238, 0.7);
+    border: none;
+    border-radius: 4px;
+    margin: 0 2px;
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
+  .last {
+    display: flex;
+    z-index: 2;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: rgba(238, 238, 238, 0.7);
+    border: none;
+    border-radius: 4px;
+    margin: 0 2px;
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
+  .break {
+    display: flex;
+    z-index: 2;
+    padding: 6px 12px;
+    cursor: default;
+    background-color: #fff;
+    border: none;
+    border-radius: 4px;
+    margin: 0 2px;
+  }
+  .link {
+    display: flex;
+    z-index: 2;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: rgba(238, 238, 238, 0.7);
+    border: none;
+    border-radius: 4px;
+    &:hover {
+      background-color: #eeeeee;
+    }
   }
   .active {
     z-index: 3;
@@ -202,23 +255,18 @@ const PaginationContainer = styled.div`
     background-color: #48bbff;
     border: none;
     border-radius: 4px;
+    &:hover {
+      background-color: #48bbff;
+    }
   }
-  .list {
-    margin: 0 2px;
-  }
-  .link {
-    display: flex;
-    z-index: 2;
-    padding: 6px 12px;
-    color: #000;
-    cursor: pointer;
-    background-color: rgba(238, 238, 238, 0.4);
+  .activeLink {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #48bbff;
     border: none;
     border-radius: 4px;
     &:hover {
-      background-color: #cbcccd;
-    }
-    &:active {
       background-color: #48bbff;
     }
   }

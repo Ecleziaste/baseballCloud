@@ -36,11 +36,11 @@ const UserRouter: React.FC<Props> = () => {
         render={() => <Redirect from="profile/:id/network" to="/network" />}
       /> */}
 
-      <Route
+      {/* <Route
         exact
         path="/"
         render={() => <Redirect from="/" to="/profile" />}
-      />
+      /> */}
     </>
   );
 };

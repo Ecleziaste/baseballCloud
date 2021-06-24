@@ -10,8 +10,6 @@ export type RootState = ReturnType<typeof rootReducer>;
 const persistConfig = {
   key: "root",
   storage,
-  // whitelist: ["auth"],
-  // FIXME: без этого слетает авторизация, с этим же - стейт падает при обновлении страницы
 };
 
 export const rootReducer = (state: any, action: any) => {

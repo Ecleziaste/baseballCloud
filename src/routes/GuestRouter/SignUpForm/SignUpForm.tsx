@@ -9,6 +9,7 @@ import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../../store/user/actions";
+import { setCurrentProfile } from "../../../store/current_profile/actions";
 
 const SignUpForm: React.FC<Props> = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const SignUpForm: React.FC<Props> = () => {
       !lengthError
     ) {
       await dispatch(signUp({ role, ...value }));
+      await dispatch(setCurrentProfile({}));
     }
   };
 

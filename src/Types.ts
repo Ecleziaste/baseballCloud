@@ -43,6 +43,7 @@ export type ProfilesSelects = {
 };
 
 export type BatterCardType = {
+  id: string | number;
   batter_name: string;
   exit_velocity: number;
   launch_angle: number;

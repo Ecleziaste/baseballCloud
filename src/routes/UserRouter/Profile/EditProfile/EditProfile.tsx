@@ -258,7 +258,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
               <BigInputBox>
                 <Field
                   name="team"
-                  defaultValue={String(profile?.teams) || ""}
+                  defaultValue={String(profile?.teams) || []}
                   title="Team"
                   component={EditSelector}
                   options={OPTIONS.team}
@@ -299,7 +299,13 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
                 <CancelBtn onClick={() => toggleEditBtn(false)}>
                   Cancel
                 </CancelBtn>
-                <SaveBtn type="submit" onClick={() => handleSubmit()}>
+                <SaveBtn
+                  type="submit"
+                  onClick={() => {
+                    handleSubmit();
+                    toggleEditBtn(false);
+                  }}
+                >
                   Save
                 </SaveBtn>
               </BtnsWrapper>

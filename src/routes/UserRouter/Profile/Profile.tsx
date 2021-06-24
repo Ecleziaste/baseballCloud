@@ -21,29 +21,28 @@ import { selectHeaders } from "../../../store/user/selectors";
 import { http } from "../../../services/http";
 
 const Profile: React.FC<Props> = () => {
+  const headers = useSelector(selectHeaders)!;
+  http.setAuthorizationHeader(headers);
   const dispatch = useDispatch();
+  const toggleEditBtn = (value: boolean): void => {
+    setEditBtn(value);
+  };
   const profile = useSelector(selectCurrentProfile)!;
   const player = useSelector(selectProfile)!;
   const { id } = useParams<{ id: string }>()!;
-  console.log(id);
-
-  const headers = useSelector(selectHeaders)!;
-  http.setAuthorizationHeader(headers);
+  const [currentId, setCurrentId] = useState(id);
 
   const [isCurrent, setIsCurrent] = useState(true);
   const [editBtn, setEditBtn] = useState(false);
   const [activeTab, setActiveTab] = useState(true);
 
-  const toggleEditBtn = (value: boolean): void => {
-    setEditBtn(value);
+  const getProfile = () => {
+    if (id === undefined || null) {
+      dispatch(setProfile(profile.id!))!;
+    } else dispatch(setProfile(id));
   };
-  const currentId = id || profile?.id;
-
-  // const getProfileData = async () => {
-  //   await dispatch(setProfile(currentId));
-  // };
   const getAllData = () => {
-    dispatch(setProfile(currentId));
+    getProfile();
     dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
     dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
     dispatch(setProfiles({ profiles_count: 10, offset: 0 }));
@@ -51,7 +50,7 @@ const Profile: React.FC<Props> = () => {
     dispatch(getTeams(""));
     dispatch(getFacilities(""));
   };
-  const checkCurrent = async () => {
+  const checkCurrent = () => {
     if (profile?.id === player?.id) {
       setIsCurrent(false);
     } else setIsCurrent(true);
@@ -60,9 +59,6 @@ const Profile: React.FC<Props> = () => {
   useEffect(() => {
     getAllData();
     checkCurrent();
-  }, [profile]);
-  useEffect(() => {
-    getAllData();
   }, []);
 
   return (

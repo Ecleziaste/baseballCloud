@@ -19,7 +19,7 @@ const SignInForm: React.FC<Props> = () => {
       emailErrorSet(true);
     } else {
       emailErrorSet(null);
-      await dispatch(signIn(value));
+      dispatch(signIn(value));
       await dispatch(setCurrentProfile({}));
     }
   };
@@ -35,7 +35,7 @@ const SignInForm: React.FC<Props> = () => {
             </FormHeader>
 
             <Form
-              // *****
+              //FIXME: *****
               initialValues={{
                 email: "testa@example.com",
                 password: "aaaaaaaaa",

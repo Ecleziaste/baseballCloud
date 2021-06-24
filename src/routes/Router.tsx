@@ -5,7 +5,7 @@ import { Switch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../store/user/selectors";
 
-const AppRouter: React.FC<Props> = ({ children }) => {
+const AppRouter: React.FC<Props> = () => {
   const user = useSelector(selectUser);
 
   return <Switch>{user ? <UserRouter /> : <GuestRouter />}</Switch>;

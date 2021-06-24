@@ -11,6 +11,7 @@ const createQuery = (data: LeaderboardSelects) => {
     query: ` query LeaderboardBatting($input:FilterLeaderboardInput!)
   { leaderboard_batting(input: $input)
    { leaderboard_batting {
+     id
      batter_name
      exit_velocity
      launch_angle
