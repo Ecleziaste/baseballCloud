@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProfiles } from "../../../store/profiles/actions";
 import { selectProfiles } from "../../../store/profiles/selectors";
 import ReactPaginate from "react-paginate";
+import { selectHeaders } from "../../../store/user/selectors";
+import { http } from "../../../services/http";
 
 enum Titles {
   school = "School",
@@ -24,12 +26,14 @@ enum Titles {
 }
 
 const Network: React.FC<Props> = () => {
+  const headers = useSelector(selectHeaders)!;
+  http.setAuthorizationHeader(headers);
   const dispatch = useDispatch();
   const profiles = useSelector(selectProfiles)!
     .profiles.slice()
     .sort(
       (a, b): any => a.first_name.toLowerCase() > b.first_name.toLowerCase()
-    );
+    )!;
   const totalCount = useSelector(selectProfiles)!.total_count!;
   const [selects, setSelects] = useState<ProfilesSelects>({
     player_name: undefined,
@@ -53,21 +57,16 @@ const Network: React.FC<Props> = () => {
   const changePage = ({ selected }: { selected: number }) => {
     const showPages = selects.profiles_count * selected;
     setSelects({ ...selects, ["offset"]: showPages });
-    console.log(selects.offset);
- 
-    // setPageNumber(selected + 1);
   };
 
   useEffect(() => {
-    dispatch(setProfiles(selects));
+    dispatch(setProfiles({ selects, headers }));
   }, [selects]);
-
-  // useEffect(() => {
-  //   dispatch(setProfiles({ profiles_count: 10, offset: 0 }));
-  // }, [profiles]);
+  useEffect(() => {
+    dispatch(setProfiles({ selects, headers }));
+  }, []);
 
   const onSubmit = () => {};
-
   return (
     <AppLayout>
       <Main>
@@ -151,100 +150,83 @@ const Network: React.FC<Props> = () => {
             <Title $width="15%">Age</Title>
             <Title $width="8%">Favorite</Title>
           </TableHeaders>
-          <TableBody>
-            {/* {profiles.map((profile) => {
-              return <NetworkCard player={profile} key={profile.id} />;
-            })} */}
-            {displayUsers}
-          
-          
-          </TableBody>
+          <TableBody>{displayUsers}</TableBody>
         </PageBody>
-        <PaginationContainer> 
+        <PaginationContainer>
           <ReactPaginate
-          previousLabel={"«"}
-          nextLabel={"»"}
-          breakLabel="..."
-          pageCount={pagesCount}
-          pageRangeDisplayed={2}
-          marginPagesDisplayed={2}
-          
-          onPageChange={changePage}
-          // onPageChange={(pageNum) => {
-          //   console.log(pageNum);
-          // }}
-          containerClassName="pagination"
-          activeClassName="active"
-          pageLinkClassName="link"
-          pageClassName="list"
-        />
+            previousLabel={"«"}
+            nextLabel={"»"}
+            breakLabel="..."
+            pageCount={pagesCount}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={2}
+            onPageChange={changePage}
+            containerClassName="pagination"
+            activeClassName="active"
+            pageLinkClassName="link"
+            pageClassName="list"
+          />
         </PaginationContainer>
       </Main>
-    
     </AppLayout>
   );
 };
 
-const PaginationContainer = styled.div `
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
-margin: 0;
-position: sticky;
-bottom: 0;
-text-decoration: none;
-font-size: 1.2rem;
-
-.pagination {
+const PaginationContainer = styled.div`
   display: flex;
-  margin: 0;
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  margin: 0;
   position: sticky;
   bottom: 0;
   text-decoration: none;
   font-size: 1.2rem;
-  list-style-type: none;
-}
-.active {
-  /* padding: 6px 12px; */
-  /* margin: 0 2px; */
-  z-index: 3;
-  color: #fff;
-  cursor: default;
-  background-color: #48bbff;
-  border: none;
-  border-radius: 4px;
-}
-.list {
-  margin: 0 2px;
-}
-.link {
-  display: flex;
-  z-index: 2;
-  padding: 6px 12px;
-  /* margin: 0 1px; */
-  color: #000;
-  cursor: pointer;
-  background-color: rgba(238, 238, 238, 0.4);
-  border: none;
-  border-radius: 4px;
-  &:hover {
-    background-color: #CBCCCD;
-  }
-  &:active {
-    background-color: #48bbff;
-  }
-}
 
+  .pagination {
+    display: flex;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    position: sticky;
+    bottom: 0;
+    text-decoration: none;
+    font-size: 1.2rem;
+    list-style-type: none;
+  }
+  .active {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #48bbff;
+    border: none;
+    border-radius: 4px;
+  }
+  .list {
+    margin: 0 2px;
+  }
+  .link {
+    display: flex;
+    z-index: 2;
+    padding: 6px 12px;
+    color: #000;
+    cursor: pointer;
+    background-color: rgba(238, 238, 238, 0.4);
+    border: none;
+    border-radius: 4px;
+    &:hover {
+      background-color: #cbcccd;
+    }
+    &:active {
+      background-color: #48bbff;
+    }
+  }
 `;
 const Main = styled.main`
   display: flex;
   flex-direction: column;
   position: relative;
-  /* overflow: auto; */
   width: 100%;
 `;
 const HeaderRow = styled.div`

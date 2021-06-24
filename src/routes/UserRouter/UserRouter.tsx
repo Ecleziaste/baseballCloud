@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import Profile from "./Profile";
-import Player from "./Player";
 import Network from "./Network";
 import Leaderboard from "./Leaderboard";
 
@@ -11,7 +10,7 @@ const UserRouter: React.FC<Props> = () => {
       <Route component={Profile} path="/profile" />
       <Route component={Leaderboard} path="/leaderboard" />
       <Route component={Network} path="/network" />
-      {/* <Route component={Profile} path="profile/:id" /> */}
+      <Route exact component={Profile} path="/profile/:id" />
 
       <Route
         exact
@@ -23,8 +22,25 @@ const UserRouter: React.FC<Props> = () => {
         path="/registration"
         render={() => <Redirect from="/registration" to="/profile" />}
       />
-      {/* <Route exact path="/" render={() => <Redirect from="/" to="/profile" />} /> */}
 
+      {/* <Route
+        exact
+        path="profile/:id"
+        render={() => (
+          <Redirect from="profile/:id/leaderboard" to="/leaderboard" />
+        )}
+      />
+      <Route
+        exact
+        path="profile/:id"
+        render={() => <Redirect from="profile/:id/network" to="/network" />}
+      /> */}
+
+      <Route
+        exact
+        path="/"
+        render={() => <Redirect from="/" to="/profile" />}
+      />
     </>
   );
 };

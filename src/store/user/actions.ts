@@ -1,6 +1,5 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { signUpApi, signInApi, signOutApi } from "../user/api";
-import { User } from "./slice";
+import { signUpApi, signInApi } from "../user/api";
 
 export const setUser = createAction<any>("user/set");
 export const signOut = createAction("user/signOut");
@@ -28,7 +27,7 @@ export const signIn = createAsyncThunk<any, SignInParams>(
       headers,
     } = await signInApi(params);
 
-    console.log(data, headers);
+    console.log({ ...data, ...headers });
 
     return { data, headers };
   }
@@ -39,7 +38,7 @@ export const signIn = createAsyncThunk<any, SignInParams>(
 //   async (params) => {
 //     const {
 //       data: { status },
- 
+
 //     } = await signOutApi();
 
 //     console.log(status);

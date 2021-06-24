@@ -5,13 +5,11 @@ import UnFavourite from "../UnFavourite";
 import { Link } from "react-router-dom";
 import { PitchingType } from "../../../../Types";
 import { useDispatch } from "react-redux";
-import { updateFavoriteProfie } from "../../../../store/profiles/actions";
+import { updateFavoriteProfile } from "../../../../store/profiles/actions";
 
 const PitchingCard: React.FC<Props> = ({ pitcher }) => {
   const dispatch = useDispatch();
   const [heartBtn, setHeartBtn] = useState<boolean>(pitcher.favorite);
-
-  // надо будет искать лидера по имени, т.к. нет айдишки?
 
   return (
     <CardContent>
@@ -25,7 +23,7 @@ const PitchingCard: React.FC<Props> = ({ pitcher }) => {
       <Title $width="14%">{pitcher.school.name}</Title>
       <Title $width="14.5%">
         {pitcher.teams?.map((team, index) => (
-          <span>{(index ? ", " : "") + team.name}</span>
+          <span key={team.id}>{(index ? ", " : "") + team.name}</span>
         )) || "-"}
       </Title>
       <Title $width="14.5%">{String(pitcher.pitch_type)}</Title>
@@ -34,13 +32,12 @@ const PitchingCard: React.FC<Props> = ({ pitcher }) => {
       <TitleFav $width="none">
         <HeartBtn
           onClick={() => {
-            // dispatch(
-            //   updateFavoriteProfie({
-            //     profile_id: pitcher.id,
-            //     // опять же, нет айдики, нужен селектор по имени чтоб достать айди видимо
-            //     favorite: !heartBtn,
-            //   })
-            // );
+            dispatch(
+              updateFavoriteProfile({
+                profile_id: pitcher.pitcher_datraks_id.toString(),
+                favorite: !heartBtn,
+              })
+            );
             setHeartBtn(!heartBtn);
           }}
         >

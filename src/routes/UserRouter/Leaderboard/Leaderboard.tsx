@@ -15,6 +15,8 @@ import { setLeaderboardBatting } from "../../../store/leaderboard_batting/action
 import { selectLeaderboardBatting } from "../../../store/leaderboard_batting/selectors";
 import { setLeaderboardPitching } from "../../../store/leaderboard_pitching/actions";
 import { selectLeaderboardPitching } from "../../../store/leaderboard_pitching/selectors";
+import { selectHeaders } from "../../../store/user/selectors";
+import { http } from "../../../services/http";
 
 enum Titles {
   date = "Date",
@@ -28,6 +30,8 @@ enum Titles {
 }
 
 const Leaderboard: React.FC<Props> = () => {
+  const headers = useSelector(selectHeaders)!;
+  http.setAuthorizationHeader(headers);
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(true);
   const selectTab = (val: boolean) => {
@@ -55,10 +59,16 @@ const Leaderboard: React.FC<Props> = () => {
     await setSelects(newData);
   };
 
+  const getData = async () => {
+    await dispatch(setLeaderboardBatting(selects));
+    await dispatch(setLeaderboardPitching(selects));
+  };
+
   useEffect(() => {
-    dispatch(setLeaderboardBatting(selects));
-    dispatch(setLeaderboardPitching(selects));
-  }, [selects, activeTab]);
+    getData();
+    // dispatch(setLeaderboardBatting(selects));
+    // dispatch(setLeaderboardPitching(selects));
+  }, [selects]);
 
   const onSubmit = () => {};
 
@@ -80,7 +90,6 @@ const Leaderboard: React.FC<Props> = () => {
                     defaultTitle={Titles.date}
                     handleSelect={handleSelect}
                   />
-
                   <Field
                     name="school"
                     fieldName="school"
@@ -88,7 +97,6 @@ const Leaderboard: React.FC<Props> = () => {
                     title={Titles.school}
                     handleSelect={handleSelect}
                   />
-
                   <Field
                     name="team"
                     fieldName="team"
@@ -96,7 +104,6 @@ const Leaderboard: React.FC<Props> = () => {
                     title="Team"
                     handleSelect={handleSelect}
                   />
-
                   <SelBoxBig>
                     <Field
                       name="position"
@@ -107,7 +114,6 @@ const Leaderboard: React.FC<Props> = () => {
                       handleSelect={handleSelect}
                     />
                   </SelBoxBig>
-
                   <Field
                     name="age"
                     fieldName="age"
@@ -115,7 +121,6 @@ const Leaderboard: React.FC<Props> = () => {
                     title={Titles.age}
                     handleSelect={handleSelect}
                   />
-
                   <SelBox>
                     <Field
                       name="favorite"
@@ -195,14 +200,14 @@ const Leaderboard: React.FC<Props> = () => {
             {activeTab === true
               ? batters.map((batter) => {
                   return (
-                    <BattingCard batter={batter} key={batter.batter_name} />
+                    <BattingCard batter={batter} key={batter.batter_name + 1} />
                   );
                 })
               : pitchers.map((pitcher) => {
                   return (
                     <PitchingCard
                       pitcher={pitcher}
-                      key={pitcher.pitcher_name}
+                      key={pitcher.pitcher_name + 2}
                     />
                   );
                 })}
@@ -256,7 +261,6 @@ const TableHeaders = styled.div`
   font-weight: 300;
   color: #667784;
 `;
-
 const Selectables = styled.div`
   display: flex;
   align-items: center;

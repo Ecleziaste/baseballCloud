@@ -5,9 +5,9 @@ import UnFavourite from "../UnFavourite";
 import { Link } from "react-router-dom";
 import { PlayerCard } from "../../../../Types";
 import { useDispatch } from "react-redux";
-import { updateFavoriteProfie } from "../../../../store/profiles/actions";
+import { updateFavoriteProfile } from "../../../../store/profiles/actions";
 
-const LeaderCard: React.FC<Props> = ({ player }) => {
+const NetworkCard: React.FC<Props> = ({ player }) => {
   const dispatch = useDispatch();
   const [heartBtn, setHeartBtn] = useState<boolean>(player.favorite);
 
@@ -19,7 +19,7 @@ const LeaderCard: React.FC<Props> = ({ player }) => {
         <Title $width="none">
           <Name
             to={{
-              pathname: `/${player.id}`,
+              pathname: `/profile/${player.id}`,
               // state: { fromDashboard: true },
             }}
             onClick={() => {}}
@@ -32,7 +32,7 @@ const LeaderCard: React.FC<Props> = ({ player }) => {
       <Title $width="23%">{player.school?.name || "-"}</Title>
       <Title $width="23%">
         {player.teams?.map((team, index) => (
-          <span>{(index ? ", " : "") + team.name}</span>
+          <span key={team.id}>{(index ? ", " : "") + team.name}</span>
         )) || "-"}
       </Title>
       <Title $width="15%">{player.age || "-"}</Title>
@@ -40,7 +40,7 @@ const LeaderCard: React.FC<Props> = ({ player }) => {
         <HeartBtn
           onClick={() => {
             dispatch(
-              updateFavoriteProfie({
+              updateFavoriteProfile({
                 profile_id: player.id,
                 favorite: !heartBtn,
               })
@@ -48,7 +48,7 @@ const LeaderCard: React.FC<Props> = ({ player }) => {
             setHeartBtn(!heartBtn);
           }}
         >
-          {heartBtn ? <Favourite /> : <UnFavourite />}
+          {heartBtn === true ? <Favourite /> : <UnFavourite />}
         </HeartBtn>
       </TitleFav>
     </CardContent>
@@ -101,7 +101,7 @@ const HeartBtn = styled.div`
   display: flex;
 `;
 
-export default LeaderCard;
+export default NetworkCard;
 
 type Props = {
   player: PlayerCard;

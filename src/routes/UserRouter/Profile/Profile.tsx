@@ -17,44 +17,60 @@ import { useParams } from "react-router-dom";
 import { getSchools } from "../../../store/schools/actions";
 import { getTeams } from "../../../store/teams/actions";
 import { getFacilities } from "../../../store/facilities/actions";
+import { selectHeaders } from "../../../store/user/selectors";
+import { http } from "../../../services/http";
 
 const Profile: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  // const [profile, profileSet] = useState(useSelector(selectCurrentProfile)!);
   const profile = useSelector(selectCurrentProfile)!;
   const player = useSelector(selectProfile)!;
-  const { id } = useParams<{ id: string }>();
-  // const Id = id || profile.id!;
+  const { id } = useParams<{ id: string }>()!;
   console.log(id);
 
+  const headers = useSelector(selectHeaders)!;
+  http.setAuthorizationHeader(headers);
+
+  const [isCurrent, setIsCurrent] = useState(true);
   const [editBtn, setEditBtn] = useState(false);
   const [activeTab, setActiveTab] = useState(true);
 
   const toggleEditBtn = (value: boolean): void => {
     setEditBtn(value);
   };
-  
-  const currentId = String(profile?.id)!;
+  const currentId = id || profile?.id;
+
+  // const getProfileData = async () => {
+  //   await dispatch(setProfile(currentId));
+  // };
   const getAllData = async () => {
-    await dispatch(setProfile(currentId));
-    await dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
-    await dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
-    await dispatch(setProfiles({ profiles_count: 10, offset: 0 }));
-    // profiles не успевает записаться, если быстро пойти в нетворкс - приложение упадет
-    await dispatch(getSchools(""));
-    await dispatch(getTeams(""));
-    await dispatch(getFacilities(""));
+    dispatch(setProfile(currentId));
+    dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
+    dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
+    await dispatch(
+      setProfiles({
+        selects: { profiles_count: 10, offset: 0 },
+        headers,
+      })
+    );
+    dispatch(getSchools(""));
+    dispatch(getTeams(""));
+    dispatch(getFacilities(""));
+  };
+  const checkCurrent = async () => {
+    if (profile?.id === player?.id) {
+      setIsCurrent(false);
+    } else setIsCurrent(true);
   };
 
   useEffect(() => {
+    // getProfileData();
     getAllData();
+    checkCurrent();
   }, [profile]);
-  // запоздалый setProfile срабатывает второй раз благодаря этому и записывает profile в state
 
   return (
     <AppLayout>
       <Container>
-      {/* currentId === player?.id! &&  */}
         {editBtn === true ? (
           <LeftPanel>
             <EditProfile toggleEditBtn={toggleEditBtn}></EditProfile>

@@ -19,15 +19,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
 import { selectProfile } from "../../../../store/profile/selectors";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
-import { updateFavoriteProfie } from "../../../../store/profiles/actions";
+import { updateFavoriteProfile } from "../../../../store/profiles/actions";
 
 const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
   const dispatch = useDispatch();
-  const current_profile = useSelector(selectCurrentProfile)!;
-
-  const profile = useSelector(selectProfile)!;
-  const avatar = current_profile?.avatar;
-  const [isFavorite, setIsFavorite] = useState(profile?.favorite);
+  const profile = useSelector(selectCurrentProfile)!;
+  const player = useSelector(selectProfile)!;
+  const avatar = player?.avatar;
+  const [isFavorite, setIsFavorite] = useState(player?.favorite);
 
   return (
     <Container>
@@ -35,15 +34,11 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
         <ImageBox>
           <Image $avatar={avatar || DUMMY} />
         </ImageBox>
-        <Name>
-          {` ${current_profile?.first_name || ""} ${
-            current_profile?.last_name || ""
-          }`}
-        </Name>
+        <Name>{` ${player?.first_name || ""} ${player?.last_name || ""}`}</Name>
 
-        <FirstRole>{current_profile?.position || ""}</FirstRole>
-        <SecondRole>{current_profile?.position2 || ""}</SecondRole>
-        {String(current_profile?.id) === profile?.id ? (
+        <FirstRole>{player?.position || ""}</FirstRole>
+        <SecondRole>{player?.position2 || ""}</SecondRole>
+        {String(profile?.id) === player?.id ? (
           <EditBtn onClick={() => toggleEditBtn(true)}>
             <Span>
               <Svg
@@ -62,15 +57,16 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
           <LikeBtn
             onClick={() => {
               dispatch(
-                updateFavoriteProfie({
-                  profile_id: profile.id,
+                updateFavoriteProfile({
+                  profile_id: player.id,
                   favorite: !isFavorite,
                 })
               );
+              setIsFavorite(!isFavorite);
             }}
           >
             <LikeSpan>
-              {profile?.favorite === true ? (
+              {isFavorite === true ? (
                 <Svg width="30" height="30" viewBox="0 0 24 24">
                   <Path
                     fill="#48BBFF"
@@ -104,7 +100,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
               </Svg>
             }
             text="Age"
-            value={`${current_profile?.age || ""}`}
+            value={`${player?.age || ""}`}
           />
           <Item
             svg={
@@ -116,9 +112,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
               </Svg>
             }
             text="Height"
-            value={`${current_profile?.feet || ""} ft ${
-              current_profile?.inches || ""
-            } in`}
+            value={`${player?.feet || ""} ft ${player?.inches || ""} in`}
           />
           <Item
             svg={
@@ -130,7 +124,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
               </Svg>
             }
             text="Weight"
-            value={`${current_profile?.weight} lbs`}
+            value={`${player?.weight} lbs`}
           />
           <Item
             svg={
@@ -141,7 +135,7 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
               </Svg>
             }
             text="Throws"
-            value={`${current_profile?.throws_hand?.toUpperCase() || ""}`}
+            value={`${player?.throws_hand?.toUpperCase() || ""}`}
           />
           <Item
             svg={
@@ -152,27 +146,18 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id }) => {
               </Svg>
             }
             text="Bats"
-            value={`${current_profile?.bats_hand?.toUpperCase() || ""}`}
+            value={`${player?.bats_hand?.toUpperCase() || ""}`}
           />
         </PersonalInfo>
-        <InnerInfo
-          title="School"
-          text={`${current_profile?.school?.name || ""}`}
-        />
-        <InnerInfo
-          title="School year"
-          text={`${current_profile?.school_year || ""}`}
-        />
-        <InnerInfo
-          title="Team"
-          text={`${current_profile?.teams[0]?.name || ""}`}
-        />
+        <InnerInfo title="School" text={`${player?.school?.name || ""}`} />
+        <InnerInfo title="School year" text={`${player?.school_year || ""}`} />
+        <InnerInfo title="Team" text={`${player?.teams[0]?.name || ""}`} />
         <InnerInfo
           title="Facility"
-          text={`${current_profile?.facilities[0]?.u_name || ""}`}
+          text={`${player?.facilities[0]?.u_name || ""}`}
         />
         <TitleLine title="About"></TitleLine>
-        <Text>{`${current_profile?.biography || ""}`}</Text>
+        <Text>{`${player?.biography || ""}`}</Text>
       </Info>
     </Container>
   );
@@ -280,4 +265,7 @@ const Path = styled.path``;
 
 export default FeaturesProfile;
 
-type Props = { toggleEditBtn: (value: boolean) => void; id: string };
+type Props = {
+  toggleEditBtn: (value: boolean) => void;
+  id: string;
+};

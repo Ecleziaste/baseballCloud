@@ -1,8 +1,21 @@
 import { http } from "../../services/http";
 import { ProfilesSelects, Favorite } from "../../Types";
+import { Headers } from "../user/slice";
 
-export const profilesApi = (payload: ProfilesSelects) =>
-  http.post(`/graphql`, getProfiles(payload));
+export const profilesApi = (payload: ProfilesPayload) =>
+  http.post(
+    `/graphql`,
+    getProfiles(payload.selects),
+    { headers: { ...payload.headers } }
+
+    // {
+    //   headers: {
+    //     "access-token": "7HvkWIID6KJW3mfo75VUVA",
+    //     client: "oz__tUs1zqK4NagfZi_PqA",
+    //     uid: "testa@example.com",
+    //   },
+    // }
+  );
 
 const getProfiles = (data: ProfilesSelects) => {
   const query = {
@@ -41,9 +54,9 @@ const getProfiles = (data: ProfilesSelects) => {
 };
 
 export const favoriteProfileApi = (payload: Favorite) =>
-  http.post(`/graphql`, updateFavoriteProfie(payload));
+  http.post(`/graphql`, updateFavoriteProfile(payload));
 
-const updateFavoriteProfie = (data: Favorite) => {
+const updateFavoriteProfile = (data: Favorite) => {
   const query = {
     variables: { form: data },
     query: `mutation UpdateFavoriteProfile($form:UpdateFavoriteProfileInput!) {
@@ -53,4 +66,9 @@ const updateFavoriteProfie = (data: Favorite) => {
     }`,
   };
   return query;
+};
+
+type ProfilesPayload = {
+  selects: ProfilesSelects;
+  headers: Headers | undefined;
 };

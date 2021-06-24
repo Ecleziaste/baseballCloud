@@ -59,8 +59,8 @@ const Header: React.FC<Props> = () => {
         <UserMenu>
           <NavBar>
             <Nav>
-              <MenuLink to="leaderboard">Leaderboard</MenuLink>
-              <MenuLink to="network">Network</MenuLink>
+              <MenuLink to="/leaderboard">Leaderboard</MenuLink>
+              <MenuLink to="/network">Network</MenuLink>
             </Nav>
           </NavBar>
           <UserWrapper>

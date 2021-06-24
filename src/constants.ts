@@ -57,6 +57,12 @@ export const OPTIONS = {
     { fieldName: "school", text: "FSU", payload: { id: "2", name: "FSU" } },
     {
       fieldName: "school",
+      text: "Rockledge",
+      payload: { id: "3", name: "Rockledge" },
+    },
+    { fieldName: "school", text: "Good", payload: { id: "4", name: "Good" } },
+    {
+      fieldName: "school",
       text: "Hogwarts",
       payload: { id: "22", name: "Hogwarts" },
     },

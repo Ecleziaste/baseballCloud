@@ -5,13 +5,11 @@ import UnFavourite from "../UnFavourite";
 import { Link } from "react-router-dom";
 import { BatterCardType } from "../../../../Types";
 import { useDispatch } from "react-redux";
-import { updateFavoriteProfie } from "../../../../store/profiles/actions";
+import { updateFavoriteProfile } from "../../../../store/profiles/actions";
 
 const BattingCard: React.FC<Props> = ({ batter }) => {
   const dispatch = useDispatch();
   const [heartBtn, setHeartBtn] = useState<boolean>(batter.favorite);
-
-  // надо будет искать лидера по имени, т.к. нет айдишки?
 
   return (
     <CardContent>
@@ -25,7 +23,7 @@ const BattingCard: React.FC<Props> = ({ batter }) => {
       <Title $width="14%">{batter.school.name}</Title>
       <Title $width="14.5%">
         {batter.teams?.map((team, index) => (
-          <span>{(index ? ", " : "") + team.name}</span>
+          <span key={team.id}>{(index ? ", " : "") + team.name}</span>
         )) || "-"}
       </Title>
       <Title $width="14.5%">{String(batter.exit_velocity)}</Title>
@@ -34,12 +32,12 @@ const BattingCard: React.FC<Props> = ({ batter }) => {
       <TitleFav $width="none">
         <HeartBtn
           onClick={() => {
-            // dispatch(
-            //   updateFavoriteProfie({
-            //     profile_id: batter.id,
-            //     favorite: !heartBtn,
-            //   })
-            // );
+            dispatch(
+              updateFavoriteProfile({
+                profile_id: batter.batter_datraks_id.toString(),
+                favorite: !heartBtn,
+              })
+            );
             setHeartBtn(!heartBtn);
           }}
         >

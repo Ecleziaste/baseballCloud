@@ -7,6 +7,7 @@ export const signUpApi = (
   payload: SignUpParams
 ): AxiosPromise<{
   data: User;
+  // headers: Headers;
   status: string;
 }> => {
   return http.post("/auth", payload);
@@ -21,9 +22,9 @@ export const signInApi = (
   return http.post("/auth/sign_in", payload);
 };
 
-export const signOutApi = (
-): AxiosPromise<{
-  status: string;
-}> => {
-  return http.post("/auth/sign_out");
-};
+// export const signOutApi = (
+// ): AxiosPromise<{
+//   status: string;
+// }> => {
+//   return http.post("/auth/sign_out");
+// };

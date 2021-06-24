@@ -38,7 +38,7 @@ export type ProfilesSelects = {
   position?: string | undefined;
   age?: number | undefined;
   favorite?: number | undefined;
-  profiles_count: number ;
+  profiles_count: number;
   offset: number;
 };
 
@@ -92,19 +92,19 @@ export type CurrentProfile = {
   last_name: string;
   position: string;
   position2: string | null;
-  avatar: string;
+  avatar: string | null;
   throws_hand: string;
   bats_hand: string;
   biography: string;
-  school_year: string;
+  school_year: string | null;
   feet: number;
   inches: number;
   weight: number;
   age: number;
-  school: School;
-  teams: Array<Team>;
-  facilities: Array<Facility>;
-  // recent_events: [] | null;
+  school: School | null;
+  teams: Array<Team> | [];
+  facilities: Array<Facility> | [];
+  recent_events: [];
 };
 
 export type UpdateProfileSelects = {
@@ -173,4 +173,4 @@ export type UploadedPhoto = {
   signedUrl: string;
   fileName: string;
   fileKey: string;
-}
+};

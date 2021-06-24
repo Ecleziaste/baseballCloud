@@ -1,7 +1,8 @@
 import { http } from "../../services/http";
 import { UpdateProfileSelects } from "../../Types";
 
-export const currentProfileApi = (payload: {}) => http.post(`/graphql`, { query });
+export const currentProfileApi = (payload: {}) =>
+  http.post(`/graphql`, { query });
 
 const query = `{ current_profile ()
   {
@@ -40,7 +41,7 @@ export const updateCurrentProfileApi = (payload: UpdateProfileSelects) =>
 
 const createQuery = (data: UpdateProfileSelects) => {
   const update = {
-    variables: { form: { data } },
+    variables: { form: { ...data } },
     query: `mutation UpdateProfile($form:UpdateProfileInput!)
   { update_profile (input:$form)
     { profile
@@ -92,5 +93,5 @@ const createQuery = (data: UpdateProfileSelects) => {
   return update;
 };
 
-export const uploadPhotoApi = (payload: {name: string}) =>
-  http.post(`/s3/signed_url`, payload);                                                         
+export const uploadPhotoApi = (payload: { name: string }) =>
+  http.post(`/s3/signed_url`, payload);
