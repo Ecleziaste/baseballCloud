@@ -24,21 +24,18 @@ const Profile: React.FC<Props> = () => {
   const headers = useSelector(selectHeaders)!;
   http.setAuthorizationHeader(headers);
   const dispatch = useDispatch();
-  const toggleEditBtn = (value: boolean): void => {
-    setEditBtn(value);
-  };
+  const [editBtn, setEditBtn] = useState(false);
+  const [activeTab, setActiveTab] = useState(true);
   const profile = useSelector(selectCurrentProfile)!;
   const player = useSelector(selectProfile)!;
   const { id } = useParams<{ id: string }>()!;
-  const [currentId, setCurrentId] = useState(id);
-
-  const [isCurrent, setIsCurrent] = useState(true);
-  const [editBtn, setEditBtn] = useState(false);
-  const [activeTab, setActiveTab] = useState(true);
+  const toggleEditBtn = (value: boolean): void => {
+    setEditBtn(value);
+  };
 
   const getProfile = () => {
     if (id === undefined || null) {
-      dispatch(setProfile(profile.id!))!;
+      dispatch(setProfile(profile?.id))!;
     } else dispatch(setProfile(id));
   };
   const getAllData = () => {
@@ -50,15 +47,9 @@ const Profile: React.FC<Props> = () => {
     dispatch(getTeams(""));
     dispatch(getFacilities(""));
   };
-  const checkCurrent = () => {
-    if (profile?.id === player?.id) {
-      setIsCurrent(false);
-    } else setIsCurrent(true);
-  };
 
   useEffect(() => {
     getAllData();
-    checkCurrent();
   }, []);
 
   return (

@@ -100,7 +100,10 @@ const Header: React.FC<Props> = () => {
                     <>
                       <ProfileScreenLink
                         to="/profile"
-                        onClick={() => dispatch(setProfile(current_profile.id))}
+                        onClick={() => {
+                          dispatch(setProfile(current_profile.id));
+                          toggleMenu(!menu);
+                        }}
                       >
                         <SelectableText>My Profile</SelectableText>
                       </ProfileScreenLink>

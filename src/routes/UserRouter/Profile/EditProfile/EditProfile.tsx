@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Form, Field } from "react-final-form";
 import TitleLine from "../components/TitleLine";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
+// import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
 import EditSelector from "./EditSelector";
 import EditInput from "./EditInput";
 import TextAreaProfile from "../components/TextAreaProfile";
@@ -14,11 +14,12 @@ import {
   uploadPhoto,
   updateCurrentProfile,
 } from "../../../../store/current_profile/actions";
+// import AvatarInput from "./AvatarInput";
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
   const dispatch = useDispatch();
   // const profile = useSelector(selectCurrentProfile)!;
-
+  const [fileName, setFileName] = useState("file name");
   const [selects, setSelects] = useState<UpdateProfileSelects>({
     age: profile?.age || undefined,
     avatar: profile?.avatar || undefined,
@@ -43,7 +44,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
 
   const onSubmit = async (values = selects) => {
     // dispatch(updateCurrentProfile({ ...selects }));
-    console.log("valuess", values);
+    console.log("values", values);
     await dispatch(updateCurrentProfile(values));
   };
 
@@ -52,7 +53,23 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
     await setSelects(newData);
   };
 
-  useEffect(() => {}, [selects]);
+  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0] as File;
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      // console.log(reader.result?.toString());
+      setSelects({ ...selects, avatar: reader.result?.toString() });
+
+      // console.log(newImage);
+    };
+    reader.onerror = () => {
+      console.log(reader.error);
+    };
+  };
+
+  // useEffect(() => {}, [selects]);
 
   return (
     <Container>
@@ -68,28 +85,39 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
                 <ChooseLink>
                   <Field name="avatar">
                     {(props) => (
-                      <>
+                      <Avatar>
                         {photoBtn === true ? (
-                          <div>
+                          <>
                             <Label
                               htmlFor="avatar"
                               onClick={() => setPhotoBtn(true)}
                             >
-                              {String(selects?.avatar)}
+                              {fileName}
                             </Label>
                             <AvatarInput
                               {...props.input}
                               id="avatar"
                               type="file"
                               accept="image/*"
+                              onChange={uploadImage}
                             />
-                            <BigInputBox>
-                              <Label>Upload Photo</Label>
+                            <AvatarBox>
+                              <Label
+                                onClick={() =>
+                                  dispatch(
+                                    uploadPhoto({
+                                      name: selects.avatar!,
+                                    })
+                                  )
+                                }
+                              >
+                                Upload Photo
+                              </Label>
                               <Label>Cancel</Label>
-                            </BigInputBox>
-                          </div>
+                            </AvatarBox>
+                          </>
                         ) : (
-                          <div>
+                          <>
                             <Label
                               htmlFor="avatar"
                               onClick={() => setPhotoBtn(true)}
@@ -102,9 +130,9 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
                               type="file"
                               accept="image/*"
                             />
-                          </div>
+                          </>
                         )}
-                      </>
+                      </Avatar>
                     )}
                   </Field>
                 </ChooseLink>
@@ -322,6 +350,18 @@ const Container = styled.div`
   width: 100%;
   flex-direction: column;
 `;
+const Avatar = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`;
+const AvatarBox = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  /* align-self: center; */
+  margin-top: 10px;
+`;
 const PhotoForm = styled.div`
   display: flex;
   flex-direction: column;
@@ -361,6 +401,7 @@ const Label = styled.label`
   align-items: center;
   font-size: 14px;
   line-height: 1;
+  margin: 0 5px;
   font-weight: 400;
   color: #788b99;
   cursor: pointer;

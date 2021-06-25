@@ -11,7 +11,6 @@ const InputField: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
 }) => {
   return (
     <Input
-      // onEndEditing={() => input.onChange("")}
       {...input}
       value={value || undefined}
       placeholder={placeholder}

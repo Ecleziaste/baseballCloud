@@ -41,7 +41,7 @@ export const updateCurrentProfileApi = (payload: UpdateProfileSelects) =>
 
 const createQuery = (data: UpdateProfileSelects) => {
   const update = {
-    variables: { form: { ...data } },
+    variables: { form: data },
     query: `mutation UpdateProfile($form:UpdateProfileInput!)
   { update_profile (input:$form)
     { profile
