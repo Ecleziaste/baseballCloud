@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Item from "../components/Item";
 import InnerInfo from "../components/InnerInfo";
@@ -16,24 +16,27 @@ import {
   HEART_PLUS,
 } from "../../../../assets/svg/paths";
 import { useSelector, useDispatch } from "react-redux";
-// import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
-// import { selectProfile } from "../../../../store/profile/selectors";
+import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
+import { selectProfile } from "../../../../store/profile/selectors";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
-import { updateFavoriteProfile } from "../../../../store/profiles/actions";
-import { CurrentProfile, Profile } from "../../../../Types";
+import {
+  updateFavoriteProfile,
+  setProfiles,
+} from "../../../../store/profiles/actions";
+import { Profile } from "../../../../Types";
 
-const FeaturesProfile: React.FC<Props> = ({
-  toggleEditBtn,
-  id,
-  profile,
-  player,
-}) => {
+const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id, player }) => {
   const dispatch = useDispatch();
   // искать профайл тут по айдишке, которая приходит сверху мб
-  // const profile = useSelector(selectCurrentProfile)!;
-  // const player = useSelector(selectProfile)!;
+  const profile = useSelector(selectCurrentProfile)!;
   const avatar = player?.avatar;
   const [isFavorite, setIsFavorite] = useState(player?.favorite);
+  console.log(player);
+  console.log(isFavorite);
+
+  useEffect(() => {
+    setIsFavorite(player?.favorite);
+  }, [player]);
 
   return (
     <Container>
@@ -62,14 +65,20 @@ const FeaturesProfile: React.FC<Props> = ({
           </EditBtn>
         ) : (
           <LikeBtn
-            onClick={() => {
-              dispatch(
+            onClick={async () => {
+              await dispatch(
                 updateFavoriteProfile({
                   profile_id: player.id,
                   favorite: !isFavorite,
                 })
               );
-              setIsFavorite(!isFavorite);
+              await setIsFavorite(!isFavorite);
+              await dispatch(
+                setProfiles({
+                  profiles_count: 10,
+                  offset: 0,
+                })
+              );
             }}
           >
             <LikeSpan>
@@ -275,6 +284,5 @@ export default FeaturesProfile;
 type Props = {
   toggleEditBtn: (value: boolean) => void;
   id: string;
-  profile: CurrentProfile;
   player: Profile;
 };

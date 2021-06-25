@@ -4,28 +4,28 @@ import Favourite from "../Favourite";
 import UnFavourite from "../UnFavourite";
 import { Link } from "react-router-dom";
 import { PlayerCard } from "../../../../Types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setProfiles,
   updateFavoriteProfile,
 } from "../../../../store/profiles/actions";
 import { setProfile } from "../../../../store/profile/actions";
+// import { selectProfileById } from "../../../../store/profile/selectors";
 
 const NetworkCard: React.FC<Props> = ({ player }) => {
   const dispatch = useDispatch();
+  // const player = useSelector(selectProfileById(id))!;
   const [heartBtn, setHeartBtn] = useState<boolean>(player.favorite);
-
-  // тут будет селектор профиля по айдишке
 
   return (
     <CardContent>
       <TitleWrapper $width="19%">
         <Title $width="none">
           <Name
+            onClick={() => dispatch(setProfile(player.id))}
             to={{
               pathname: `/profile/${player.id}`,
             }}
-            onClick={() => dispatch(setProfile(player.id))}
           >
             {`${player.first_name} ${player.last_name}`}
           </Name>
@@ -114,4 +114,5 @@ export default NetworkCard;
 
 type Props = {
   player: PlayerCard;
+  // id: string;
 };

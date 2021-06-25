@@ -22,11 +22,11 @@ const UserRouter: React.FC<Props> = () => {
         path="/registration"
         render={() => <Redirect from="/registration" to="/profile" />}
       />
-      <Route
+      {/* <Route
         exact
         path="/"
         render={() => <Redirect from="/" to="/profile" />}
-      />
+      /> */}
     </Switch>
   );
 };

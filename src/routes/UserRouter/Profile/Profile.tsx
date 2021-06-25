@@ -27,21 +27,21 @@ const Profile: React.FC<Props> = () => {
   const [editBtn, setEditBtn] = useState(false);
   const [activeTab, setActiveTab] = useState(true);
   const profile = useSelector(selectCurrentProfile)!;
-  const player = useSelector(selectProfile)!;
   const { id } = useParams<{ id: string }>();
+  const player = useSelector(selectProfile)!;
 
   const toggleEditBtn = (value: boolean): void => {
     setEditBtn(value);
   };
 
-  const getProfile = async () => {
+  const getProfile = () => {
     if (id === undefined || null) {
       dispatch(setProfile(profile?.id))!;
     } else dispatch(setProfile(id));
   };
 
-  const getAllData = async () => {
-    await getProfile();
+  const getAllData = () => {
+    getProfile();
     dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
     dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
     dispatch(setProfiles({ profiles_count: 10, offset: 0 }));
@@ -52,25 +52,21 @@ const Profile: React.FC<Props> = () => {
 
   useEffect(() => {
     getAllData();
-  }, [profile]);
+  }, [id, profile]);
 
   return (
     <AppLayout>
       <Container>
         {editBtn === true ? (
           <LeftPanel>
-            <EditProfile
-              toggleEditBtn={toggleEditBtn}
-              profile={profile}
-            ></EditProfile>
+            <EditProfile toggleEditBtn={toggleEditBtn}></EditProfile>
           </LeftPanel>
         ) : (
           <LeftPanel>
             <FeaturesProfile
               toggleEditBtn={toggleEditBtn}
-              profile={profile}
-              player={player}
               id={id}
+              player={player}
             ></FeaturesProfile>
           </LeftPanel>
         )}

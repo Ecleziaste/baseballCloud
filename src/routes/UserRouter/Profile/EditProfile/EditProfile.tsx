@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Form, Field } from "react-final-form";
 import TitleLine from "../components/TitleLine";
 import { useDispatch, useSelector } from "react-redux";
-// import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
 import EditSelector from "./EditSelector";
 import EditInput from "./EditInput";
 import TextAreaProfile from "../components/TextAreaProfile";
@@ -14,11 +13,11 @@ import {
   uploadPhoto,
   updateCurrentProfile,
 } from "../../../../store/current_profile/actions";
-// import AvatarInput from "./AvatarInput";
+import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
 
-const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
+const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
   const dispatch = useDispatch();
-  // const profile = useSelector(selectCurrentProfile)!;
+  const profile = useSelector(selectCurrentProfile)!;
   const [fileName, setFileName] = useState("file name");
   const [selects, setSelects] = useState<UpdateProfileSelects>({
     age: profile?.age || undefined,
@@ -58,7 +57,6 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      // console.log(reader.result?.toString());
       setSelects({ ...selects, avatar: reader.result?.toString() });
     };
     console.log(selects);
@@ -234,7 +232,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
                   <Field
                     name="throws_hand"
                     defaultValue={profile?.throws_hand || ""}
-                    title={profile?.throws_hand.toUpperCase() || "Throws *"}
+                    title={profile?.throws_hand!.toUpperCase()! || "Throws *"}
                     component={EditSelector}
                     options={OPTIONS.throws}
                     handleSelect={handleSelect}
@@ -477,5 +475,4 @@ export default EditProfile;
 
 type Props = {
   toggleEditBtn: (value: boolean) => void;
-  profile: CurrentProfile;
 };
