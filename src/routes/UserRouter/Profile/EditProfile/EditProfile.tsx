@@ -43,7 +43,6 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
   const [photoBtn, setPhotoBtn] = useState(false);
 
   const onSubmit = async (values = selects) => {
-    // dispatch(updateCurrentProfile({ ...selects }));
     console.log("values", values);
     await dispatch(updateCurrentProfile(values));
   };
@@ -53,7 +52,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
     await setSelects(newData);
   };
 
-  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const chooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0] as File;
     const reader = new FileReader();
@@ -61,16 +60,15 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
     reader.onload = () => {
       // console.log(reader.result?.toString());
       setSelects({ ...selects, avatar: reader.result?.toString() });
-
-      // console.log(newImage);
     };
+    console.log(selects);
+
     reader.onerror = () => {
       console.log(reader.error);
     };
   };
 
   // useEffect(() => {}, [selects]);
-
   return (
     <Container>
       <InfoForm>
@@ -99,7 +97,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
                               id="avatar"
                               type="file"
                               accept="image/*"
-                              onChange={uploadImage}
+                              onChange={chooseImage}
                             />
                             <AvatarBox>
                               <Label

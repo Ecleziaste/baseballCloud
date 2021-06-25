@@ -28,18 +28,20 @@ const Profile: React.FC<Props> = () => {
   const [activeTab, setActiveTab] = useState(true);
   const profile = useSelector(selectCurrentProfile)!;
   const player = useSelector(selectProfile)!;
-  const { id } = useParams<{ id: string }>()!;
+  const { id } = useParams<{ id: string }>();
+
   const toggleEditBtn = (value: boolean): void => {
     setEditBtn(value);
   };
 
-  const getProfile = () => {
+  const getProfile = async () => {
     if (id === undefined || null) {
       dispatch(setProfile(profile?.id))!;
     } else dispatch(setProfile(id));
   };
-  const getAllData = () => {
-    getProfile();
+
+  const getAllData = async () => {
+    await getProfile();
     dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
     dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
     dispatch(setProfiles({ profiles_count: 10, offset: 0 }));
@@ -50,7 +52,7 @@ const Profile: React.FC<Props> = () => {
 
   useEffect(() => {
     getAllData();
-  }, []);
+  }, [profile]);
 
   return (
     <AppLayout>
