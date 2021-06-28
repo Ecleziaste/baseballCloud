@@ -40,7 +40,7 @@ const Header: React.FC<Props> = () => {
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
-  });
+  }, []);
 
   return (
     <Container>

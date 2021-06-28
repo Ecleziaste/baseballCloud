@@ -31,8 +31,6 @@ const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id, player }) => {
   const profile = useSelector(selectCurrentProfile)!;
   const avatar = player?.avatar;
   const [isFavorite, setIsFavorite] = useState(player?.favorite);
-  console.log(player);
-  console.log(isFavorite);
 
   useEffect(() => {
     setIsFavorite(player?.favorite);

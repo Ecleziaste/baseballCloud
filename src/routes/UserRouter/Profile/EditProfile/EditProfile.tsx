@@ -12,13 +12,21 @@ import { CurrentProfile, UpdateProfileSelects } from "../../../../Types";
 import {
   uploadPhoto,
   updateCurrentProfile,
+  setCurrentProfile,
 } from "../../../../store/current_profile/actions";
 import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
 
-const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
+type Props = {
+  toggleEditBtn: (value: boolean) => void;
+  profile: CurrentProfile;
+};
+
+const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
   const dispatch = useDispatch();
-  const profile = useSelector(selectCurrentProfile)!;
+  // const profile = useSelector(selectCurrentProfile)!;
+  const [photoBtn, setPhotoBtn] = useState(false);
   const [fileName, setFileName] = useState("file name");
+  const [base64, setBase64] = useState("");
   const [selects, setSelects] = useState<UpdateProfileSelects>({
     age: profile?.age || undefined,
     avatar: profile?.avatar || undefined,
@@ -39,34 +47,40 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
     weight: profile?.weight || undefined,
   });
 
-  const [photoBtn, setPhotoBtn] = useState(false);
+  const onSubmit = async (values: UpdateProfileSelects) => {
+    console.log("onSubmit func = values", values);
 
-  const onSubmit = async (values = selects) => {
-    console.log("values", values);
     await dispatch(updateCurrentProfile(values));
   };
 
-  const handleSelect = async (fieldName: any, value: any) => {
+  const handleSelect = (fieldName: any, value: any) => {
     const newData = { ...selects, [fieldName]: value };
-    await setSelects(newData);
+    setSelects(newData);
   };
 
   const chooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0] as File;
+    setFileName(file.name);
     const reader = new FileReader();
+    // const wtf = reader.readAsDataURL(file);
+    // console.log("wtf", wtf);
     reader.readAsDataURL(file);
-    reader.onload = () => {
-      setSelects({ ...selects, avatar: reader.result?.toString() });
-    };
-    console.log(selects);
 
-    reader.onerror = () => {
-      console.log(reader.error);
+    reader.onloadend = () => {
+      setSelects({ ...selects, avatar: reader.result as string });
+      setBase64(reader.result as string);
+
+      //   fetch(reader.result! as string)
+      //     .then((res) => res.blob())
+      //     .then(console.log);
     };
   };
 
-  // useEffect(() => {}, [selects]);
+  useEffect(() => {
+    console.log("selects", selects);
+  }, [selects]);
+
   return (
     <Container>
       <InfoForm>
@@ -86,7 +100,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                           <>
                             <Label
                               htmlFor="avatar"
-                              onClick={() => setPhotoBtn(true)}
+                              // onClick={() => setPhotoBtn(true)}
                             >
                               {fileName}
                             </Label>
@@ -97,15 +111,17 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                               accept="image/*"
                               onChange={chooseImage}
                             />
+
                             <AvatarBox>
                               <Label
-                                onClick={() =>
+                                onClick={() => {
                                   dispatch(
                                     uploadPhoto({
-                                      name: selects.avatar!,
+                                      // name: selects.avatar!,
+                                      name: fileName,
                                     })
-                                  )
-                                }
+                                  );
+                                }}
                               >
                                 Upload Photo
                               </Label>
@@ -231,8 +247,8 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <SmallInputBox>
                   <Field
                     name="throws_hand"
-                    defaultValue={profile?.throws_hand || ""}
-                    title={profile?.throws_hand!.toUpperCase()! || "Throws *"}
+                    defaultValue={profile?.throws_hand?.toUpperCase() || ""}
+                    title={"Throws *"}
                     component={EditSelector}
                     options={OPTIONS.throws}
                     handleSelect={handleSelect}
@@ -242,7 +258,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                   <Field
                     name="bats_hand"
                     defaultValue={profile?.bats_hand || ""}
-                    title={profile?.bats_hand.toUpperCase() || "Bats *"}
+                    title={profile?.bats_hand?.toUpperCase() || "Bats *"}
                     component={EditSelector}
                     options={OPTIONS.bats}
                     handleSelect={handleSelect}
@@ -326,7 +342,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn }) => {
                 <SaveBtn
                   type="submit"
                   onClick={() => {
-                    handleSubmit();
+                    onSubmit({ ...selects, avatar: fileName });
                     toggleEditBtn(false);
                   }}
                 >
@@ -472,7 +488,3 @@ const SaveBtn = styled(CancelBtn)`
 `;
 
 export default EditProfile;
-
-type Props = {
-  toggleEditBtn: (value: boolean) => void;
-};

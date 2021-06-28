@@ -52,6 +52,7 @@ const Profile: React.FC<Props> = () => {
 
   useEffect(() => {
     getAllData();
+    if (profile?.first_name === null) setEditBtn(true);
   }, [id, profile]);
 
   return (
@@ -59,7 +60,10 @@ const Profile: React.FC<Props> = () => {
       <Container>
         {editBtn === true ? (
           <LeftPanel>
-            <EditProfile toggleEditBtn={toggleEditBtn}></EditProfile>
+            <EditProfile
+              toggleEditBtn={toggleEditBtn}
+              profile={profile}
+            ></EditProfile>
           </LeftPanel>
         ) : (
           <LeftPanel>
@@ -71,7 +75,11 @@ const Profile: React.FC<Props> = () => {
           </LeftPanel>
         )}
 
-        {profile?.first_name !== null ? (
+        {profile?.first_name === null ? (
+          <MainContent>
+            <Appeal />
+          </MainContent>
+        ) : (
           <MainContent>
             <SummaryEvents>
               <PitcherSummary>
@@ -95,10 +103,6 @@ const Profile: React.FC<Props> = () => {
               </TabBtnsWrapper>
               <InnerContent>There's no info yet!</InnerContent>
             </InfoCard>
-          </MainContent>
-        ) : (
-          <MainContent>
-            <Appeal></Appeal>
           </MainContent>
         )}
       </Container>

@@ -26,13 +26,13 @@ const query = `{ current_profile ()
     }
     teams {
       id
-       name
+      name
       }
-      facilities {
-        id
-        email
-        u_name
-      }
+    facilities {
+      id
+      email
+      u_name
+    }
     }
   }`;
 

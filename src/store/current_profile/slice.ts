@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { setCurrentProfile, updateCurrentProfile } from "./actions";
-import { CurrentProfile } from "../../Types";
+import {
+  setCurrentProfile,
+  updateCurrentProfile,
+  uploadPhoto,
+} from "./actions";
+import { CurrentProfile, UploadedPhoto } from "../../Types";
 
 const initialState = null as null | CurrentProfile;
 
@@ -20,6 +24,14 @@ const currentProfileSlice = createSlice({
       action: PayloadAction<CurrentProfile>
     ) => {
       return action.payload;
+    },
+    [uploadPhoto.fulfilled.type]: (
+      state,
+      action: PayloadAction<UploadedPhoto>
+    ) => {
+      console.log(action.payload);
+
+      state!.avatar = action.payload.signedUrl;
     },
   },
 });

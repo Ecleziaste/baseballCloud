@@ -27,8 +27,6 @@ export const signIn = createAsyncThunk<any, SignInParams>(
       headers,
     } = await signInApi(params);
 
-    console.log({ ...data, ...headers });
-
     return { data, headers };
   }
 );
