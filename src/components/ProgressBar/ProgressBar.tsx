@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-const ProgressBar: React.FC<Props> = ({ title, avail }) => {
+const ProgressBar: React.FC<Props> = ({ title, value }) => {
   return (
     <div>
       <Record>
         <Info>
           <Text>{title}</Text>
-          <TextAvail>{avail}</TextAvail>
+          <TextNumber>{value || "N/A"}</TextNumber>
         </Info>
         <Bar>
           <Svg viewBox="0 0 100 1" preserveAspectRatio="none">
             <PathTrail></PathTrail>
-            <PathLine></PathLine>
+            <PathLine $value={value}></PathLine>
           </Svg>
         </Bar>
       </Record>
@@ -36,7 +36,7 @@ const Text = styled.div`
   color: #667784;
   font-size: 16px;
 `;
-const TextAvail = styled(Text)`
+const TextNumber = styled(Text)`
   font-weight: 600;
 `;
 const Bar = styled.div`
@@ -56,11 +56,11 @@ const PathTrail = styled.path`
   stroke-width: 1;
   fill-opacity: 0;
 `;
-const PathLine = styled.path`
+const PathLine = styled.path<{ $value: string }>`
   d: path("M 0.5 0.5 L 99.5 0.5");
   stroke-linecap: round;
   stroke: rgb(255, 208, 26);
-  stroke-width: 1;
+  stroke-width: ${(props) => props.$value || "1"};
   fill-opacity: 0;
   stroke-dasharray: 0px, 100px;
   stroke-dashoffset: 0px;
@@ -70,4 +70,4 @@ const PathLine = styled.path`
 
 export default ProgressBar;
 
-type Props = { title: string; avail: string };
+type Props = { title: string; value: string };

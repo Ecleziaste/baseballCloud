@@ -53,10 +53,12 @@ const SignUpForm: React.FC<Props> = () => {
     if (value.password !== value.password_confirmation) {
       return { [FORM_ERROR]: "Passwords are not equal." };
     }
-    if (await dispatch(signUp({ role, ...value }))) {
+    if (
+      (await dispatch(signUp({ role, ...value }))) &&
+      (await dispatch(setCurrentProfile({})))
+    ) {
       return { [FORM_ERROR]: "Email has already been taken." };
     }
-    await dispatch(setCurrentProfile({}));
   };
 
   return (

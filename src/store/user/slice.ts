@@ -29,16 +29,10 @@ const userSlice = createSlice({
     [signIn.fulfilled.type]: (
       state,
       { payload }: PayloadAction<{ data: User; headers: any }>
-    ) =>
-      //  & {
-      //   success: boolean;
-      //   errors: Array<string>;
-      // }
-      {
-        state.headers = payload.headers;
-        state.user = payload.data;
-        // if (payload.success === false) {} else return state;
-      },
+    ) => {
+      state.headers = payload.headers;
+      state.user = payload.data;
+    },
     [setUser.type]: (state, action: PayloadAction<any>) => {
       return action.payload;
     },

@@ -15,11 +15,12 @@ const SignInForm: React.FC<Props> = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (value: Values) => {
-    if (await dispatch(signIn(value))) {
+    if (
+      (await dispatch(signIn(value))) &&
+      (await dispatch(setCurrentProfile({})))
+    ) {
       return { [FORM_ERROR]: "Invalid login credentials. Please try again." };
     }
-
-    await dispatch(setCurrentProfile({}));
   };
 
   return (

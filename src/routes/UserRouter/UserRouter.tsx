@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
 import Profile from "./Profile";
 import Network from "./Network";
 import Leaderboard from "./Leaderboard";

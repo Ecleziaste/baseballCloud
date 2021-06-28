@@ -132,7 +132,9 @@ export type Profile = {
   age: number;
   avatar: string;
   bats_hand: string;
-  batter_summary: [];
+  batter_summary: [
+    { exit_velocity: number; distance: number; launch_angle: number }
+  ];
   batting_top_values: [];
   biography: string;
   broad_jump: null;
@@ -148,8 +150,12 @@ export type Profile = {
   inches: number;
   last_name: string;
   paid: boolean;
-  pitcher_summary: [];
-  pitching_top_values: [];
+  pitcher_summary:
+    | Array<{ velocity: number; spin_rate: number; horizontal_break: any }>
+    | [];
+  pitching_top_values:
+    | Array<{ velocity: number; spin_rate: number; pitch_type: string }>
+    | [];
   position: string;
   position2: string | null;
   recent_events: [];

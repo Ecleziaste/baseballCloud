@@ -10,10 +10,8 @@ const Dropdown: React.FC<Props> = ({
   handleSelect,
   renderElement,
 }) => {
-  const width = "100%";
-
   return (
-    <DropdownMenu width={width} options={options} ref={refer}>
+    <DropdownMenu options={options} ref={refer}>
       {renderElement && renderElement()}
       {options.map((o) => {
         return (
@@ -32,11 +30,11 @@ const Dropdown: React.FC<Props> = ({
   );
 };
 
-const DropdownMenu = styled.div<{ width: string; options: Array<Options> }>`
+const DropdownMenu = styled.div<{ options: Array<Options> }>`
   display: flex;
   flex-flow: column nowrap;
   text-align: left;
-  min-width: ${(props) => props.width};
+  min-width: 100%;
   position: absolute;
   top: 100%;
   right: -5px;

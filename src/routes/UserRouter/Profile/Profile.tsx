@@ -42,6 +42,7 @@ const Profile: React.FC<Props> = () => {
 
   const getAllData = () => {
     getProfile();
+
     dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
     dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
     dispatch(setProfiles({ profiles_count: 10, offset: 0 }));
@@ -81,14 +82,55 @@ const Profile: React.FC<Props> = () => {
         ) : (
           <MainContent>
             <SummaryEvents>
-              <PitcherSummary>
+              <Summary>
+                <SumTitle>Top Pitching Values</SumTitle>
+                <SumRecord>
+                  <ProgressBar
+                    title="Fastball Velocity"
+                    value={
+                      player?.pitcher_summary[0]?.velocity?.toString() || "N/A"
+                    }
+                  />
+                  <ProgressBar
+                    title="Spin Rate"
+                    value={
+                      player?.pitcher_summary[0]?.spin_rate?.toString() || "N/A"
+                    }
+                  />
+                  <ProgressBar
+                    title="Pitch Movement"
+                    value={
+                      player?.pitcher_summary[0]?.horizontal_break?.toString() ||
+                      "N/A"
+                    }
+                  />
+                </SumRecord>
+              </Summary>
+              <Summary>
                 <SumTitle>Top Batting Values</SumTitle>
                 <SumRecord>
-                  <ProgressBar title="Exit Velocity" avail="N/A" />
-                  <ProgressBar title="Carry Distance" avail="N/A" />
-                  <ProgressBar title="Launch Angle" avail="N/A" />
+                  <ProgressBar
+                    title="Exit Velocity"
+                    value={
+                      player?.batter_summary[0]?.exit_velocity?.toString() ||
+                      "N/A"
+                    }
+                  />
+                  <ProgressBar
+                    title="Carry Distance"
+                    value={
+                      player?.batter_summary[0]?.distance?.toString() || "N/A"
+                    }
+                  />
+                  <ProgressBar
+                    title="Launch Angle"
+                    value={
+                      player?.batter_summary[0]?.launch_angle?.toString() ||
+                      "N/A"
+                    }
+                  />
                 </SumRecord>
-              </PitcherSummary>
+              </Summary>
               <RecentEvents>
                 <EvTitle>Recent Session Reports</EvTitle>
                 <EvData>No data currently linked to this profile</EvData>
@@ -134,7 +176,7 @@ const SummaryEvents = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const PitcherSummary = styled.div`
+const Summary = styled.div`
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -151,7 +193,7 @@ const SumTitle = styled.div`
 const SumRecord = styled.div`
   display: flex;
 `;
-const RecentEvents = styled(PitcherSummary)``;
+const RecentEvents = styled(Summary)``;
 const EvTitle = styled(SumTitle)``;
 const EvData = styled.div`
   display: flex;
