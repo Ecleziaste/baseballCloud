@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import TabBtn from "../components/TabBtn";
-import ProgressBar from "../components/ProgressBar";
+import TabBtn from "../../../components/TabBtn";
+import ProgressBar from "../../../components/ProgressBar";
 import FeaturesProfile from "./FeaturesProfile";
 import EditProfile from "./EditProfile";
 import AppLayout from "../../../layouts";
@@ -69,7 +69,6 @@ const Profile: React.FC<Props> = () => {
           <LeftPanel>
             <FeaturesProfile
               toggleEditBtn={toggleEditBtn}
-              id={id}
               player={player}
             ></FeaturesProfile>
           </LeftPanel>

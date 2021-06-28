@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AppLayout from "../../../layouts";
-import PageHeader from "../components/PageHeader";
-import NetworkCard from "../components/NetworkCard";
+import PageHeader from "../../../components/PageHeader";
+import NetworkCard from "./NetworkCard";
 import Selector from "../../../components/Selector";
 import SelectorInput from "../../../components/SelectorInput";
-import SearchInput from "../components/SearchInput";
+import SearchInput from "../../../components/SearchInput";
 import { Form, Field } from "react-final-form";
 import { OPTIONS } from "../../../constants";
 import { ProfilesSelects } from "../../../Types";
@@ -50,9 +50,9 @@ const Network: React.FC<Props> = () => {
   const displayUsers = profiles.map((profile) => {
     return <NetworkCard player={profile} key={profile.id} />;
   });
-  const handleSelect = async (fieldName: any, value: any) => {
+  const handleSelect = (fieldName: any, value: any) => {
     const newData = { ...selects, [fieldName]: value };
-    await setSelects(newData);
+    setSelects(newData);
   };
   const changePage = ({ selected }: { selected: number }) => {
     const showPages = selects.profiles_count * selected;

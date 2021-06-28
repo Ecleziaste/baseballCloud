@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { BLUE_ARROW } from "../../../../../assets/svg/paths";
-import Dropdown from "../../../../../components/Dropdown";
+import { BLUE_ARROW } from "../../../../../../assets/svg/paths";
+import Dropdown from "../../../../../../components/Dropdown";
 import { FieldRenderProps } from "react-final-form";
-import { Options } from "../../../../../Types";
+import { Options } from "../../../../../../Types";
 import { v4 as uuidv4 } from "uuid";
 
 const EditSelector: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({

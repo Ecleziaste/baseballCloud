@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Form, Field } from "react-final-form";
 import TitleLine from "../components/TitleLine";
-import { useDispatch, useSelector } from "react-redux";
-import EditSelector from "./EditSelector";
-import EditInput from "./EditInput";
+import { useDispatch } from "react-redux";
+import EditSelector from "./components/EditSelector";
+import EditInput from "./components/EditInput";
 import TextAreaProfile from "../components/TextAreaProfile";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
 import { OPTIONS } from "../../../../constants";
@@ -12,9 +12,7 @@ import { CurrentProfile, UpdateProfileSelects } from "../../../../Types";
 import {
   uploadPhoto,
   updateCurrentProfile,
-  setCurrentProfile,
 } from "../../../../store/current_profile/actions";
-import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
 
 type Props = {
   toggleEditBtn: (value: boolean) => void;
@@ -23,7 +21,6 @@ type Props = {
 
 const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
   const dispatch = useDispatch();
-  // const profile = useSelector(selectCurrentProfile)!;
   const [photoBtn, setPhotoBtn] = useState(false);
   const [fileName, setFileName] = useState("file name");
   const [base64, setBase64] = useState("");
@@ -63,23 +60,14 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
     const file = e.target.files[0] as File;
     setFileName(file.name);
     const reader = new FileReader();
-    // const wtf = reader.readAsDataURL(file);
-    // console.log("wtf", wtf);
+
     reader.readAsDataURL(file);
 
     reader.onloadend = () => {
       setSelects({ ...selects, avatar: reader.result as string });
       setBase64(reader.result as string);
-
-      //   fetch(reader.result! as string)
-      //     .then((res) => res.blob())
-      //     .then(console.log);
     };
   };
-
-  useEffect(() => {
-    console.log("selects", selects);
-  }, [selects]);
 
   return (
     <Container>
@@ -98,12 +86,7 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
                       <Avatar>
                         {photoBtn === true ? (
                           <>
-                            <Label
-                              htmlFor="avatar"
-                              // onClick={() => setPhotoBtn(true)}
-                            >
-                              {fileName}
-                            </Label>
+                            <Label htmlFor="avatar">{fileName}</Label>
                             <AvatarInput
                               {...props.input}
                               id="avatar"
@@ -117,7 +100,6 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
                                 onClick={() => {
                                   dispatch(
                                     uploadPhoto({
-                                      // name: selects.avatar!,
                                       name: fileName,
                                     })
                                   );
@@ -303,13 +285,6 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
                   component={EditSelector}
                   options={OPTIONS.team}
                   handleSelect={handleSelect}
-                  // renderElement={() => (
-                  //   <>
-                  //     {profile?.teams.map((team) => (
-                  //       <SelectValue text={team.name} />
-                  //     ))}
-                  //   </>
-                  // )}
                 />
               </BigInputBox>
               <TitleLine title="Facility" />
@@ -336,7 +311,11 @@ const EditProfile: React.FC<Props> = ({ toggleEditBtn, profile }) => {
               </TextAreaBox>
 
               <BtnsWrapper>
-                <CancelBtn onClick={() => toggleEditBtn(false)}>
+                <CancelBtn
+                  onClick={() => {
+                    toggleEditBtn(false);
+                  }}
+                >
                   Cancel
                 </CancelBtn>
                 <SaveBtn
@@ -371,7 +350,6 @@ const AvatarBox = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  /* align-self: center; */
   margin-top: 10px;
 `;
 const PhotoForm = styled.div`
@@ -423,7 +401,6 @@ const Label = styled.label`
     text-decoration: underline;
   }
 `;
-
 const InfoForm = styled.div`
   display: flex;
   width: 100%;

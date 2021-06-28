@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ButtonMain from "../components/ButtonMain";
-import InputField from "../components/InputField";
+import ButtonMain from "../../../components/ButtonMain";
+import InputField from "../../../components/InputField";
 import { Form, Field } from "react-final-form";
 import { CHECK_SVG } from "../../../assets/svg/paths";
 import { Link } from "react-router-dom";
@@ -9,8 +9,19 @@ import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../../store/user/actions";
+import { FORM_ERROR } from "final-form";
 import { setCurrentProfile } from "../../../store/current_profile/actions";
-// import { setProfile } from "../../../store/profile/actions";
+
+const required = (value: string) => (value ? undefined : "Required");
+const minValue = (min: number) => (value: string) =>
+  value.length >= min ? undefined : `Must contain more than ${min} characters`;
+const composeValidators =
+  (...validators: any) =>
+  (value: string) =>
+    validators.reduce(
+      (error: any, validator: any) => error || validator(value),
+      undefined
+    );
 
 const SignUpForm: React.FC<Props> = () => {
   const dispatch = useDispatch();
@@ -37,36 +48,15 @@ const SignUpForm: React.FC<Props> = () => {
   };
 
   const [role, setRole] = useState<string>("player");
-  const [emailError, emailErrorSet] = useState<null | boolean>(null);
-  const [sameEmailError, sameEmailErrorSet] = useState<null | boolean>(null);
-  const [pswdError, pswdErrorSet] = useState<null | boolean>(null);
-  const [confError, confErrorSet] = useState<null | boolean>(null);
-  const [lengthError, lengthErrorSet] = useState<null | boolean>(null);
 
-  const onSubmit = async (value: any) => {
-    if (!value.email) {
-      emailErrorSet(true);
-    } else emailErrorSet(null);
-    if (!value.password) {
-      pswdErrorSet(true);
-    } else pswdErrorSet(null);
-    if (value.password && value.password !== value.password_confirmation) {
-      confErrorSet(true);
-    } else confErrorSet(null);
-    if (value.password && value.password.length < 8) {
-      lengthErrorSet(true);
-    } else lengthErrorSet(null);
-    if (
-      !emailError &&
-      !sameEmailError &&
-      !pswdError &&
-      !confError &&
-      !lengthError
-    ) {
-      await dispatch(signUp({ role, ...value }));
-      await dispatch(setCurrentProfile({}));
-      // await dispatch(setProfile());
+  const onSubmit = async (value: Values) => {
+    if (value.password !== value.password_confirmation) {
+      return { [FORM_ERROR]: "Passwords are not equal." };
     }
+    if (await dispatch(signUp({ role, ...value }))) {
+      return { [FORM_ERROR]: "Email has already been taken." };
+    }
+    await dispatch(setCurrentProfile({}));
   };
 
   return (
@@ -75,8 +65,13 @@ const SignUpForm: React.FC<Props> = () => {
         <Container>
           <FormWrapper>
             <Form
+              initialValues={{
+                email: "",
+                password: "",
+                password_confirmation: "",
+              }}
               onSubmit={onSubmit}
-              render={({ handleSubmit }) => (
+              render={({ handleSubmit, submitError }) => (
                 <FormContainer>
                   <BtnsWrapper>
                     <BtnLeft isActive={btnPress} onClick={handleLeftBtnClick}>
@@ -116,16 +111,14 @@ const SignUpForm: React.FC<Props> = () => {
                       ></UserIcon>
                     </FieldIcon>
                     <Field
+                      validate={required}
                       name="email"
                       type="email"
                       component={InputField}
                       placeholder="Email"
                     />
-                    {emailError && <ValidationText>Required</ValidationText>}
-                    {sameEmailError && (
-                      <ValidationText>
-                        Email has already been taken
-                      </ValidationText>
+                    {submitError && (
+                      <ValidationText>{submitError}</ValidationText>
                     )}
                   </FieldContainer>
                   <FieldContainer>
@@ -133,18 +126,13 @@ const SignUpForm: React.FC<Props> = () => {
                       <LockIcon className="fa fa-lock"></LockIcon>
                     </FieldIcon>
                     <Field
+                      validate={composeValidators(required, minValue(8))}
                       name="password"
                       type="password"
                       component={InputField}
                       placeholder="Password"
                       secure
                     />
-                    {pswdError && <ValidationText>Required</ValidationText>}
-                    {lengthError && (
-                      <ValidationText>
-                        Must contain more than 8 characters
-                      </ValidationText>
-                    )}
                   </FieldContainer>
                   <FieldContainer>
                     <FieldIcon>
@@ -154,15 +142,13 @@ const SignUpForm: React.FC<Props> = () => {
                       ></CheckIcon>
                     </FieldIcon>
                     <Field
+                      validate={required}
                       name="password_confirmation"
                       type="password"
                       component={InputField}
                       placeholder="Confirm Password"
                       secure
                     />
-                    {confError && (
-                      <ValidationText>Passwords are not equal</ValidationText>
-                    )}
                   </FieldContainer>
 
                   <FormText>
@@ -352,3 +338,8 @@ const SignUpLink = styled(Link)`
 export default SignUpForm;
 
 type Props = {};
+type Values = {
+  email: string;
+  password: string;
+  password_confirmation: string;
+};

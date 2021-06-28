@@ -88,7 +88,6 @@ export type PitchingType = {
 
 export type CurrentProfile = {
   id: string;
-  // раньше по факту приходил намбер в пейлоаде экшена
   first_name: string;
   last_name: string;
   position: string;

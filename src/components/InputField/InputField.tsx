@@ -6,26 +6,36 @@ import styled from "styled-components";
 const InputField: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
   placeholder,
   input,
+  meta,
   value,
   secure,
 }) => {
   return (
-    <Input
-      {...input}
-      value={value || undefined}
-      placeholder={placeholder}
-      secureTextEntry={secure}
-    />
+    <Root>
+      <Input
+        {...input}
+        value={value || undefined}
+        placeholder={placeholder}
+        secureTextEntry={secure}
+      />
+      {(meta.error || meta.submitError) && meta.touched && (
+        <ValidationText>{meta.error || meta.submitError}</ValidationText>
+      )}
+    </Root>
   );
 };
 
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
 const Input = styled.input`
   display: flex;
   max-width: 100%;
   justify-content: flex-start;
   flex-direction: row;
   height: 32px;
-  /* margin-bottom: 15px; */
   padding: 6px 12px 10px 37px;
   border-radius: 4px;
   background-color: #eff1f3;
@@ -41,6 +51,11 @@ const Input = styled.input`
   }
 `;
 
+const ValidationText = styled.div`
+  display: flex;
+  color: #f05f62;
+  margin-bottom: 2px;
+`;
 export default InputField;
 
 type Props = {

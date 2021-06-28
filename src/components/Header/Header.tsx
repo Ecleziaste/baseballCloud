@@ -22,17 +22,14 @@ const Header: React.FC<Props> = () => {
   const current_profile = useSelector(selectCurrentProfile)!;
   const user = useSelector(selectUser);
   const [menu, setMenu] = useState(false);
-  const toggleMenu = (value: boolean) => {
-    setMenu(value);
-  };
+
   const avatar = current_profile?.avatar;
-  const avatar2 = "http://avatars.mitosa.net/warcraft/039.jpg";
 
   const menuEl = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: Event) => {
     if (menuEl.current && !menuEl.current.contains(event.target as Node)) {
-      toggleMenu(false);
+      setMenu(false);
     }
   };
   useEffect(() => {
@@ -77,7 +74,7 @@ const Header: React.FC<Props> = () => {
                   <Avatar $avatar={avatar || DUMMY}></Avatar>
                 </ProfileLink>
               </AvatarWrapper>
-              <ProfileButton onClick={() => toggleMenu(!menu)}>
+              <ProfileButton onClick={() => setMenu(!menu)}>
                 <UserName>
                   {`${current_profile?.first_name || "Profile"} ${
                     current_profile?.last_name || "Name"
@@ -102,7 +99,7 @@ const Header: React.FC<Props> = () => {
                         to="/profile"
                         onClick={() => {
                           dispatch(setProfile(current_profile.id));
-                          toggleMenu(!menu);
+                          setMenu(!menu);
                         }}
                       >
                         <SelectableText>My Profile</SelectableText>

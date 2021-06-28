@@ -46,7 +46,6 @@ const Selector: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({
       {text}
       {isActive && (
         <Dropdown
-          // handleClick={setIsActive(!isActive)}
           onSelect={onSelect}
           options={options}
           handleSelect={handleSelect}

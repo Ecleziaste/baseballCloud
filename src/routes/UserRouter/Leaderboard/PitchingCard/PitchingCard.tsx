@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Favourite from "../Favourite";
-import UnFavourite from "../UnFavourite";
+import Favourite from "../../../../components/Favourite";
+import UnFavourite from "../../../../components/UnFavourite";
 import { Link } from "react-router-dom";
-import { BatterCardType } from "../../../../Types";
+import { PitchingType } from "../../../../Types";
 import { useDispatch } from "react-redux";
 import { updateFavoriteProfile } from "../../../../store/profiles/actions";
-import { setLeaderboardBatting } from "../../../../store/leaderboard_batting/actions";
+import { setLeaderboardPitching } from "../../../../store/leaderboard_pitching/actions";
 
-const BattingCard: React.FC<Props> = ({ batter }) => {
+const PitchingCard: React.FC<Props> = ({ pitcher }) => {
   const dispatch = useDispatch();
-  const [heartBtn, setHeartBtn] = useState<boolean>(batter.favorite);
+  const [heartBtn, setHeartBtn] = useState<boolean>(pitcher.favorite);
 
   return (
     <CardContent>
@@ -20,33 +20,33 @@ const BattingCard: React.FC<Props> = ({ batter }) => {
       <Title $width="14%">
         <Name
           to={{
-            pathname: `/profile/${batter.batter_datraks_id.toString()}`,
+            pathname: `/profile/${pitcher.pitcher_datraks_id.toString()}`,
           }}
         >
-          {batter.batter_name}
+          {pitcher.pitcher_name}
         </Name>
       </Title>
-      <Title $width="5%">{batter.age}</Title>
-      <Title $width="14%">{batter.school.name}</Title>
+      <Title $width="5%">{pitcher.age}</Title>
+      <Title $width="14%">{pitcher.school.name}</Title>
       <Title $width="14.5%">
-        {batter.teams?.map((team, index) => (
+        {pitcher.teams?.map((team, index) => (
           <span key={team.id}>{(index ? ", " : "") + team.name}</span>
         )) || "-"}
       </Title>
-      <Title $width="14.5%">{String(batter.exit_velocity)}</Title>
-      <Title $width="14.5%">{String(batter.launch_angle || "-")}</Title>
-      <Title $width="10%">{String(batter.distance)}</Title>
+      <Title $width="14.5%">{String(pitcher.pitch_type)}</Title>
+      <Title $width="14.5%">{String(pitcher.velocity)}</Title>
+      <Title $width="10%">{String(pitcher.spin_rate)}</Title>
       <TitleFav $width="none">
         <HeartBtn
           onClick={async () => {
             await dispatch(
               updateFavoriteProfile({
-                profile_id: batter.batter_datraks_id.toString(),
+                profile_id: pitcher.pitcher_datraks_id.toString(),
                 favorite: !heartBtn,
               })
             );
             await setHeartBtn(!heartBtn);
-            await dispatch(setLeaderboardBatting({ type: "exit_velocity" }));
+            await dispatch(setLeaderboardPitching({ type: "pitch_velocity" }));
           }}
         >
           {heartBtn ? <Favourite /> : <UnFavourite />}
@@ -82,7 +82,6 @@ const Title = styled.div<{ $width: string }>`
 const TitleWrapper = styled(Title)`
   padding-left: 6px;
 `;
-
 const Name = styled(Link)`
   display: flex;
   max-width: 100%;
@@ -104,8 +103,8 @@ const HeartBtn = styled.div`
   display: flex;
 `;
 
-export default BattingCard;
+export default PitchingCard;
 
 type Props = {
-  batter: BatterCardType;
+  pitcher: PitchingType;
 };

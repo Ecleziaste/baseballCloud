@@ -16,7 +16,6 @@ const profilesSlice = createSlice({
       state,
       action: PayloadAction<boolean>
     ) => {
-      // setProfiles({ profiles_count: 10, offset: 0 });
       return state;
     },
   },

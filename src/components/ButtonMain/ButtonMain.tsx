@@ -19,7 +19,6 @@ const Button = styled.button`
   padding-bottom: 17px;
   margin-bottom: 15px;
   cursor: pointer;
-  /* flex: 1 1 auto; */
   color: #ffffff;
   font-weight: 400;
   font-size: 16px;

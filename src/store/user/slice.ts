@@ -17,12 +17,10 @@ const userSlice = createSlice({
         payload,
       }: PayloadAction<{ status: string; data: User; headers: Headers }>
     ) => {
-      console.log("signUp payload", payload);
-      // FIXME:
       if (payload.status === "success") {
         state.headers = payload.headers;
         state.user = payload.data;
-        console.log("sign UP succesful");
+
         return state;
       }
 
@@ -31,11 +29,16 @@ const userSlice = createSlice({
     [signIn.fulfilled.type]: (
       state,
       { payload }: PayloadAction<{ data: User; headers: any }>
-    ) => {
-      state.headers = payload.headers;
-      state.user = payload.data;
-      return state;
-    },
+    ) =>
+      //  & {
+      //   success: boolean;
+      //   errors: Array<string>;
+      // }
+      {
+        state.headers = payload.headers;
+        state.user = payload.data;
+        // if (payload.success === false) {} else return state;
+      },
     [setUser.type]: (state, action: PayloadAction<any>) => {
       return action.payload;
     },

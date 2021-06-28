@@ -17,7 +17,6 @@ import {
 } from "../../../../assets/svg/paths";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentProfile } from "../../../../store/current_profile/selectors";
-import { selectProfile } from "../../../../store/profile/selectors";
 import DUMMY from "../../../../assets/images/avatar_dummy.png";
 import {
   updateFavoriteProfile,
@@ -25,9 +24,8 @@ import {
 } from "../../../../store/profiles/actions";
 import { Profile } from "../../../../Types";
 
-const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, id, player }) => {
+const FeaturesProfile: React.FC<Props> = ({ toggleEditBtn, player }) => {
   const dispatch = useDispatch();
-  // искать профайл тут по айдишке, которая приходит сверху мб
   const profile = useSelector(selectCurrentProfile)!;
   const avatar = player?.avatar;
   const [isFavorite, setIsFavorite] = useState(player?.favorite);
@@ -281,6 +279,5 @@ export default FeaturesProfile;
 
 type Props = {
   toggleEditBtn: (value: boolean) => void;
-  id: string;
   player: Profile;
 };

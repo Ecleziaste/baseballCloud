@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import ButtonMain from "../components/ButtonMain";
-import InputField from "../components/InputField";
+import ButtonMain from "../../../components/ButtonMain";
+import InputField from "../../../components/InputField";
 import { Form, Field } from "react-final-form";
+import { FORM_ERROR } from "final-form";
 import { Link } from "react-router-dom";
 import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
@@ -12,16 +13,13 @@ import { setCurrentProfile } from "../../../store/current_profile/actions";
 
 const SignInForm: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const [emailError, emailErrorSet] = useState<null | boolean>(null);
 
   const onSubmit = async (value: Values) => {
-    if (!value.email || !value.password) {
-      emailErrorSet(true);
-    } else {
-      emailErrorSet(null);
-      await dispatch(signIn(value));
-      await dispatch(setCurrentProfile({}));
+    if (await dispatch(signIn(value))) {
+      return { [FORM_ERROR]: "Invalid login credentials. Please try again." };
     }
+
+    await dispatch(setCurrentProfile({}));
   };
 
   return (
@@ -35,14 +33,22 @@ const SignInForm: React.FC<Props> = () => {
             </FormHeader>
 
             <Form
-              //FIXME: *****
               initialValues={{
-                email: "testa@example.com",
-                password: "aaaaaaaaa",
+                email: "",
+                password: "",
               }}
-              // *****
               onSubmit={onSubmit}
-              render={({ handleSubmit }) => (
+              validate={(values: Values) => {
+                const errors = {} as Values;
+                if (!values.email) {
+                  errors.email = "Required";
+                }
+                if (!values.password) {
+                  errors.password = "Required";
+                }
+                return errors;
+              }}
+              render={({ handleSubmit, submitError }) => (
                 <FormContainer>
                   <FieldContainer>
                     <FieldIcon>
@@ -73,10 +79,9 @@ const SignInForm: React.FC<Props> = () => {
                       secure
                     />
                   </FieldContainer>
-                  {emailError && (
-                    <ValidationText>
-                      Invalid login credentials. Please try again.
-                    </ValidationText>
+
+                  {submitError && (
+                    <ValidationText>{submitError}</ValidationText>
                   )}
                   <ButtonMain
                     text="Sign in"
@@ -109,17 +114,17 @@ const Container = styled.div`
   overflow: auto;
   padding: 16px;
 `;
+const ValidationText = styled.div`
+  display: flex;
+  color: #f05f62;
+  margin-bottom: 2px;
+`;
 const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
   width: 100%;
   margin-bottom: 15px;
-`;
-const ValidationText = styled.div`
-  display: flex;
-  color: #f05f62;
-  margin-bottom: 2px;
 `;
 const FieldIcon = styled.span`
   display: flex;

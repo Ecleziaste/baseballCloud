@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import ButtonMain from "../components/ButtonMain";
-import InputField from "../components/InputField";
+import ButtonMain from "../../../components/ButtonMain";
+import InputField from "../../../components/InputField";
 import { Form, Field } from "react-final-form";
 import { Link } from "react-router-dom";
 import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
+import { useDispatch } from "react-redux";
+import { resetPassword } from "../../../store/user/actions";
+import { FORM_ERROR } from "final-form";
+
+const required = (value: string) => (value ? undefined : "Required");
 
 const ForgotPassForm: React.FC<Props> = () => {
-  const [emailError, emailErrorSet] = useState<null | boolean>(null);
-
-  const onSubmit = (value: Values) => {
-    if (!value.email) {
-      emailErrorSet(true);
-    } else emailErrorSet(null);
-    console.log("value", value);
+  const dispatch = useDispatch();
+  const onSubmit = async (value: Values) => {
+    if (
+      await dispatch(
+        resetPassword({
+          value,
+          redirect_url:
+            "https://baseballcloud-front.herokuapp.com/resetpassword",
+        })
+      )
+    ) {
+      return {
+        [FORM_ERROR]: `Unable to find user with email '${value.email}'.`,
+      };
+    }
   };
 
   return (
@@ -31,8 +44,11 @@ const ForgotPassForm: React.FC<Props> = () => {
             </FormHeader>
             <FormContainer>
               <Form
+                initialValues={{
+                  email: "",
+                }}
                 onSubmit={onSubmit}
-                render={({ handleSubmit }) => (
+                render={({ handleSubmit, submitError }) => (
                   <FormContainer>
                     <FieldContainer>
                       <FieldIcon>
@@ -42,15 +58,17 @@ const ForgotPassForm: React.FC<Props> = () => {
                         ></UserIcon>
                       </FieldIcon>
                       <Field
+                        validate={required}
                         value={"undefined"}
                         name="email"
                         type="email"
                         component={InputField}
                         placeholder="Email"
                       />
-                      {emailError && <ValidationText>Required</ValidationText>}
                     </FieldContainer>
-
+                    {submitError && (
+                      <ValidationText>{submitError}</ValidationText>
+                    )}
                     <ButtonMain
                       text="Submit"
                       handleClick={handleSubmit}
@@ -79,6 +97,11 @@ const Container = styled.div`
   overflow: auto;
   padding: 16px;
 `;
+const ValidationText = styled.div`
+  display: flex;
+  color: #f05f62;
+  margin-bottom: 2px;
+`;
 const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -86,11 +109,6 @@ const FieldContainer = styled.div`
   position: relative;
   max-width: 100%;
   margin-bottom: 15px;
-`;
-const ValidationText = styled.div`
-  display: flex;
-  margin-top: 8px;
-  color: #f05f62;
 `;
 const FieldIcon = styled.span`
   display: flex;

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AppLayout from "../../../layouts";
-import TabBtn from "../components/TabBtn";
-import PageHeader from "../components/PageHeader";
-import BattingCard from "../components/BattingCard";
-import PitchingCard from "../components/PitchingCard";
+import TabBtn from "../../../components/TabBtn";
+import PageHeader from "../../../components/PageHeader";
+import BattingCard from "./BattingCard";
+import PitchingCard from "./PitchingCard";
 import Selector from "../../../components/Selector";
 import SelectorInput from "../../../components/SelectorInput";
 import { Form, Field } from "react-final-form";

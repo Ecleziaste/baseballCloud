@@ -29,8 +29,6 @@ const currentProfileSlice = createSlice({
       state,
       action: PayloadAction<UploadedPhoto>
     ) => {
-      console.log(action.payload);
-
       state!.avatar = action.payload.signedUrl;
     },
   },

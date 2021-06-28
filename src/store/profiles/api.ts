@@ -1,15 +1,8 @@
 import { http } from "../../services/http";
 import { ProfilesSelects, Favorite } from "../../Types";
-import { Headers } from "../user/slice";
 
 export const profilesApi = (payload: ProfilesSelects) =>
-  http.post(
-    `/graphql`,
-    getProfiles(payload)
-    //  {
-    //   headers: { ...payload.headers },
-    // }
-  );
+  http.post(`/graphql`, getProfiles(payload));
 
 const getProfiles = (data: ProfilesSelects) => {
   const query = {
@@ -61,8 +54,3 @@ const updateFavoriteProfile = (data: Favorite) => {
   };
   return query;
 };
-
-// type ProfilesPayload = {
-//   selects: ProfilesSelects;
-//   headers: Headers | undefined;
-// };

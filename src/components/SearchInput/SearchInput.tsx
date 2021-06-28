@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { SEARCH_ICON } from "../../../../assets/svg/paths";
+import { SEARCH_ICON } from "../../assets/svg/paths";
 import { FieldRenderProps } from "react-final-form";
 
 const SearchInput: React.FC<FieldRenderProps<string, HTMLElement> & Props> = ({

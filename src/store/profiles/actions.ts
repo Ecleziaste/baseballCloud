@@ -2,21 +2,19 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { profilesApi, favoriteProfileApi } from "../profiles/api";
 import { Profiles } from "./slice";
 import { ProfilesSelects, Favorite, IsUpdated } from "../../Types";
-import { Headers } from "../user/slice";
 
-export const setProfiles = createAsyncThunk<
-  Profiles,
-  ProfilesSelects
-  // { selects: ProfilesSelects; headers: Headers }
->("profiles/set", async (params) => {
-  const {
-    data: {
-      data: { profiles },
-    },
-  } = await profilesApi(params);
+export const setProfiles = createAsyncThunk<Profiles, ProfilesSelects>(
+  "profiles/set",
+  async (params) => {
+    const {
+      data: {
+        data: { profiles },
+      },
+    } = await profilesApi(params);
 
-  return profiles;
-});
+    return profiles;
+  }
+);
 
 export const updateFavoriteProfile = createAsyncThunk<IsUpdated, Favorite>(
   "profiles/update",
@@ -27,7 +25,6 @@ export const updateFavoriteProfile = createAsyncThunk<IsUpdated, Favorite>(
       },
     } = await favoriteProfileApi(params);
 
-    console.log(update_favorite_profile);
     return update_favorite_profile;
   }
 );

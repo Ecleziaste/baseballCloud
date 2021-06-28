@@ -75,7 +75,6 @@ const Container = styled.div`
   line-height: 1.19;
   background-color: transparent;
   padding-right: 10px;
-  /* max-width: 100%; */
   border: none;
   white-space: nowrap;
   cursor: pointer;

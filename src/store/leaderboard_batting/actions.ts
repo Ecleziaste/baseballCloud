@@ -15,5 +15,3 @@ export const setLeaderboardBatting = createAsyncThunk<
 
   return leaderboard_batting;
 });
-
-// export type LeaderboardBattingParams = {};

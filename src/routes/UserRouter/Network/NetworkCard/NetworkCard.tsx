@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Favourite from "../Favourite";
-import UnFavourite from "../UnFavourite";
+import Favourite from "../../../../components/Favourite";
+import UnFavourite from "../../../../components/UnFavourite";
 import { Link } from "react-router-dom";
 import { PlayerCard } from "../../../../Types";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setProfiles,
   updateFavoriteProfile,
 } from "../../../../store/profiles/actions";
 import { setProfile } from "../../../../store/profile/actions";
-// import { selectProfileById } from "../../../../store/profile/selectors";
 
 const NetworkCard: React.FC<Props> = ({ player }) => {
   const dispatch = useDispatch();
-  // const player = useSelector(selectProfileById(id))!;
   const [heartBtn, setHeartBtn] = useState<boolean>(player.favorite);
 
   return (
@@ -114,5 +112,4 @@ export default NetworkCard;
 
 type Props = {
   player: PlayerCard;
-  // id: string;
 };
