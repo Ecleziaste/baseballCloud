@@ -10,6 +10,24 @@ import GuestLayout from "../../../layouts/GuestLayout";
 import { useDispatch } from "react-redux";
 import { signIn } from "../../../store/user/actions";
 import { setCurrentProfile } from "../../../store/current_profile/actions";
+import { REG_EXP_EMAIL, REG_EXP_PASSWORD } from "../../../constants";
+
+const regexpEmail = (value: string) =>
+  value.match(REG_EXP_EMAIL) ? undefined : "Wrong characters for e-mail";
+const regexpPassword = (value: string) =>
+  REG_EXP_PASSWORD.test(value)
+    ? undefined
+    : "Password must not contain whitespaces";
+const required = (value: string) => (value ? undefined : "Required");
+const minValue = (min: number) => (value: string) =>
+  value.length >= min ? undefined : `Must contain more than ${min} characters`;
+const composeValidators =
+  (...validators: any) =>
+  (value: string) =>
+    validators.reduce(
+      (error: any, validator: any) => error || validator(value),
+      undefined
+    );
 
 const SignInForm: React.FC<Props> = () => {
   const dispatch = useDispatch();
@@ -39,16 +57,6 @@ const SignInForm: React.FC<Props> = () => {
                 password: "",
               }}
               onSubmit={onSubmit}
-              validate={(values: Values) => {
-                const errors = {} as Values;
-                if (!values.email) {
-                  errors.email = "Required";
-                }
-                if (!values.password) {
-                  errors.password = "Required";
-                }
-                return errors;
-              }}
               render={({ handleSubmit, submitError }) => (
                 <FormContainer>
                   <FieldContainer>
@@ -59,6 +67,7 @@ const SignInForm: React.FC<Props> = () => {
                       ></UserIcon>
                     </FieldIcon>
                     <Field
+                      validate={composeValidators(required, regexpEmail)}
                       name="email"
                       type="email"
                       component={InputField}
@@ -73,6 +82,11 @@ const SignInForm: React.FC<Props> = () => {
                       ></LockIcon>
                     </FieldIcon>
                     <Field
+                      validate={composeValidators(
+                        required,
+                        minValue(8),
+                        regexpPassword
+                      )}
                       name="password"
                       type="password"
                       component={InputField}

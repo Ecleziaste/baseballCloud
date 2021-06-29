@@ -11,7 +11,14 @@ import { useDispatch } from "react-redux";
 import { signUp } from "../../../store/user/actions";
 import { FORM_ERROR } from "final-form";
 import { setCurrentProfile } from "../../../store/current_profile/actions";
+import { REG_EXP_EMAIL, REG_EXP_PASSWORD } from "../../../constants";
 
+const regexpEmail = (value: string) =>
+  value.match(REG_EXP_EMAIL) ? undefined : "Wrong characters for e-mail";
+const noSpaces = (value: string) =>
+  REG_EXP_PASSWORD.test(value)
+    ? undefined
+    : "Password must not contain whitespaces";
 const required = (value: string) => (value ? undefined : "Required");
 const minValue = (min: number) => (value: string) =>
   value.length >= min ? undefined : `Must contain more than ${min} characters`;
@@ -113,7 +120,7 @@ const SignUpForm: React.FC<Props> = () => {
                       ></UserIcon>
                     </FieldIcon>
                     <Field
-                      validate={required}
+                      validate={composeValidators(required, regexpEmail)}
                       name="email"
                       type="email"
                       component={InputField}
@@ -128,7 +135,11 @@ const SignUpForm: React.FC<Props> = () => {
                       <LockIcon className="fa fa-lock"></LockIcon>
                     </FieldIcon>
                     <Field
-                      validate={composeValidators(required, minValue(8))}
+                      validate={composeValidators(
+                        required,
+                        minValue(8),
+                        noSpaces
+                      )}
                       name="password"
                       type="password"
                       component={InputField}
@@ -144,7 +155,11 @@ const SignUpForm: React.FC<Props> = () => {
                       ></CheckIcon>
                     </FieldIcon>
                     <Field
-                      validate={required}
+                      validate={composeValidators(
+                        required,
+                        minValue(8),
+                        noSpaces
+                      )}
                       name="password_confirmation"
                       type="password"
                       component={InputField}
