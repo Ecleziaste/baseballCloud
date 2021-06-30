@@ -4,8 +4,13 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { authMiddleware } from "./authMiddleware";
 import { signOut } from "./user/actions";
+import { useDispatch } from "react-redux";
 
 export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => {
+  return useDispatch<AppDispatch>();
+};
 
 const persistConfig = {
   key: "root",

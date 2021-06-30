@@ -1,7 +1,4 @@
 export const API_URL = "https://baseballcloud-back.herokuapp.com/api/v1";
-export const REG_EXP_PASSWORD = /[^\s]{6,}$/;
-export const REG_EXP_EMAIL =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const OPTIONS = {
   date: [
     { fieldName: "date", text: "All" },

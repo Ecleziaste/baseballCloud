@@ -21,9 +21,6 @@ export const signInApi = (
   return http.post("/auth/sign_in", payload);
 };
 
-export const passwordApi = (payload: {
-  email: string;
-  redirect_url: string;
-}) => {
+export const passwordApi = (payload: string) => {
   return http.post("/auth/password", payload);
 };

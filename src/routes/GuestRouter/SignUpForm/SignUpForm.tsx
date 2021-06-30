@@ -7,64 +7,60 @@ import { CHECK_SVG } from "../../../assets/svg/paths";
 import { Link } from "react-router-dom";
 import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
-import { useDispatch } from "react-redux";
 import { signUp } from "../../../store/user/actions";
 import { FORM_ERROR } from "final-form";
 import { setCurrentProfile } from "../../../store/current_profile/actions";
-import { REG_EXP_EMAIL, REG_EXP_PASSWORD } from "../../../constants";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { useAppDispatch } from "../../../store";
+import {
+  regexpEmail,
+  noSpaces,
+  required,
+  minValue,
+  composeValidators,
+} from "../../../utils";
 
-const regexpEmail = (value: string) =>
-  value.match(REG_EXP_EMAIL) ? undefined : "Wrong characters for e-mail";
-const noSpaces = (value: string) =>
-  REG_EXP_PASSWORD.test(value)
-    ? undefined
-    : "Password must not contain whitespaces";
-const required = (value: string) => (value ? undefined : "Required");
-const minValue = (min: number) => (value: string) =>
-  value.length >= min ? undefined : `Must contain more than ${min} characters`;
-const composeValidators =
-  (...validators: any) =>
-  (value: string) =>
-    validators.reduce(
-      (error: any, validator: any) => error || validator(value),
-      undefined
-    );
+const textPlayers =
+  " Players have their own profile within the system and plan on having data collected.";
+const textScouts =
+  "Coaches and scouts can view players in the system but do not have their own profile.";
 
 const SignUpForm: React.FC<Props> = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [btnPress, setBtnPress] = useState(true);
   const [title, setTitle] = useState("Players");
-  const [text, setText] = useState(
-    " Players have their own profile within the system and plan on having data collected."
-  );
+  const [text, setText] = useState(textPlayers);
+  const [role, setRole] = useState<string>("player");
   const handleLeftBtnClick = () => {
     setBtnPress(true);
     setTitle("Players");
-    setText(
-      " Players have their own profile within the system and plan on having data collected."
-    );
+    setText(textPlayers);
     setRole("player");
   };
   const handleRightBtnClick = () => {
     setBtnPress(false);
     setTitle("Scouts");
-    setText(
-      "Coaches and scouts can view players in the system but do not have their own profile."
-    );
+    setText(textScouts);
     setRole("scout");
   };
-
-  const [role, setRole] = useState<string>("player");
 
   const onSubmit = async (value: Values) => {
     if (value.password !== value.password_confirmation) {
       return { [FORM_ERROR]: "Passwords are not equal." };
     }
-    if (
-      (await dispatch(signUp({ role, ...value }))) &&
-      (await dispatch(setCurrentProfile({})))
-    ) {
-      return { [FORM_ERROR]: "Email has already been taken." };
+    try {
+      const action = await dispatch(signUp({ role, ...value }));
+      unwrapResult(action);
+      await dispatch(setCurrentProfile({}));
+    } catch (e) {
+      if (Array.isArray(e.full_messages)) {
+        return {
+          [FORM_ERROR]: e.full_messages[0],
+        };
+      }
+      return {
+        [FORM_ERROR]: e.full_messages,
+      };
     }
   };
 

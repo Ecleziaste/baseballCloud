@@ -6,26 +6,26 @@ import { Form, Field } from "react-final-form";
 import { Link } from "react-router-dom";
 import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
-import { useDispatch } from "react-redux";
 import { resetPassword } from "../../../store/user/actions";
 import { FORM_ERROR } from "final-form";
-
-const required = (value: string) => (value ? undefined : "Required");
+import { unwrapResult } from "@reduxjs/toolkit";
+import { useAppDispatch } from "../../../store";
+import { required } from "../../../utils";
 
 const ForgotPassForm: React.FC<Props> = () => {
-  const dispatch = useDispatch();
-  const onSubmit = async (value: Values) => {
-    if (
-      await dispatch(
-        resetPassword({
-          value,
-          redirect_url:
-            "https://baseballcloud-front.herokuapp.com/resetpassword",
-        })
-      )
-    ) {
+  const dispatch = useAppDispatch();
+  const onSubmit = async (email: string) => {
+    try {
+      const action = await dispatch(resetPassword(email));
+      unwrapResult(action);
+    } catch (e) {
+      if (Array.isArray(e)) {
+        return {
+          [FORM_ERROR]: e[0],
+        };
+      }
       return {
-        [FORM_ERROR]: `Unable to find user with email '${value.email}'.`,
+        [FORM_ERROR]: e,
       };
     }
   };
@@ -178,4 +178,3 @@ const SignUpLink = styled(Link)`
 export default ForgotPassForm;
 
 type Props = {};
-type Values = { email: string | {} };

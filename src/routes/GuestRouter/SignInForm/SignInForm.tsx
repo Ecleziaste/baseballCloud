@@ -7,37 +7,35 @@ import { FORM_ERROR } from "final-form";
 import { Link } from "react-router-dom";
 import AppLayout from "../../../layouts";
 import GuestLayout from "../../../layouts/GuestLayout";
-import { useDispatch } from "react-redux";
 import { signIn } from "../../../store/user/actions";
 import { setCurrentProfile } from "../../../store/current_profile/actions";
-import { REG_EXP_EMAIL, REG_EXP_PASSWORD } from "../../../constants";
-
-const regexpEmail = (value: string) =>
-  value.match(REG_EXP_EMAIL) ? undefined : "Wrong characters for e-mail";
-const regexpPassword = (value: string) =>
-  REG_EXP_PASSWORD.test(value)
-    ? undefined
-    : "Password must not contain whitespaces";
-const required = (value: string) => (value ? undefined : "Required");
-const minValue = (min: number) => (value: string) =>
-  value.length >= min ? undefined : `Must contain more than ${min} characters`;
-const composeValidators =
-  (...validators: any) =>
-  (value: string) =>
-    validators.reduce(
-      (error: any, validator: any) => error || validator(value),
-      undefined
-    );
+import { unwrapResult } from "@reduxjs/toolkit";
+import { useAppDispatch } from "../../../store";
+import {
+  regexpEmail,
+  noSpaces,
+  required,
+  minValue,
+  composeValidators,
+} from "../../../utils";
 
 const SignInForm: React.FC<Props> = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSubmit = async (value: Values) => {
-    if (
-      (await dispatch(signIn(value))) &&
-      (await dispatch(setCurrentProfile({})))
-    ) {
-      return { [FORM_ERROR]: "Invalid login credentials. Please try again." };
+    try {
+      const action = await dispatch(signIn(value));
+      unwrapResult(action);
+      await dispatch(setCurrentProfile({}));
+    } catch (e) {
+      if (Array.isArray(e)) {
+        return {
+          [FORM_ERROR]: e[0],
+        };
+      }
+      return {
+        [FORM_ERROR]: e,
+      };
     }
   };
 
@@ -85,7 +83,7 @@ const SignInForm: React.FC<Props> = () => {
                       validate={composeValidators(
                         required,
                         minValue(8),
-                        regexpPassword
+                        noSpaces
                       )}
                       name="password"
                       type="password"
