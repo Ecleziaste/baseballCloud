@@ -29,18 +29,15 @@ const SignUpForm: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
   const [btnPress, setBtnPress] = useState(true);
   const [title, setTitle] = useState("Players");
-  const [text, setText] = useState(textPlayers);
   const [role, setRole] = useState<string>("player");
   const handleLeftBtnClick = () => {
     setBtnPress(true);
     setTitle("Players");
-    setText(textPlayers);
     setRole("player");
   };
   const handleRightBtnClick = () => {
     setBtnPress(false);
     setTitle("Scouts");
-    setText(textScouts);
     setRole("scout");
   };
 
@@ -106,7 +103,7 @@ const SignUpForm: React.FC<Props> = () => {
 
                   <FormHeader>
                     <Title>{title}</Title>
-                    <Text>{text}</Text>
+                    <Text>{btnPress ? textPlayers : textScouts}</Text>
                   </FormHeader>
                   <FieldContainer>
                     <FieldIcon>
